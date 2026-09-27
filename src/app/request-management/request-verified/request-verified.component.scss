@@ -1,0 +1,319 @@
+* {
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  background: #f7f9fc;
+  color: #14284c;
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+.sidebar {
+  width: 225px;
+  min-height: 100vh;
+  flex-shrink: 0;
+  background: #0d172d;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  height: 72px;
+  padding: 0 18px;
+  border-bottom: 1px solid #253149;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #35435d;
+  display: grid;
+  place-items: center;
+}
+
+.brand strong,
+.brand span,
+.profile strong,
+.profile span {
+  display: block;
+}
+
+.brand strong {
+  font-size: 13px;
+}
+
+.brand span {
+  color: #7f90ae;
+  font-size: 9px;
+}
+
+.menu-title {
+  padding: 18px 20px 8px;
+  color: #62718b;
+  font-size: 9px;
+}
+
+nav {
+  padding: 0 10px;
+}
+
+.nav-item {
+  min-height: 40px;
+  margin-bottom: 3px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  color: #8192b0;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background: #2948b8;
+  color: #fff;
+}
+
+.nav-item b {
+  margin-left: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffdce1;
+  color: #df4050;
+  display: grid;
+  place-items: center;
+  font-size: 9px;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 14px;
+  border-top: 1px solid #253149;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.avatar,
+.top-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #34445f;
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: 10px;
+}
+
+.profile strong {
+  font-size: 11px;
+}
+
+.profile span {
+  color: #7385a3;
+  font-size: 9px;
+}
+
+.sidebar-bottom button {
+  margin-top: 14px;
+  border: 0;
+  background: transparent;
+  color: #8b9bb6;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+main {
+  flex: 1;
+  min-width: 0;
+}
+
+.topbar {
+  height: 72px;
+  padding: 0 28px;
+  background: #fff;
+  border-bottom: 1px solid #dce3ec;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.topbar p {
+  margin: 2px 0 0;
+  color: #8295b5;
+  font-size: 11px;
+}
+
+.admin {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.bell {
+  position: relative;
+  color: #617490;
+  margin-right: 8px;
+}
+
+.bell i {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ef3c4c;
+  right: -2px;
+  top: -2px;
+}
+
+.top-avatar {
+  background: #2948b8;
+}
+
+.admin strong,
+.admin small {
+  display: block;
+}
+
+.admin strong {
+  font-size: 12px;
+}
+
+.admin small {
+  color: #8a9bb6;
+  font-size: 9px;
+}
+
+.content {
+  padding: 32px;
+}
+
+.success-card {
+  width: 420px;
+  min-height: 360px;
+  margin: 0 auto;
+  padding: 45px 40px;
+  background: #fff;
+  border: 1px solid #dce4ed;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(18, 38, 67, .08);
+  text-align: center;
+}
+
+.success-icon {
+  width: 75px;
+  height: 75px;
+  margin: 0 auto 22px;
+  border-radius: 50%;
+  background: #d9f9e5;
+  color: #0ca54c;
+  display: grid;
+  place-items: center;
+  font-size: 42px;
+  font-weight: 500;
+}
+
+.success-card h2 {
+  margin: 0;
+  color: #081b3a;
+  font-size: 23px;
+  font-weight: 400;
+}
+
+.success-card p {
+  margin: 12px auto 24px;
+  max-width: 330px;
+  color: #617697;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.success-card p strong {
+  color: #f04a3b;
+  font-weight: 500;
+}
+
+.success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.success-card button {
+  width: 100%;
+  height: 46px;
+  border: 0;
+  border-radius: 10px;
+  background: #2948b8;
+  color: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.success-card button.primary {
+  background: #1a7f4b;
+}
+
+.success-card button.primary:hover {
+  background: #15663d;
+}
+
+.success-card button:hover {
+  background: #1f3ea7;
+}
+
+@media (max-width: 700px) {
+  .sidebar {
+    width: 70px;
+  }
+
+  .brand {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .brand > div:last-child,
+  .menu-title,
+  .profile div:last-child {
+    display: none;
+  }
+
+  .nav-item {
+    justify-content: center;
+    font-size: 0;
+  }
+
+  .nav-item b {
+    display: none;
+  }
+
+  .content {
+    padding: 20px 15px;
+  }
+
+  .success-card {
+    width: 100%;
+    max-width: 420px;
+  }
+}

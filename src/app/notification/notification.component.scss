@@ -1,0 +1,148 @@
+// BayanihanLink — toast notifications
+@use 'sass:color';
+
+$navy: #0d172d;
+$blue: #2848b7;
+$line: #e3e9f2;
+$muted: #7d8ea9;
+$ink: #16233d;
+$green: #2c9a5b;
+$yellow: #f0b429;
+$red: #d6453a;
+$shadow: 0 10px 30px rgba(16, 32, 64, 0.16);
+
+:host {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 1200;
+  display: block;
+  max-width: 360px;
+  font-family: "Poppins", Arial, sans-serif;
+  pointer-events: none;
+}
+
+.notif-host {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notif {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 12px 14px;
+  border: 1px solid $line;
+  border-left: 4px solid $blue;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: $shadow;
+  pointer-events: auto;
+  animation: notif-in 220ms ease-out;
+}
+
+.notif-info {
+  border-left-color: $blue;
+}
+
+.notif-success {
+  border-left-color: $green;
+}
+
+.notif-warning {
+  border-left-color: $yellow;
+}
+
+.notif-error {
+  border-left-color: $red;
+}
+
+.notif-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(40, 72, 183, 0.1);
+  color: $blue;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.notif-success .notif-icon {
+  background: rgba(44, 154, 91, 0.12);
+  color: $green;
+}
+
+.notif-warning .notif-icon {
+  background: rgba(240, 180, 41, 0.16);
+  color: color.adjust($yellow, $lightness: -12%);
+}
+
+.notif-error .notif-icon {
+  background: rgba(214, 69, 58, 0.12);
+  color: $red;
+}
+
+.notif-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.notif-label {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $muted;
+}
+
+.notif-message {
+  margin: 3px 0 0;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: $ink;
+  word-break: break-word;
+}
+
+.notif-close {
+  flex: 0 0 auto;
+  border: 0;
+  padding: 0 2px;
+  background: none;
+  color: $muted;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 140ms ease;
+
+  &:hover {
+    color: $ink;
+  }
+}
+
+@keyframes notif-in {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 600px) {
+  :host {
+    top: auto;
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    max-width: none;
+  }
+}

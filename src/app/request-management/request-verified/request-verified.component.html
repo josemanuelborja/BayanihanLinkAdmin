@@ -1,0 +1,156 @@
+<div class="page">
+
+  <aside class="sidebar">
+
+    <div class="brand">
+
+      <div class="brand-icon">
+        ♣
+      </div>
+
+      <div>
+        <strong>BayanihanLink</strong>
+        <span>Administrator</span>
+      </div>
+
+    </div>
+
+    <div class="menu-title">
+      MENU
+    </div>
+
+    <nav>
+
+      <a routerLink="/dashboard" class="nav-item">
+        <span>▦</span>
+        Dashboard
+      </a>
+
+      <a
+        routerLink="/request-management"
+        class="nav-item active"
+      >
+        <span>□</span>
+        Request Management
+        <b>23</b>
+      </a>
+
+      <a routerLink="/donation-offers" class="nav-item">
+        <span>♡</span>
+        Donation Offers
+        <b>12</b>
+      </a>
+
+      <a routerLink="/dswd-coordination" class="nav-item">
+        <span>♧</span>
+        DSWD Coordination
+      </a>
+
+      <a routerLink="/status-monitoring" class="nav-item">
+        <span>⌁</span>
+        Status Monitoring
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <div class="profile">
+
+        <div class="avatar">
+          AD
+        </div>
+
+        <div>
+          <strong>Admin User</strong>
+          <span>Logged in</span>
+        </div>
+
+      </div>
+
+      <button (click)="logout()">
+        ↪ &nbsp; Log Out
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <main>
+
+    <header class="topbar">
+
+      <div>
+
+        <h1>
+          Request Verified
+        </h1>
+
+        <p>
+          BayanihanLink — Disaster Needs Coordination Platform
+        </p>
+
+      </div>
+
+      <div class="admin">
+
+        <app-notification-bell />
+
+        <div class="top-avatar">
+          AD
+        </div>
+
+        <div>
+          <strong>Admin User</strong>
+          <small>Administrator</small>
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <section class="content">
+
+      <div class="success-card">
+
+        <div class="success-icon">
+          ✓
+        </div>
+
+        <h2>
+          Request Verified!
+        </h2>
+
+        <p>
+          The request has been verified with
+          <strong>URGENT</strong>
+          priority and posted to the Community
+          Needs Board.
+        </p>
+
+        <div class="success-actions">
+
+          <button
+            class="primary"
+            (click)="proceedToCoordination()"
+          >
+            Proceed to DSWD Coordination
+          </button>
+
+          <button
+            (click)="backToRequests()"
+          >
+            Back to Request Management
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>

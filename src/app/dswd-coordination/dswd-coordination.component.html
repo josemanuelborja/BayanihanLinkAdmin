@@ -1,0 +1,266 @@
+<div class="page">
+
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-icon">♣</div>
+      <div>
+        <strong>BayanihanLink</strong>
+        <span>Administrator</span>
+      </div>
+    </div>
+
+    <div class="menu-title">MENU</div>
+
+    <nav>
+      <a routerLink="/dashboard" class="nav-item">
+        <span>▦</span> Dashboard
+      </a>
+
+      <a routerLink="/request-management" class="nav-item">
+        <span>□</span> Request Management
+        <b>23</b>
+      </a>
+
+      <a routerLink="/donation-offers" class="nav-item">
+        <span>♡</span> Donation Offers
+        <b>12</b>
+      </a>
+
+      <a routerLink="/dswd-coordination" class="nav-item active">
+        <span>♧</span> DSWD Coordination
+      </a>
+
+      <a routerLink="/status-monitoring" class="nav-item">
+        <span>⌁</span> Status Monitoring
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="profile">
+        <div class="avatar">AD</div>
+        <div>
+          <strong>Admin User</strong>
+          <span>Logged in</span>
+        </div>
+      </div>
+
+      <button (click)="logout()">↪ &nbsp; Log Out</button>
+    </div>
+
+  </aside>
+
+
+  <main>
+
+    <header class="topbar">
+
+      <div>
+        <h1>DSWD Coordination — #{{ requestId }} / #{{ offerId }}</h1>
+        <p>BayanihanLink — Disaster Needs Coordination Platform</p>
+      </div>
+
+      <div class="admin">
+        <app-notification-bell />
+        <div class="top-avatar">AD</div>
+        <div>
+          <strong>Admin User</strong>
+          <small>Administrator</small>
+        </div>
+      </div>
+
+    </header>
+
+
+    <section class="content">
+
+      <div class="layout">
+
+        <div class="left">
+
+          <section class="case-header">
+
+            <div class="case-title">
+              <small>COORDINATION CASE</small>
+
+              <h2>Typhoon Assistance · Drinking Water</h2>
+            </div>
+
+            <div class="case-status">
+              <i></i>
+              {{ selectedStatus }}
+            </div>
+
+            <div class="case-info">
+
+              <div>
+                <small>Request ID</small>
+                <strong>#{{ requestId }}</strong>
+              </div>
+
+              <div>
+                <small>Donation Offer ID</small>
+                <strong>#{{ offerId }}</strong>
+              </div>
+
+              <div>
+                <small>Priority</small>
+                <strong>CRITICAL</strong>
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <section class="card details">
+
+            <h2>Coordination Details</h2>
+
+            <div class="detail-grid">
+
+              <div>
+                <small>RECIPIENT REQUEST</small>
+                <strong>#{{ requestId }}</strong>
+              </div>
+
+              <div>
+                <small>GENERAL LOCATION</small>
+                <strong>Brgy. 14, Cagayan de Oro City</strong>
+              </div>
+
+              <div>
+                <small>ITEM NEEDED</small>
+                <strong>Drinking Water (1L bottles)</strong>
+              </div>
+
+              <div>
+                <small>QUANTITY NEEDED</small>
+                <strong>100 bottles</strong>
+              </div>
+
+              <div>
+                <small>DONATION OFFER</small>
+                <strong>#{{ offerId }} · Ramon Garcia</strong>
+              </div>
+
+              <div>
+                <small>QUANTITY OFFERED</small>
+                <strong>30 bottles</strong>
+              </div>
+
+              <div>
+                <small>GOVERNMENT PARTNER</small>
+                <strong>DSWD Region X</strong>
+              </div>
+
+              <div>
+                <small>PERSONS AFFECTED</small>
+                <strong>50 families</strong>
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <section class="card notes">
+
+            <h2>Administrator Notes</h2>
+
+            <div class="note-list" *ngIf="notes.length; else noNotes">
+
+              <article
+                class="note"
+                *ngFor="let note of notes"
+              >
+                <div class="note-head">
+                  <div class="note-avatar">{{ note.author.slice(0, 2) }}</div>
+                  <div>
+                    <strong>{{ note.author }}</strong>
+                    <small>{{ note.role }} · {{ note.time }}</small>
+                  </div>
+                  <button
+                    class="remove"
+                    type="button"
+                    (click)="removeNote(note.id)"
+                  >
+                    ×
+                  </button>
+                </div>
+
+                <p>{{ note.text }}</p>
+              </article>
+
+            </div>
+
+            <ng-template #noNotes>
+              <p class="empty">No notes yet on this coordination case.</p>
+            </ng-template>
+
+            <div class="note-composer">
+              <textarea
+                [(ngModel)]="noteDraft"
+                placeholder="Add a note for DSWD Region X..."
+                rows="3"
+                maxlength="500"
+              ></textarea>
+
+              <div class="composer-actions">
+                <small>{{ noteDraft.trim().length }}/500</small>
+                <button
+                  type="button"
+                  class="post"
+                  [disabled]="!canPostNote"
+                  (click)="addNote()"
+                >
+                  Comment
+                </button>
+              </div>
+            </div>
+
+          </section>
+
+        </div>
+
+
+        <aside class="update-card">
+
+          <h2>Update Coordination Status</h2>
+
+          <div class="status-options">
+
+            <button
+              *ngFor="let status of statuses"
+              [class.selected]="selectedStatus === status"
+              (click)="selectStatus(status)"
+            >
+              <i></i>
+              {{ status }}
+            </button>
+
+          </div>
+
+          <button
+            class="save"
+            (click)="saveStatus()"
+          >
+            Save & Update Status
+          </button>
+
+          <button
+            class="back"
+            (click)="backToOffers()"
+          >
+            ← Back to Offers
+          </button>
+
+        </aside>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>

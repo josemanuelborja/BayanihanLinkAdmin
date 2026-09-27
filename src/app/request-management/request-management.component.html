@@ -1,0 +1,236 @@
+<div class="page">
+
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-icon">♣</div>
+      <div>
+        <strong>BayanihanLink</strong>
+        <span>Administrator</span>
+      </div>
+    </div>
+
+    <div class="menu-title">MENU</div>
+
+    <nav>
+
+      <a routerLink="/dashboard" class="nav-item">
+        <span>▦</span>
+        Dashboard
+      </a>
+
+      <a routerLink="/request-management" class="nav-item active">
+        <span>□</span>
+        Request Management
+        <b>23</b>
+      </a>
+
+      <a routerLink="/donation-offers" class="nav-item">
+        <span>♡</span>
+        Donation Offers
+        <b>12</b>
+      </a>
+
+      <a routerLink="/dswd-coordination" class="nav-item">
+        <span>♧</span>
+        DSWD Coordination
+      </a>
+
+      <a routerLink="/status-monitoring" class="nav-item">
+        <span>⌁</span>
+        Status Monitoring
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="profile">
+        <div class="avatar">AD</div>
+        <div>
+          <strong>Admin User</strong>
+          <span>Logged in</span>
+        </div>
+      </div>
+
+      <button (click)="logout()">↪ &nbsp; Log Out</button>
+    </div>
+
+  </aside>
+
+
+  <main>
+
+    <header class="topbar">
+
+      <div>
+        <h1>Request Management</h1>
+        <p>BayanihanLink — Disaster Needs Coordination Platform</p>
+      </div>
+
+      <div class="admin">
+        <app-notification-bell />
+        <div class="top-avatar">AD</div>
+        <div>
+          <strong>Admin User</strong>
+          <small>Administrator</small>
+        </div>
+      </div>
+
+    </header>
+
+
+    <section class="content">
+
+      <div class="filter-box">
+
+        <div class="search">
+          <span>⌕</span>
+          <input
+            type="text"
+            [(ngModel)]="search"
+            placeholder="Search by name, ID, or location..."
+          >
+        </div>
+
+        <div class="filters">
+
+          <label>Status:</label>
+
+          <button
+            [class.active]="statusFilter === 'All'"
+            (click)="setStatus('All')"
+          >All</button>
+
+          <button
+            [class.active]="statusFilter === 'Pending'"
+            (click)="setStatus('Pending')"
+          >Pending</button>
+
+          <button
+            [class.active]="statusFilter === 'Verified'"
+            (click)="setStatus('Verified')"
+          >Verified</button>
+
+          <button
+            [class.active]="statusFilter === 'Assisted'"
+            (click)="setStatus('Assisted')"
+          >Assisted</button>
+
+          <button
+            [class.active]="statusFilter === 'Completed'"
+            (click)="setStatus('Completed')"
+          >Completed</button>
+
+          <label>Priority:</label>
+
+          <button
+            [class.active]="priorityFilter === 'All'"
+            (click)="setPriority('All')"
+          >All</button>
+
+          <button
+            [class.active]="priorityFilter === 'CRITICAL'"
+            (click)="setPriority('CRITICAL')"
+          >CRITICAL</button>
+
+          <button
+            [class.active]="priorityFilter === 'URGENT'"
+            (click)="setPriority('URGENT')"
+          >URGENT</button>
+
+          <button
+            [class.active]="priorityFilter === 'NORMAL'"
+            (click)="setPriority('NORMAL')"
+          >NORMAL</button>
+
+        </div>
+
+        <span class="result-count">
+          {{ filteredRequests.length }} of 8 results
+        </span>
+
+      </div>
+
+
+      <div class="table-card">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>REQUEST ID</th>
+              <th>REQUESTER</th>
+              <th>DISASTER</th>
+              <th>CATEGORY</th>
+              <th>QTY NEEDED</th>
+              <th>LOCATION</th>
+              <th>PRIORITY</th>
+              <th>STATUS</th>
+              <th>DATE</th>
+              <th>ACTIONS</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr *ngFor="let request of filteredRequests">
+
+              <td class="id">{{ request.id }}</td>
+              <td>{{ request.requester }}</td>
+              <td>{{ request.disaster }}</td>
+              <td>{{ request.category }}</td>
+              <td>{{ request.quantity }}</td>
+              <td>{{ request.location }}</td>
+
+              <td>
+                <span
+                  class="badge priority"
+                  [ngClass]="'priority-' + request.priority.toLowerCase()"
+                >
+                  {{ request.priority }}
+                </span>
+              </td>
+
+              <td>
+                <span
+                  class="badge status"
+                  [ngClass]="'status-' + request.status.toLowerCase()"
+                >
+                  {{ request.status }}
+                </span>
+              </td>
+
+              <td>{{ request.date }}</td>
+
+              <td class="actions">
+
+                <button
+                  class="review"
+                  (click)="review(request.id)"
+                >
+                  Review
+                </button>
+
+                <button
+                  *ngIf="request.status === 'Pending'"
+                  class="verify"
+                  (click)="verify(request.id)"
+                >
+                  Verify
+                </button>
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>

@@ -1,0 +1,264 @@
+// BayanihanLink — notification bell + dropdown panel
+@use 'sass:color';
+
+$navy: #0d172d;
+$blue: #2848b7;
+$line: #e3e9f2;
+$muted: #7d8ea9;
+$ink: #16233d;
+$green: #2c9a5b;
+$yellow: #f0b429;
+$red: #d6453a;
+$shadow: 0 12px 32px rgba(16, 32, 64, 0.18);
+
+:host {
+  position: relative;
+  display: inline-block;
+  // Matches the spacing the previous `.bell` span had in each topbar.
+  margin-right: 8px;
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+.bell-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 9px;
+  background: none;
+  color: #617490;
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease;
+
+  &:hover,
+  &.is-open {
+    background: rgba(40, 72, 183, 0.08);
+    color: $blue;
+  }
+}
+
+.bell-btn.is-circle {
+  width: 38px;
+  height: 38px;
+  border: 1px solid $line;
+  border-radius: 50%;
+  background: #fff;
+  color: #5a6c88;
+}
+
+.bell-btn.is-circle:hover,
+.bell-btn.is-circle.is-open {
+  background: #f4f7fc;
+  color: $blue;
+}
+
+.bell-count {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: #ef3c4c;
+  color: #fff;
+  font-size: 9.5px;
+  font-weight: 600;
+  line-height: 15px;
+  text-align: center;
+}
+
+/* ---------- Dropdown ---------- */
+
+.bell-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 1100;
+  width: 340px;
+  border: 1px solid $line;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: $shadow;
+  animation: bell-drop 160ms ease-out;
+}
+
+.bell-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 15px;
+  border-bottom: 1px solid $line;
+
+  h4 {
+    margin: 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: $navy;
+  }
+}
+
+.bell-clear {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: $blue;
+  font-size: 11.5px;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.bell-empty {
+  margin: 0;
+  padding: 26px 15px;
+  color: $muted;
+  font-size: 12.5px;
+  text-align: center;
+}
+
+.bell-list {
+  margin: 0;
+  padding: 0;
+  max-height: 340px;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.bell-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 15px;
+  border-bottom: 1px solid #f1f4f9;
+  cursor: pointer;
+  transition: background 140ms ease;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover {
+    background: #f7f9fc;
+  }
+}
+
+.bell-item.is-unread {
+  background: rgba(40, 72, 183, 0.045);
+
+  &:hover {
+    background: rgba(40, 72, 183, 0.075);
+  }
+}
+
+.bell-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 20px;
+  height: 20px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: rgba(40, 72, 183, 0.1);
+  color: $blue;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.bell-item-icon-success {
+  background: rgba(44, 154, 91, 0.12);
+  color: $green;
+}
+
+.bell-item-icon-warning {
+  background: rgba(240, 180, 41, 0.16);
+  color: color.adjust($yellow, $lightness: -12%);
+}
+
+.bell-item-icon-error {
+  background: rgba(214, 69, 58, 0.12);
+  color: $red;
+}
+
+.bell-item-body {
+  flex: 1;
+  min-width: 0;
+
+  strong {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: $ink;
+  }
+
+  p {
+    margin: 2px 0 0;
+    font-size: 11.5px;
+    line-height: 1.45;
+    color: $muted;
+    word-break: break-word;
+  }
+
+  small {
+    display: block;
+    margin-top: 4px;
+    font-size: 10px;
+    letter-spacing: 0.03em;
+    color: #a6b4c9;
+  }
+}
+
+.bell-item-remove {
+  flex: 0 0 auto;
+  border: 0;
+  padding: 0 2px;
+  background: none;
+  color: #c2cddd;
+  font-size: 10px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 140ms ease, color 140ms ease;
+
+  .bell-item:hover & {
+    opacity: 1;
+  }
+
+  &:hover {
+    color: $red;
+  }
+}
+
+@keyframes bell-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  :host {
+    margin-right: 0;
+  }
+
+  .bell-panel {
+    position: fixed;
+    top: 64px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+  }
+}

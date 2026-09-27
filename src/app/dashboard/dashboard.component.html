@@ -1,0 +1,432 @@
+<div class="dashboard">
+
+  <aside class="sidebar">
+
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">
+        <svg viewBox="0 0 24 24">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+      </div>
+
+      <div>
+        <strong>BayanihanLink</strong>
+        <span>Administrator</span>
+      </div>
+    </div>
+
+    <div class="menu-label">MENU</div>
+
+    <nav class="sidebar-nav">
+
+      <a routerLink="/dashboard" class="nav-item active">
+        <span class="nav-icon">▦</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a
+        routerLink="/request-management"
+        class="nav-item"
+      >
+        <span class="nav-icon">□</span>
+        <span>Request<br>Management</span>
+        <b class="notification">23</b>
+      </a>
+
+      <a
+        routerLink="/donation-offers"
+        class="nav-item"
+      >
+        <span class="nav-icon">♡</span>
+        <span>Donation Offers</span>
+        <b class="notification">12</b>
+      </a>
+
+      <a
+        routerLink="/dswd-coordination"
+        class="nav-item"
+      >
+        <span class="nav-icon">♧</span>
+        <span>DSWD Coordination</span>
+      </a>
+
+      <a
+        routerLink="/status-monitoring"
+        class="nav-item"
+      >
+        <span class="nav-icon">⌁</span>
+        <span>Status Monitoring</span>
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <div class="admin-profile">
+        <div class="admin-avatar">AD</div>
+
+        <div>
+          <strong>Admin User</strong>
+          <span>Logged in</span>
+        </div>
+      </div>
+
+      <button class="logout-button" (click)="logout()">
+        <span>↪</span>
+        Log Out
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <main class="main-content">
+
+    <header class="topbar">
+
+      <div>
+        <h1>Dashboard</h1>
+        <p>
+          BayanihanLink — Disaster Needs Coordination Platform
+        </p>
+      </div>
+
+      <div class="topbar-right">
+
+        <app-notification-bell [circle]="true" />
+
+        <div class="top-admin-avatar">
+          AD
+        </div>
+
+        <div class="top-admin-info">
+          <strong>Admin User</strong>
+          <span>Administrator</span>
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <section class="dashboard-body">
+
+      <div class="stat-grid">
+
+        <div class="stat-card blue">
+          <strong>142</strong>
+          <span>Total Requests</span>
+        </div>
+
+        <div class="stat-card yellow">
+          <strong>23</strong>
+          <span>Pending Verification</span>
+        </div>
+
+        <div class="stat-card red">
+          <strong>8</strong>
+          <span>Critical Requests</span>
+        </div>
+
+        <div class="stat-card teal">
+          <strong>31</strong>
+          <span>Active Assistance</span>
+        </div>
+
+        <div class="stat-card green">
+          <strong>88</strong>
+          <span>Completed</span>
+        </div>
+
+        <div class="stat-card purple">
+          <strong>54</strong>
+          <span>Donation Offers</span>
+        </div>
+
+      </div>
+
+
+      <div class="charts-grid">
+
+        <section class="card status-card">
+
+          <div class="card-header">
+            <h2>Requests by Status</h2>
+            <span>September 2026</span>
+          </div>
+
+          <div class="bar-chart">
+
+            <div class="bar-item">
+              <strong>23</strong>
+              <div class="bar pending" style="height: 41px"></div>
+              <span>Pending</span>
+            </div>
+
+            <div class="bar-item">
+              <strong>31</strong>
+              <div class="bar verified" style="height: 41px"></div>
+              <span>Verified</span>
+            </div>
+
+            <div class="bar-item">
+              <strong>31</strong>
+              <div class="bar assisted" style="height: 41px"></div>
+              <span>Assisted</span>
+            </div>
+
+            <div class="bar-item">
+              <strong>88</strong>
+              <div class="bar completed" style="height: 113px"></div>
+              <span>Completed</span>
+            </div>
+
+            <div class="bar-item">
+              <strong>7</strong>
+              <div class="bar rejected" style="height: 9px"></div>
+              <span>Rejected</span>
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <section class="card priority-card">
+
+          <div class="card-header">
+            <h2>Requests by Priority</h2>
+          </div>
+
+          <div class="donut-container">
+
+            <div class="donut">
+              <div class="donut-center">
+                <strong>142</strong>
+                <span>total</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="priority-list">
+
+            <div>
+              <span>
+                <i class="critical"></i>
+                Critical
+              </span>
+
+              <strong>33</strong>
+              <small>23%</small>
+            </div>
+
+            <div>
+              <span>
+                <i class="urgent"></i>
+                Urgent
+              </span>
+
+              <strong>42</strong>
+              <small>30%</small>
+            </div>
+
+            <div>
+              <span>
+                <i class="normal"></i>
+                Normal
+              </span>
+
+              <strong>67</strong>
+              <small>47%</small>
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+
+      <section class="card requests-card">
+
+        <div class="requests-header">
+          <h2>Recent Requests</h2>
+
+          <a class="view-all" routerLink="/request-management">
+            View All →
+          </a>
+        </div>
+
+        <div class="table-wrapper">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>REQUEST ID</th>
+                <th>REQUESTER</th>
+                <th>DISASTER</th>
+                <th>CATEGORY</th>
+                <th>LOCATION</th>
+                <th>PRIORITY</th>
+                <th>STATUS</th>
+                <th>DATE</th>
+                <th>ACTION</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td>#BL-000302</td>
+                <td>Ana Reyes</td>
+                <td>Typhoon</td>
+                <td>Food</td>
+                <td>CDO City</td>
+                <td>
+                  <span class="badge priority-critical">
+                    CRITICAL
+                  </span>
+                </td>
+                <td>
+                  <span class="badge status-pending">
+                    Pending
+                  </span>
+                </td>
+                <td>Sep 16, 2026</td>
+                <td>
+                  <button
+                    class="review-button"
+                    (click)="reviewRequest('BL-000302')"
+                  >
+                    Review
+                  </button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>#BL-000301</td>
+                <td>Juan Dela Cruz</td>
+                <td>Flood</td>
+                <td>Water</td>
+                <td>Iligan City</td>
+                <td>
+                  <span class="badge priority-urgent">
+                    URGENT
+                  </span>
+                </td>
+                <td>
+                  <span class="badge status-pending">
+                    Pending
+                  </span>
+                </td>
+                <td>Sep 16, 2026</td>
+                <td>
+                  <button
+                    class="review-button"
+                    (click)="reviewRequest('BL-000301')"
+                  >
+                    Review
+                  </button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>#BL-000298</td>
+                <td>Rosa Gomez</td>
+                <td>Fire</td>
+                <td>Clothing</td>
+                <td>Davao City</td>
+                <td>
+                  <span class="badge priority-normal">
+                    NORMAL
+                  </span>
+                </td>
+                <td>
+                  <span class="badge status-verified">
+                    Verified
+                  </span>
+                </td>
+                <td>Sep 15, 2026</td>
+                <td>
+                  <button
+                    class="review-button"
+                    (click)="reviewRequest('BL-000298')"
+                  >
+                    Review
+                  </button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>#BL-000295</td>
+                <td>Pedro Santos</td>
+                <td>Typhoon</td>
+                <td>Medicine</td>
+                <td>Butuan City</td>
+                <td>
+                  <span class="badge priority-urgent">
+                    URGENT
+                  </span>
+                </td>
+                <td>
+                  <span class="badge status-assisted">
+                    Assisted
+                  </span>
+                </td>
+                <td>Sep 14, 2026</td>
+                <td>
+                  <button
+                    class="review-button"
+                    (click)="reviewRequest('BL-000295')"
+                  >
+                    Review
+                  </button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>#BL-000290</td>
+                <td>Maria Lopez</td>
+                <td>Earthquake</td>
+                <td>Blankets</td>
+                <td>Surigao del Norte</td>
+                <td>
+                  <span class="badge priority-normal">
+                    NORMAL
+                  </span>
+                </td>
+                <td>
+                  <span class="badge status-completed">
+                    Completed
+                  </span>
+                </td>
+                <td>Sep 12, 2026</td>
+                <td>
+                  <button
+                    class="review-button"
+                    (click)="reviewRequest('BL-000290')"
+                  >
+                    Review
+                  </button>
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+</div>

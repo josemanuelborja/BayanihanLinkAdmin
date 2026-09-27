@@ -1,0 +1,392 @@
+<div class="page">
+
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-icon">♣</div>
+
+      <div>
+        <strong>BayanihanLink</strong>
+        <span>Administrator</span>
+      </div>
+    </div>
+
+    <div class="menu-title">MENU</div>
+
+    <nav>
+
+      <a routerLink="/dashboard" class="nav-item">
+        <span>▦</span>
+        Dashboard
+      </a>
+
+      <a routerLink="/request-management" class="nav-item active">
+        <span>□</span>
+        Request Management
+        <b>23</b>
+      </a>
+
+      <a routerLink="/donation-offers" class="nav-item">
+        <span>♡</span>
+        Donation Offers
+        <b>12</b>
+      </a>
+
+      <a routerLink="/dswd-coordination" class="nav-item">
+        <span>♧</span>
+        DSWD Coordination
+      </a>
+
+      <a routerLink="/status-monitoring" class="nav-item">
+        <span>⌁</span>
+        Status Monitoring
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <div class="profile">
+
+        <div class="avatar">
+          AD
+        </div>
+
+        <div>
+          <strong>Admin User</strong>
+          <span>Logged in</span>
+        </div>
+
+      </div>
+
+      <button (click)="logout()">
+        ↪ &nbsp; Log Out
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <main>
+
+    <header class="topbar">
+
+      <div>
+
+        <h1>
+          Review Request — #{{ requestId }}
+        </h1>
+
+        <p>
+          BayanihanLink — Disaster Needs Coordination Platform
+        </p>
+
+      </div>
+
+      <div class="admin">
+
+        <app-notification-bell />
+
+        <div class="top-avatar">
+          AD
+        </div>
+
+        <div>
+          <strong>Admin User</strong>
+          <small>Administrator</small>
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <section class="content">
+
+      <div class="layout">
+
+        <div class="left">
+
+          <section class="card">
+
+            <h2>Request Information</h2>
+
+            <div class="info-grid">
+
+              <div>
+                <small>REQUEST ID</small>
+                <strong>#{{ requestId }}</strong>
+              </div>
+
+              <div>
+                <small>REQUESTER</small>
+                <strong>Juan Dela Cruz</strong>
+              </div>
+
+              <div>
+                <small>DATE SUBMITTED</small>
+                <strong>Sep 16, 2026</strong>
+              </div>
+
+              <div>
+                <small>CONTACT</small>
+                <strong>+63 912 345 XXXX</strong>
+              </div>
+
+              <div>
+                <small>DISASTER TYPE</small>
+                <strong>Flood</strong>
+              </div>
+
+              <div>
+                <small>CATEGORY</small>
+                <strong>Drinking Water</strong>
+              </div>
+
+              <div>
+                <small>LOCATION</small>
+                <strong>Iligan City, Lanao del Norte</strong>
+              </div>
+
+              <div>
+                <small>PERSONS AFFECTED</small>
+                <strong>6 family members</strong>
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <section class="card requested-items">
+
+            <h2>Requested Items</h2>
+
+            <div class="item-header">
+              <span>ITEM</span>
+              <span>QUANTITY</span>
+              <span>UNIT</span>
+              <span>DESCRIPTION</span>
+            </div>
+
+            <div class="item-row">
+
+              <span>
+                Mineral Water (1L bottles)
+              </span>
+
+              <span>50</span>
+
+              <span>bottles</span>
+
+              <span>
+                Drinking water for family of 6
+              </span>
+
+            </div>
+
+          </section>
+
+
+          <section class="card timeline">
+
+            <h2>Request Status Timeline</h2>
+
+            <div class="timeline-track">
+
+              <div class="timeline-step completed">
+
+                <div class="circle">
+                  ✓
+                </div>
+
+                <small>
+                  Submitted
+                </small>
+
+              </div>
+
+              <div class="timeline-line completed"></div>
+
+              <div class="timeline-step current">
+
+                <div class="circle">
+                  2
+                </div>
+
+                <small>
+                  Pending<br>
+                  Verification
+                </small>
+
+              </div>
+
+              <div class="timeline-line"></div>
+
+              <div class="timeline-step">
+
+                <div class="circle">
+                  3
+                </div>
+
+                <small>
+                  Verified
+                </small>
+
+              </div>
+
+              <div class="timeline-line"></div>
+
+              <div class="timeline-step">
+
+                <div class="circle">
+                  4
+                </div>
+
+                <small>
+                  Assistance<br>
+                  Offered
+                </small>
+
+              </div>
+
+              <div class="timeline-line"></div>
+
+              <div class="timeline-step">
+
+                <div class="circle">
+                  5
+                </div>
+
+                <small>
+                  Assisted
+                </small>
+
+              </div>
+
+              <div class="timeline-line"></div>
+
+              <div class="timeline-step">
+
+                <div class="circle">
+                  6
+                </div>
+
+                <small>
+                  Completed
+                </small>
+
+              </div>
+
+            </div>
+
+          </section>
+
+        </div>
+
+
+        <aside class="right">
+
+          <section class="card priority-card">
+
+            <h2>Assign Priority</h2>
+
+            <button
+              class="priority-option critical"
+              [class.selected]="priority === 'CRITICAL'"
+              (click)="priority = 'CRITICAL'"
+            >
+
+              <strong>Critical</strong>
+
+              <small>
+                Life-threatening, immediate
+              </small>
+
+            </button>
+
+
+            <button
+              class="priority-option urgent"
+              [class.selected]="priority === 'URGENT'"
+              (click)="priority = 'URGENT'"
+            >
+
+              <strong>Urgent</strong>
+
+              <small>
+                Serious, needs prompt action
+              </small>
+
+            </button>
+
+
+            <button
+              class="priority-option normal"
+              [class.selected]="priority === 'NORMAL'"
+              (click)="priority = 'NORMAL'"
+            >
+
+              <strong>Normal</strong>
+
+              <small>
+                Important but not urgent
+              </small>
+
+            </button>
+
+          </section>
+
+
+          <section class="card status-card">
+
+            <h2>Update Status</h2>
+
+            <select [(ngModel)]="status">
+
+              <option
+                *ngFor="let item of statuses"
+                [value]="item"
+              >
+                {{ item }}
+              </option>
+
+            </select>
+
+          </section>
+
+
+          <section class="card notes-card">
+
+            <textarea
+              placeholder="Administrator notes..."
+            ></textarea>
+
+          </section>
+
+
+          <button
+            class="verify-button"
+            (click)="verifyRequest()"
+          >
+            ✓ Verify &amp; Post to Needs Board
+          </button>
+
+
+          <button
+            class="reject-button"
+            (click)="rejectRequest()"
+          >
+            × Reject Request
+          </button>
+
+        </aside>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>

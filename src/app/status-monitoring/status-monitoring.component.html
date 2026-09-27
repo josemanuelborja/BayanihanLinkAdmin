@@ -1,0 +1,212 @@
+<div class="page">
+
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-icon">♣</div>
+      <div>
+        <strong>BayanihanLink</strong>
+        <span>Administrator</span>
+      </div>
+    </div>
+
+    <div class="menu-title">MENU</div>
+
+    <nav>
+
+      <a routerLink="/dashboard" class="nav-item">
+        <span>▦</span>
+        Dashboard
+      </a>
+
+      <a routerLink="/request-management" class="nav-item">
+        <span>□</span>
+        Request Management
+        <b>23</b>
+      </a>
+
+      <a routerLink="/donation-offers" class="nav-item">
+        <span>♡</span>
+        Donation Offers
+        <b>12</b>
+      </a>
+
+      <a routerLink="/dswd-coordination" class="nav-item">
+        <span>♧</span>
+        DSWD Coordination
+      </a>
+
+      <a routerLink="/status-monitoring" class="nav-item active">
+        <span>⌁</span>
+        Status Monitoring
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <div class="profile">
+        <div class="avatar">AD</div>
+
+        <div>
+          <strong>Admin User</strong>
+          <span>Logged in</span>
+        </div>
+      </div>
+
+      <button (click)="logout()">
+        ↪ &nbsp; Log Out
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <main>
+
+    <header class="topbar">
+
+      <div>
+        <h1>Status Monitoring</h1>
+        <p>BayanihanLink — Disaster Needs Coordination Platform</p>
+      </div>
+
+      <div class="admin">
+        <app-notification-bell />
+
+        <div class="top-avatar">AD</div>
+
+        <div>
+          <strong>Admin User</strong>
+          <small>Administrator</small>
+        </div>
+      </div>
+
+    </header>
+
+
+    <section class="content">
+
+      <div class="stage-cards">
+
+        <div>
+          <i>1</i>
+          <strong>0</strong>
+          <span>Submitted</span>
+        </div>
+
+        <div>
+          <i>2</i>
+          <strong>1</strong>
+          <span>Verified</span>
+        </div>
+
+        <div>
+          <i>3</i>
+          <strong>1</strong>
+          <span>Assistance Offered</span>
+        </div>
+
+        <div>
+          <i>4</i>
+          <strong>1</strong>
+          <span>Gov't Verification</span>
+        </div>
+
+        <div>
+          <i>5</i>
+          <strong>1</strong>
+          <span>Distributed</span>
+        </div>
+
+        <div>
+          <i>6</i>
+          <strong>1</strong>
+          <span>Completed</span>
+        </div>
+
+      </div>
+
+
+      <section class="tracker">
+
+        <div class="tracker-header">
+          <h2>Assistance Progress Tracker</h2>
+          <p>Real-time status of all active assistance requests</p>
+        </div>
+
+
+        <div
+          class="tracking-row"
+          *ngFor="let item of tracking"
+        >
+
+          <div class="request-info">
+
+            <div class="request-title">
+              <span>{{ item.id }}</span>
+
+              <b
+                [ngClass]="{
+                  'urgent': item.priority === 'URGENT',
+                  'critical': item.priority === 'CRITICAL',
+                  'normal': item.priority === 'NORMAL'
+                }"
+              >
+                {{ item.priority }}
+              </b>
+            </div>
+
+            <strong>{{ item.name }}</strong>
+
+            <small>{{ item.disaster }}</small>
+
+            <small>{{ item.location }}</small>
+
+          </div>
+
+
+          <div class="progress">
+
+            <ng-container
+              *ngFor="let stage of stages; let i = index"
+            >
+
+              <div class="stage">
+
+                <div
+                  class="circle"
+                  [class.done]="i + 1 < item.current"
+                  [class.current]="i + 1 === item.current"
+                  [class.future]="i + 1 > item.current"
+                >
+                  <span *ngIf="i + 1 < item.current">✓</span>
+                  <span *ngIf="i + 1 >= item.current">
+                    {{ i + 1 }}
+                  </span>
+                </div>
+
+                <small>{{ stage }}</small>
+
+              </div>
+
+              <div
+                *ngIf="i < stages.length - 1"
+                class="line"
+                [class.completed]="i + 1 < item.current"
+              ></div>
+
+            </ng-container>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+</div>

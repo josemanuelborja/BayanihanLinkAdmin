@@ -1,0 +1,141 @@
+<div class="login-page">
+
+  <section class="login-brand">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+      </div>
+      <span>Bayani<span>hanLink</span></span>
+    </div>
+
+    <div class="brand-content">
+      <h1>
+        Coordinating<br>
+        relief. Connecting<br>
+        communities.
+      </h1>
+
+      <p>
+        The centralized platform for disaster assistance
+        request management, donor coordination, and
+        government verification.
+      </p>
+    </div>
+
+    <div class="brand-stats">
+      <div>
+        <strong>142</strong>
+        <span>Total Requests</span>
+      </div>
+
+      <div>
+        <strong>54</strong>
+        <span>Donors Active</span>
+      </div>
+
+      <div>
+        <strong>88</strong>
+        <span>Completed</span>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="login-form-section">
+
+    <div class="login-container">
+
+      <div class="portal-label">
+        <span></span>
+        ADMINISTRATOR PORTAL
+      </div>
+
+      <h2>
+        Sign in to<br>
+        your account
+      </h2>
+
+      <p class="login-description">
+        Authorized personnel only. Unauthorized access is
+        prohibited.
+      </p>
+
+      <form (ngSubmit)="login()">
+
+        <div class="form-group">
+          <label for="email">ADMIN EMAIL</label>
+
+          <input
+            id="email"
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="admin@bayanihanlink.gov.ph"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">PASSWORD</label>
+
+          <div class="password-input">
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              name="password"
+              [(ngModel)]="password"
+              placeholder="••••••••"
+              required
+            >
+
+            <button
+              type="button"
+              class="password-toggle"
+              (click)="togglePassword()"
+            >
+              {{ showPassword ? 'Hide' : '' }}
+            </button>
+          </div>
+        </div>
+
+        <div class="security-warning">
+          <div class="warning-icon">!</div>
+
+          <span>
+            This portal is restricted to authorized
+            administrators only.
+          </span>
+        </div>
+
+        <button type="submit" class="login-button">
+          Administrator Login
+        </button>
+
+      </form>
+
+      <button
+        class="admin-link"
+        type="button"
+        (click)="goToUserLogin()"
+      >
+        DSWD Administrator? Log in here →
+      </button>
+
+      <button
+        class="back-link"
+        type="button"
+        (click)="goToUserLogin()"
+      >
+        ← Back to User Login
+      </button>
+
+    </div>
+
+  </section>
+
+</div>

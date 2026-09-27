@@ -1,0 +1,63 @@
+<div class="bell-wrap" (click)="$event.stopPropagation()">
+  <button
+    type="button"
+    class="bell-btn"
+    [class.is-open]="open"
+    [class.is-circle]="circle"
+    [attr.aria-expanded]="open"
+    aria-label="Notifications"
+    (click)="toggle()"
+  >
+    <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M12 22a2.4 2.4 0 0 0 2.4-2.4H9.6A2.4 2.4 0 0 0 12 22Zm7-5.6-1.7-1.7v-4.1a5.3 5.3 0 0 0-3.6-5.1V4.6a1.7 1.7 0 1 0-3.4 0v.9a5.3 5.3 0 0 0-3.6 5.1v4.1L5 16.4a.8.8 0 0 0 .6 1.4h12.8a.8.8 0 0 0 .6-1.4Z"
+      />
+    </svg>
+
+    @if (hasUnread()) {
+      <span class="bell-count">{{ unreadCount() }}</span>
+    }
+  </button>
+
+  @if (open) {
+    <div class="bell-panel">
+      <div class="bell-panel-head">
+        <h4>Notifications</h4>
+
+        @if (items().length > 0) {
+          <button type="button" class="bell-clear" (click)="clearAll()">Clear all</button>
+        }
+      </div>
+
+      @if (items().length === 0) {
+        <p class="bell-empty">You're all caught up.</p>
+      } @else {
+        <ul class="bell-list">
+          @for (item of items(); track item.id) {
+            <li class="bell-item" [class.is-unread]="!item.read" (click)="markRead(item)">
+              <span class="bell-item-icon bell-item-icon-{{ item.type }}">
+                {{ iconFor(item.type) }}
+              </span>
+
+              <div class="bell-item-body">
+                <strong>{{ item.title }}</strong>
+                <p>{{ item.message }}</p>
+                <small>{{ labelFor(item.type) }} · {{ item.time }}</small>
+              </div>
+
+              <button
+                type="button"
+                class="bell-item-remove"
+                aria-label="Remove notification"
+                (click)="remove(item); $event.stopPropagation()"
+              >
+                ✕
+              </button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  }
+</div>

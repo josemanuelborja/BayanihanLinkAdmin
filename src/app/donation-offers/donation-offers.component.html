@@ -1,0 +1,232 @@
+<div class="page">
+
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-icon">♣</div>
+      <div>
+        <strong>BayanihanLink</strong>
+        <span>Administrator</span>
+      </div>
+    </div>
+
+    <div class="menu-title">MENU</div>
+
+    <nav>
+      <a routerLink="/dashboard" class="nav-item">
+        <span>▦</span> Dashboard
+      </a>
+
+      <a routerLink="/request-management" class="nav-item">
+        <span>□</span> Request Management
+        <b>23</b>
+      </a>
+
+      <a routerLink="/donation-offers" class="nav-item active">
+        <span>♡</span> Donation Offers
+        <b>12</b>
+      </a>
+
+      <a routerLink="/dswd-coordination" class="nav-item">
+        <span>♧</span> DSWD Coordination
+      </a>
+
+      <a routerLink="/status-monitoring" class="nav-item">
+        <span>⌁</span> Status Monitoring
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="profile">
+        <div class="avatar">AD</div>
+        <div>
+          <strong>Admin User</strong>
+          <span>Logged in</span>
+        </div>
+      </div>
+
+      <button (click)="logout()">↪ &nbsp; Log Out</button>
+    </div>
+
+  </aside>
+
+
+  <main>
+
+    <header class="topbar">
+
+      <div>
+        <h1>Donation Offer Management</h1>
+        <p>BayanihanLink — Disaster Needs Coordination Platform</p>
+      </div>
+
+      <div class="admin">
+        <app-notification-bell />
+        <div class="top-avatar">AD</div>
+        <div>
+          <strong>Admin User</strong>
+          <small>Administrator</small>
+        </div>
+      </div>
+
+    </header>
+
+
+    <section class="content">
+
+      <div class="stats">
+
+        <div class="stat blue">
+          <strong>54</strong>
+          <span>Total Offers</span>
+        </div>
+
+        <div class="stat yellow">
+          <strong>12</strong>
+          <span>Pending</span>
+        </div>
+
+        <div class="stat purple">
+          <strong>8</strong>
+          <span>Coordinating</span>
+        </div>
+
+        <div class="stat blue2">
+          <strong>6</strong>
+          <span>For Verification</span>
+        </div>
+
+        <div class="stat teal">
+          <strong>9</strong>
+          <span>Distributed</span>
+        </div>
+
+        <div class="stat green">
+          <strong>19</strong>
+          <span>Completed</span>
+        </div>
+
+      </div>
+
+
+      <div class="filter-box">
+
+        <div class="search">
+          <span>⌕</span>
+          <input
+            [(ngModel)]="search"
+            placeholder="Search by donor, offer ID, or request ID..."
+          >
+        </div>
+
+        <div class="filters">
+
+          <button
+            [class.active]="filter === 'All'"
+            (click)="setFilter('All')"
+          >All</button>
+
+          <button
+            [class.active]="filter === 'Pending Coordination'"
+            (click)="setFilter('Pending Coordination')"
+          >Pending Coordination</button>
+
+          <button
+            [class.active]="filter === 'Coordinating'"
+            (click)="setFilter('Coordinating')"
+          >Coordinating</button>
+
+          <button
+            [class.active]="filter === 'For Verification'"
+            (click)="setFilter('For Verification')"
+          >For Verification</button>
+
+          <button
+            [class.active]="filter === 'Verified'"
+            (click)="setFilter('Verified')"
+          >Verified</button>
+
+          <button
+            [class.active]="filter === 'Distributed'"
+            (click)="setFilter('Distributed')"
+          >Distributed</button>
+
+          <button
+            [class.active]="filter === 'Completed'"
+            (click)="setFilter('Completed')"
+          >Completed</button>
+
+        </div>
+
+      </div>
+
+
+      <div class="table-card">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>OFFER ID</th>
+              <th>DONOR</th>
+              <th>CONTACT</th>
+              <th>RELATED REQUEST</th>
+              <th>ITEM</th>
+              <th>QUANTITY</th>
+              <th>STATUS</th>
+              <th>DATE</th>
+              <th>ACTIONS</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr *ngFor="let item of filteredDonations">
+
+              <td class="id">{{ item.id }}</td>
+              <td>{{ item.donor }}</td>
+              <td>{{ item.contact }}</td>
+              <td class="request">{{ item.request }}</td>
+              <td>{{ item.item }}</td>
+              <td>{{ item.quantity }}</td>
+
+              <td>
+                <span
+                  class="status"
+                  [ngClass]="{
+                    'pending': item.status === 'Pending Coordination',
+                    'coordinating': item.status === 'Coordinating',
+                    'verification': item.status === 'For Verification',
+                    'verified': item.status === 'Verified',
+                    'distributed': item.status === 'Distributed',
+                    'completed': item.status === 'Completed'
+                  }"
+                >
+                  {{ item.status }}
+                </span>
+              </td>
+
+              <td>{{ item.date }}</td>
+
+              <td>
+                <button
+                  class="coordinate"
+                  (click)="coordinate(item)"
+                >
+                  Coordinate
+                </button>
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
