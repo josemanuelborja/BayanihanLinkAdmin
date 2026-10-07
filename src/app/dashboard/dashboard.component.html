@@ -1,87 +1,6 @@
 <div class="dashboard">
 
-  <aside class="sidebar">
-
-    <div class="sidebar-brand">
-      <div class="sidebar-logo">
-        <svg viewBox="0 0 24 24">
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-          <circle cx="9" cy="7" r="4"></circle>
-          <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-        </svg>
-      </div>
-
-      <div>
-        <strong>BayanihanLink</strong>
-        <span>Administrator</span>
-      </div>
-    </div>
-
-    <div class="menu-label">MENU</div>
-
-    <nav class="sidebar-nav">
-
-      <a routerLink="/dashboard" class="nav-item active">
-        <span class="nav-icon">▦</span>
-        <span>Dashboard</span>
-      </a>
-
-      <a
-        routerLink="/request-management"
-        class="nav-item"
-      >
-        <span class="nav-icon">□</span>
-        <span>Request<br>Management</span>
-        <b class="notification">23</b>
-      </a>
-
-      <a
-        routerLink="/donation-offers"
-        class="nav-item"
-      >
-        <span class="nav-icon">♡</span>
-        <span>Donation Offers</span>
-        <b class="notification">12</b>
-      </a>
-
-      <a
-        routerLink="/dswd-coordination"
-        class="nav-item"
-      >
-        <span class="nav-icon">♧</span>
-        <span>DSWD Coordination</span>
-      </a>
-
-      <a
-        routerLink="/status-monitoring"
-        class="nav-item"
-      >
-        <span class="nav-icon">⌁</span>
-        <span>Status Monitoring</span>
-      </a>
-
-    </nav>
-
-    <div class="sidebar-bottom">
-
-      <div class="admin-profile">
-        <div class="admin-avatar">AD</div>
-
-        <div>
-          <strong>Admin User</strong>
-          <span>Logged in</span>
-        </div>
-      </div>
-
-      <button class="logout-button" (click)="logout()">
-        <span>↪</span>
-        Log Out
-      </button>
-
-    </div>
-
-  </aside>
+  <app-admin-sidebar />
 
 
   <main class="main-content">
@@ -99,14 +18,7 @@
 
         <app-notification-bell [circle]="true" />
 
-        <div class="top-admin-avatar">
-          AD
-        </div>
-
-        <div class="top-admin-info">
-          <strong>Admin User</strong>
-          <span>Administrator</span>
-        </div>
+        <app-admin-user-badge />
 
       </div>
 

@@ -10,141 +10,14 @@
   font-family: "Poppins", Arial, sans-serif;
 }
 
-.sidebar {
-  width: 225px;
-  min-height: 100vh;
-  flex-shrink: 0;
-  background: #0d172d;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-}
-
-.brand {
-  height: 72px;
-  padding: 0 18px;
-  border-bottom: 1px solid #253149;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.brand-icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: #35435d;
-  display: grid;
-  place-items: center;
-}
-
-.brand strong,
-.brand span,
-.profile strong,
-.profile span {
-  display: block;
-}
-
-.brand strong {
-  font-size: 13px;
-}
-
-.brand span {
-  color: #7f90ae;
-  font-size: 9px;
-}
-
-.menu-title {
-  padding: 18px 20px 8px;
-  color: #62718b;
-  font-size: 9px;
-}
-
-nav {
-  padding: 0 10px;
-}
-
-.nav-item {
-  min-height: 40px;
-  margin-bottom: 3px;
-  padding: 8px 12px;
-  border-radius: 10px;
-  color: #8192b0;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 13px;
-}
-
-.nav-item:hover,
-.nav-item.active {
-  background: #2948b8;
-  color: #fff;
-}
-
-.nav-item b {
-  margin-left: auto;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #ffdce1;
-  color: #df4050;
-  display: grid;
-  place-items: center;
-  font-size: 9px;
-}
-
-.sidebar-bottom {
-  margin-top: auto;
-  padding: 14px;
-  border-top: 1px solid #253149;
-}
-
-.profile {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-
-.avatar,
-.top-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #34445f;
-  color: white;
-  display: grid;
-  place-items: center;
-  font-size: 10px;
-}
-
-.profile strong {
-  font-size: 11px;
-}
-
-.profile span {
-  color: #7385a3;
-  font-size: 9px;
-}
-
-.sidebar-bottom button {
-  margin-top: 14px;
-  border: 0;
-  background: transparent;
-  color: #8b9bb6;
-  cursor: pointer;
-  font-family: inherit;
-}
-
 main {
   flex: 1;
   min-width: 0;
 }
 
 .topbar {
-  height: 72px;
-  padding: 0 28px;
+  min-height: 72px;
+  padding: 18px 30px;
   background: #fff;
   border-bottom: 1px solid #dce3ec;
   display: flex;
@@ -154,14 +27,14 @@ main {
 
 .topbar h1 {
   margin: 0;
-  font-size: 19px;
-  font-weight: 400;
+  font-size: 22px;
+  font-weight: 500;
 }
 
 .topbar p {
   margin: 2px 0 0;
   color: #8295b5;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .admin {
@@ -187,7 +60,15 @@ main {
 }
 
 .top-avatar {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
   background: #2948b8;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .admin strong,
@@ -196,12 +77,13 @@ main {
 }
 
 .admin strong {
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .admin small {
   color: #8a9bb6;
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .content {
@@ -443,28 +325,10 @@ main {
 }
 
 @media (max-width: 800px) {
-  .sidebar {
-    width: 70px;
-  }
-
-  .brand {
-    justify-content: center;
-    padding: 0;
-  }
-
-  .brand > div:last-child,
-  .menu-title,
-  .profile div:last-child {
-    display: none;
-  }
-
-  .nav-item {
-    justify-content: center;
-    font-size: 0;
-  }
-
-  .nav-item b {
-    display: none;
+  .topbar {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px 18px;
   }
 
   .content {

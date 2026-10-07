@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
+import { AdminUserBadgeComponent } from '../admin-user-badge/admin-user-badge.component';
+import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { NotificationBellComponent } from '../notification/notification-bell.component';
 import { NotificationService } from '../notification/notification.service';
 
@@ -21,7 +23,7 @@ interface RequestItem {
 @Component({
   selector: 'app-request-management',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, NotificationBellComponent],
+  imports: [CommonModule, FormsModule, AdminSidebarComponent, AdminUserBadgeComponent, NotificationBellComponent],
   templateUrl: './request-management.component.html',
   styleUrl: './request-management.component.scss'
 })
@@ -168,7 +170,4 @@ export class RequestManagementComponent {
     this.notifications.success(`${id} marked for verification.`);
   }
 
-  logout(): void {
-    this.router.navigate(['/login']);
-  }
 }

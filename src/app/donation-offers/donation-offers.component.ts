@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
+import { AdminUserBadgeComponent } from '../admin-user-badge/admin-user-badge.component';
+import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { NotificationBellComponent } from '../notification/notification-bell.component';
 
 interface Donation {
@@ -19,7 +21,7 @@ interface Donation {
 @Component({
   selector: 'app-donation-offers',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, NotificationBellComponent],
+  imports: [CommonModule, FormsModule, AdminSidebarComponent, AdminUserBadgeComponent, NotificationBellComponent],
   templateUrl: './donation-offers.component.html',
   styleUrl: './donation-offers.component.scss'
 })
@@ -124,7 +126,4 @@ export class DonationOffersComponent {
     ]);
   }
 
-  logout(): void {
-    this.router.navigate(['/login']);
-  }
 }

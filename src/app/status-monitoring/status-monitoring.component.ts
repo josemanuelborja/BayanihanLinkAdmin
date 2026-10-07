@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-
+import { AdminUserBadgeComponent } from '../admin-user-badge/admin-user-badge.component';
+import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { NotificationBellComponent } from '../notification/notification-bell.component';
 
 interface TrackingItem {
@@ -16,7 +16,7 @@ interface TrackingItem {
 @Component({
   selector: 'app-status-monitoring',
   standalone: true,
-  imports: [CommonModule, RouterLink, NotificationBellComponent],
+  imports: [CommonModule, AdminSidebarComponent, AdminUserBadgeComponent, NotificationBellComponent],
   templateUrl: './status-monitoring.component.html',
   styleUrl: './status-monitoring.component.scss'
 })
@@ -74,9 +74,4 @@ export class StatusMonitoringComponent {
     'Completed'
   ];
 
-  constructor(private router: Router) {}
-
-  logout(): void {
-    this.router.navigate(['/login']);
-  }
 }

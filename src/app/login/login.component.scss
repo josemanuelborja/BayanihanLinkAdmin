@@ -3,16 +3,18 @@
 }
 
 .login-page {
-  min-height: 100vh;
+  height: 100vh;
+  min-height: 0;
+  overflow: hidden;
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   font-family: "Poppins", Arial, sans-serif;
 }
 
 .login-brand {
   position: relative;
-  min-height: 100vh;
-  padding: 60px;
+  min-height: 0;
+  padding: clamp(28px, 4vh, 60px);
   background:
     radial-gradient(circle at 20% 25%, rgba(255,255,255,.035) 1px, transparent 1px),
     #0d172d;
@@ -35,42 +37,36 @@
 }
 
 .brand-icon {
+  flex: 0 0 48px;
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: rgba(255,255,255,.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.brand-icon svg {
-  width: 27px;
-  height: 27px;
-  fill: none;
-  stroke: #fff;
-  stroke-width: 1.8;
+  background-color: rgba(255,255,255,.12);
+  background-image: url('../assets/bayanihanlinklogo.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .brand-content {
-  margin-top: 175px;
+  margin-top: clamp(36px, 16vh, 175px);
   max-width: 530px;
 }
 
 .brand-content h1 {
   margin: 0;
-  font-size: 43px;
-  line-height: 1.32;
+  font-size: clamp(32px, 3vw, 43px);
+  line-height: 1.2;
   font-weight: 400;
   letter-spacing: -.7px;
 }
 
 .brand-content p {
-  margin-top: 25px;
+  margin-top: clamp(12px, 2.5vh, 25px);
   max-width: 500px;
   color: #9fb1d2;
-  font-size: 20px;
-  line-height: 1.65;
+  font-size: clamp(15px, 1.4vw, 20px);
+  line-height: 1.5;
 }
 
 .brand-stats {
@@ -101,7 +97,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 50px;
+  min-height: 0;
+  padding: clamp(24px, 4vh, 50px) clamp(24px, 4vw, 60px);
 }
 
 .login-container {
@@ -131,22 +128,22 @@
 
 .login-container h2 {
   color: #09142b;
-  margin: 24px 0 10px;
-  font-size: 39px;
+  margin: 18px 0 8px;
+  font-size: clamp(32px, 2.8vw, 39px);
   line-height: 1.12;
   font-weight: 400;
   letter-spacing: -.8px;
 }
 
 .login-description {
-  margin: 0 0 40px;
+  margin: 0 0 clamp(18px, 3vh, 32px);
   color: #8da0c0;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.45;
 }
 
 .form-group {
-  margin-bottom: 22px;
+  margin-bottom: 16px;
 }
 
 .form-group label {
@@ -159,7 +156,7 @@
 
 .form-group input {
   width: 100%;
-  height: 57px;
+  height: 52px;
   padding: 0 20px;
   border: 1px solid #dce3ed;
   border-radius: 14px;
@@ -196,9 +193,9 @@
 }
 
 .security-warning {
-  min-height: 67px;
-  margin: 30px 0;
-  padding: 15px 18px;
+  min-height: 58px;
+  margin: 20px 0;
+  padding: 12px 16px;
   border: 1px solid #ffc982;
   border-radius: 14px;
   background: #fffaf2;
@@ -206,7 +203,7 @@
   display: flex;
   align-items: center;
   gap: 15px;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .warning-icon {
@@ -225,13 +222,13 @@
 
 .login-button {
   width: 100%;
-  height: 65px;
+  height: 56px;
   border: 0;
   border-radius: 14px;
   background: #2848b7;
   color: #fff;
   font-family: inherit;
-  font-size: 20px;
+  font-size: 18px;
   cursor: pointer;
   transition: .2s;
 }
@@ -244,12 +241,12 @@
 .admin-link,
 .back-link {
   display: block;
-  margin: 31px auto 0;
+  margin: 22px auto 0;
   border: 0;
   background: transparent;
   font-family: inherit;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .admin-link {
@@ -263,16 +260,19 @@
 
 @media (max-width: 950px) {
   .login-page {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
     grid-template-columns: 1fr;
   }
 
   .login-brand {
-    min-height: auto;
+    min-height: 380px;
     padding: 40px;
   }
 
   .brand-content {
-    margin-top: 80px;
+    margin-top: 36px;
   }
 
   .brand-content h1 {
@@ -280,11 +280,68 @@
   }
 
   .brand-stats {
-    margin-top: 70px;
+    margin-top: 36px;
   }
 
   .login-form-section {
-    min-height: 650px;
+    min-height: 560px;
+  }
+}
+
+@media (min-width: 951px) and (max-height: 700px) {
+  .login-brand {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .brand-content {
+    margin-top: 7vh;
+  }
+
+  .brand-content p {
+    margin-top: 12px;
+  }
+
+  .login-form-section {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .login-container h2 {
+    margin-top: 12px;
+    font-size: 32px;
+  }
+
+  .login-description {
+    margin-bottom: 14px;
+    font-size: 14px;
+  }
+
+  .form-group {
+    margin-bottom: 10px;
+  }
+
+  .form-group input {
+    height: 44px;
+  }
+
+  .security-warning {
+    min-height: 48px;
+    margin: 12px 0;
+    padding: 8px 12px;
+  }
+
+  .login-button {
+    height: 48px;
+  }
+
+  .admin-link,
+  .back-link {
+    margin-top: 12px;
+  }
+
+  .back-link {
+    margin-top: 6px;
   }
 }
 

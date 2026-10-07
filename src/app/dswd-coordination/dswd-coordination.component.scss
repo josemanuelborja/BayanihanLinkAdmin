@@ -117,6 +117,7 @@ nav {
   background: #34445f;
   color: #fff;
   font-size: 10px;
+  font-weight: 700;
 }
 
 .profile strong {
@@ -143,8 +144,8 @@ main {
 }
 
 .topbar {
-  height: 72px;
-  padding: 0 28px;
+  min-height: 72px;
+  padding: 18px 30px;
   background: #fff;
   border-bottom: 1px solid #dce3ec;
   display: flex;
@@ -154,14 +155,14 @@ main {
 
 .topbar h1 {
   margin: 0;
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 22px;
+  font-weight: 500;
 }
 
 .topbar p {
   margin: 2px 0 0;
   color: #8295b5;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .admin {
@@ -187,7 +188,15 @@ main {
 }
 
 .top-avatar {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
   background: #2948b8;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .admin strong,
@@ -196,12 +205,13 @@ main {
 }
 
 .admin strong {
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .admin small {
   color: #8a9bb6;
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .content {
@@ -534,6 +544,12 @@ main {
 }
 
 @media (max-width: 700px) {
+  .topbar {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px 18px;
+  }
+
   .sidebar {
     width: 70px;
   }

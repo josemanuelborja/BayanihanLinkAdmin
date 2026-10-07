@@ -1,0 +1,60 @@
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div
+      class="sidebar-logo"
+      role="img"
+      aria-label="BayanihanLink logo"
+    ></div>
+
+    <div>
+      <strong>BayanihanLink</strong>
+      <span>Administrator</span>
+    </div>
+  </div>
+
+  <div class="menu-label">MENU</div>
+
+  <nav class="sidebar-nav" aria-label="Main menu">
+    <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-item">
+      <span class="nav-icon">▦</span>
+      <span>Dashboard</span>
+    </a>
+
+    <a routerLink="/request-management" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">□</span>
+      <span>Request<br>Management</span>
+      <b class="notification">23</b>
+    </a>
+
+    <a routerLink="/donation-offers" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">♡</span>
+      <span>Donation Offers</span>
+      <b class="notification">12</b>
+    </a>
+
+    <a routerLink="/dswd-coordination" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">♧</span>
+      <span>DSWD Coordination</span>
+    </a>
+
+    <a routerLink="/status-monitoring" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">⌁</span>
+      <span>Status Monitoring</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <div class="admin-profile">
+      <div class="admin-avatar">AD</div>
+      <div>
+        <strong>Admin User</strong>
+        <span>Logged in</span>
+      </div>
+    </div>
+
+    <button class="logout-button" type="button" (click)="logout()">
+      <span>↪</span>
+      Log Out
+    </button>
+  </div>
+</aside>

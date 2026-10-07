@@ -1,0 +1,43 @@
+:host {
+  display: block;
+  flex: 0 0 auto;
+}
+
+.admin-user {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+.avatar {
+  display: flex;
+  flex: 0 0 38px;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #2948b8;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.details strong,
+.details span {
+  display: block;
+}
+
+.details strong {
+  color: #16233d;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.details span {
+  color: #8a9bb6;
+  font-size: 12px;
+  font-weight: 400;
+}
