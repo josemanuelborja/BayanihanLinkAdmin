@@ -67,7 +67,7 @@ $shadow: 0 10px 30px rgba(16, 32, 64, 0.16);
   border-radius: 50%;
   background: rgba(40, 72, 183, 0.1);
   color: $blue;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   line-height: 1;
 }
@@ -94,7 +94,7 @@ $shadow: 0 10px 30px rgba(16, 32, 64, 0.16);
 
 .notif-label {
   display: block;
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -103,7 +103,7 @@ $shadow: 0 10px 30px rgba(16, 32, 64, 0.16);
 
 .notif-message {
   margin: 3px 0 0;
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.45;
   color: $ink;
   word-break: break-word;
@@ -115,7 +115,7 @@ $shadow: 0 10px 30px rgba(16, 32, 64, 0.16);
   padding: 0 2px;
   background: none;
   color: $muted;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1;
   cursor: pointer;
   transition: color 140ms ease;

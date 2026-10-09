@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
+import { AdminSidebarComponent } from '../../admin-sidebar/admin-sidebar.component';
 import { NotificationBellComponent } from '../../notification/notification-bell.component';
 
 @Component({
   selector: 'app-request-verified',
   standalone: true,
-  imports: [RouterLink, NotificationBellComponent],
+  imports: [NotificationBellComponent, AdminSidebarComponent],
   templateUrl: './request-verified.component.html',
   styleUrl: './request-verified.component.scss'
 })

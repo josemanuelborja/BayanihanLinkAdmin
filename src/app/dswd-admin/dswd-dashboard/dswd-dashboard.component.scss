@@ -1,0 +1,526 @@
+* {
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  background: #f7f9fc;
+  color: #10264b;
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+.sidebar {
+  /* Stays viewport-height and sticks, like the admin sidebar. Without this it
+     stretched to the full page height and `margin-top: auto` pushed the
+     profile and Log Out button off the bottom of long pages. */
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  width: 258px;
+  height: 100vh;
+  min-height: 0;
+  flex-shrink: 0;
+  overflow-y: auto;
+  background: #0d6b63;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  height: 73px;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.15);
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.18);
+  background-image: url('../../assets/bayanihanlinklogo.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: grid;
+  place-items: center;
+}
+
+.brand strong,
+.brand span {
+  display: block;
+}
+
+.brand strong {
+  font-size: 14px;
+}
+
+.brand span {
+  font-size: 11px;
+  color: #b9e3de;
+}
+
+.menu-title {
+  padding: 18px 20px 8px;
+  color: #8fcfc8;
+  font-size: 11px;
+}
+
+nav {
+  padding: 0 10px;
+}
+
+.nav-item {
+  min-height: 40px;
+  padding: 8px 12px;
+  margin-bottom: 3px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #c3e6e2;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav-item.active,
+.nav-item:hover {
+  background: #ffffff;
+  color: #0a4f49;
+}
+
+.nav-item b {
+  margin-left: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffedd5;
+  color: #9a3412;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 14px;
+  border-top: 1px solid rgba(255,255,255,.15);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* The sidebar avatar is larger than the topbar one, matching the admin
+   sidebar. `.top-avatar` below stays small. */
+.profile .avatar {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.avatar,
+.top-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,.2);
+  font-size: 11px;
+}
+
+.profile strong,
+.profile span {
+  display: block;
+}
+
+.profile strong {
+  font-size: 14px;
+}
+
+.profile span {
+  font-size: 12px;
+  color: #a7d8d2;
+}
+
+main {
+  flex: 1;
+  min-width: 0;
+}
+
+.topbar {
+  height: 81px;
+  padding: 0 28px;
+  background: white;
+  border-bottom: 1px solid #dce4ed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.topbar p {
+  margin: 2px 0 0;
+  color: #8093b3;
+  font-size: 12px;
+}
+
+.admin {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.top-avatar {
+  background: #2948b8;
+  color: white;
+}
+
+.admin strong,
+.admin small {
+  display: block;
+}
+
+.admin strong {
+  font-size: 13px;
+}
+
+.admin small {
+  color: #8a9bb6;
+  font-size: 11px;
+}
+
+.content {
+  padding: 30px;
+}
+
+.notice {
+  padding: 18px 24px;
+  border: 1px solid #b7d5ff;
+  border-radius: 15px;
+  background: #f0f6ff;
+  display: flex;
+  gap: 18px;
+  color: #164fc4;
+}
+
+.notice-icon {
+  font-size: 22px;
+}
+
+.notice strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.notice p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.stats {
+  margin: 30px 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+
+.stat-card {
+  min-height: 128px;
+  padding: 18px;
+  border: 1px solid;
+  border-radius: 15px;
+}
+
+.stat-icon {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.stat-card strong {
+  display: block;
+  font-size: 29px;
+  font-weight: 400;
+}
+
+.stat-card small {
+  font-size: 11px;
+}
+
+.blue {
+  background: #f0f5ff;
+  border-color: #d5e3ff;
+  color: #2948b8;
+}
+
+.red {
+  background: #fff2f2;
+  border-color: #ffd9d9;
+  color: #f12f3d;
+}
+
+.pink {
+  background: #fff2f8;
+  border-color: #f7d8e8;
+  color: #e50070;
+}
+
+.yellow {
+  background: #fffceb;
+  border-color: #f7ebaa;
+  color: #dca900;
+}
+
+.teal {
+  background: #effcfb;
+  border-color: #c6efeb;
+  color: #008f89;
+}
+
+.green {
+  background: #effcf3;
+  border-color: #c9efd5;
+  color: #079b48;
+}
+
+.request-card {
+  background: white;
+  border: 1px solid #dce4ed;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.section-heading {
+  padding: 18px 23px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.section-heading p {
+  margin: 4px 0 0;
+  color: #8194b2;
+  font-size: 11px;
+}
+
+.review-all,
+.table-row button {
+  border: 0;
+  border-radius: 9px;
+  background: #119c91;
+  color: white;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.review-all {
+  padding: 10px 16px;
+  font-size: 12px;
+}
+
+.table {
+  overflow-x: auto;
+}
+
+.table-header,
+.table-row {
+  /* Previously min-width: 1050px, which forced the table wider than its card
+     so the right-hand columns were cut off and needed sideways scrolling. */
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 0.9fr 1.5fr 1.5fr 0.9fr 1.1fr 1.2fr 0.8fr 0.7fr;
+  align-items: center;
+  gap: 6px;
+}
+
+.table-header {
+  padding: 12px 14px;
+  border-top: 1px solid #e7ecf2;
+  border-bottom: 1px solid #e7ecf2;
+  color: #7f94b4;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.table-row {
+  min-height: 54px;
+  padding: 0 14px;
+  border-bottom: 1px solid #edf1f5;
+  color: #1d365d;
+  font-size: 11px;
+}
+
+.table-row:last-child {
+  border-bottom: 0;
+}
+
+.table-row button {
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
+.priority,
+.status {
+  width: fit-content;
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-style: normal;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.critical {
+  background: #ffe4e5;
+  color: #ed2938;
+  border: 1px solid #ffbfc3;
+}
+
+.urgent {
+  background: #fff0dc;
+  color: #f37a00;
+  border: 1px solid #ffc982;
+}
+
+.normal {
+  background: #dcfbe9;
+  color: #00a64b;
+  border: 1px solid #a8efc4;
+}
+
+.verification {
+  background: #e2eaff;
+  color: #365bd2;
+}
+
+.coordination {
+  background: #f1f4f9;
+  color: #5b6f8f;
+}
+
+.distributed {
+  background: #d7f5e4;
+  color: #0a8f4a;
+}
+
+.distribution {
+  background: #d9faf5;
+  color: #008f87;
+}
+
+.verified {
+  background: #dfeaff;
+  color: #3963d6;
+}
+
+@media (max-width: 1000px) {
+  .stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .sidebar {
+    width: 70px;
+  }
+
+  .brand > div:last-child,
+  .menu-title,
+  .profile > div:last-child {
+    display: none;
+  }
+
+  .nav-item {
+    justify-content: center;
+    font-size: 0;
+  }
+
+  .nav-item b {
+    display: none;
+  }
+
+  .content {
+    padding: 15px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* Icons are Tabler outlines, sized here so every icon renders identically
+   instead of relying on each svg's own attributes. */
+.nav-icon {
+  display: inline-flex;
+  flex: 0 0 20px;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.nav-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  stroke-width: 1.5;
+}
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  background: transparent;
+  color: #c3e6e2;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.logout-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.logout-icon {
+  display: inline-flex;
+  flex: 0 0 18px;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+}
+
+.logout-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  stroke-width: 1.5;
+}

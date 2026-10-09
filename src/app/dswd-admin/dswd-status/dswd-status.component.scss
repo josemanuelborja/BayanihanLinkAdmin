@@ -1,0 +1,509 @@
+* {
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  background: #f7f9fc;
+  color: #10264b;
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+.sidebar {
+  /* Stays viewport-height and sticks, like the admin sidebar. Without this it
+     stretched to the full page height and `margin-top: auto` pushed the
+     profile and Log Out button off the bottom of long pages. */
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  width: 258px;
+  height: 100vh;
+  min-height: 0;
+  flex-shrink: 0;
+  overflow-y: auto;
+  background: #0d6b63;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  height: 73px;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.18);
+  background-image: url('../../assets/bayanihanlinklogo.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: grid;
+  place-items: center;
+}
+
+.brand strong,
+.brand span,
+.profile strong,
+.profile span {
+  display: block;
+}
+
+.brand strong {
+  font-size: 14px;
+}
+
+.brand span {
+  color: #b9e3de;
+  font-size: 11px;
+}
+
+.menu-title {
+  padding: 18px 20px 8px;
+  color: #8fcfc8;
+  font-size: 11px;
+}
+
+nav {
+  padding: 0 10px;
+}
+
+.nav-item {
+  min-height: 40px;
+  padding: 8px 12px;
+  margin-bottom: 3px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #c3e6e2;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav-item.active,
+.nav-item:hover {
+  background: #ffffff;
+  color: #0a4f49;
+}
+
+.nav-item b {
+  margin-left: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffedd5;
+  color: #9a3412;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* The sidebar avatar is larger than the topbar one, matching the admin
+   sidebar. `.top-avatar` below stays small. */
+.profile .avatar {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.avatar,
+.top-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 11px;
+}
+
+.profile strong {
+  font-size: 14px;
+}
+
+.profile span {
+  color: #a7d8d2;
+  font-size: 12px;
+}
+
+main {
+  flex: 1;
+  min-width: 0;
+}
+
+.topbar {
+  height: 81px;
+  padding: 0 28px;
+  background: white;
+  border-bottom: 1px solid #dce4ed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.topbar p {
+  margin: 2px 0 0;
+  color: #8295b5;
+  font-size: 12px;
+}
+
+.admin {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.top-avatar {
+  background: #2948b8;
+  color: white;
+}
+
+.admin strong,
+.admin small {
+  display: block;
+}
+
+.admin strong {
+  font-size: 13px;
+}
+
+.admin small {
+  color: #8a9bb6;
+  font-size: 11px;
+}
+
+.content {
+  padding: 30px;
+}
+
+.stage-cards {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stage-cards > div {
+  height: 114px;
+  padding: 15px;
+  background: white;
+  border: 1px solid #dce4ed;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.stage-cards span {
+  width: 31px;
+  height: 31px;
+  margin: 0 auto 8px;
+  border-radius: 50%;
+  background: #dceaff;
+  color: #2956c7;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+}
+
+.stage-cards > div:nth-child(4) span,
+.stage-cards > div:nth-child(5) span {
+  background: #d5f8f3;
+  color: #079b90;
+}
+
+.stage-cards > div:nth-child(6) span {
+  background: #d9f9e4;
+  color: #0aa04b;
+}
+
+.stage-cards strong {
+  display: block;
+  color: #111;
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.stage-cards small {
+  color: #8295b5;
+  font-size: 10px;
+}
+
+.tracker {
+  background: white;
+  border: 1px solid #dce4ed;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.tracker-heading {
+  padding: 18px 23px;
+  border-bottom: 1px solid #e8edf3;
+}
+
+.tracker-heading h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.tracker-heading p {
+  margin: 4px 0 0;
+  color: #8295b5;
+  font-size: 11px;
+}
+
+.request {
+  min-height: 115px;
+  padding: 17px 24px;
+  border-bottom: 1px solid #edf1f5;
+  display: grid;
+  grid-template-columns: 225px 1fr;
+  align-items: center;
+  gap: 20px;
+}
+
+.request:last-child {
+  border-bottom: 0;
+}
+
+.request-info > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.request-info a {
+  color: #184cc1;
+  font-size: 13px;
+}
+
+.request-info em {
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-style: normal;
+  font-size: 10px;
+}
+
+.request-info .urgent {
+  background: #fff0dc;
+  color: #f27a00;
+}
+
+.request-info .critical {
+  background: #ffe3e5;
+  color: #ed3341;
+}
+
+.request-info .normal {
+  background: #dcfbe9;
+  color: #00a64b;
+}
+
+.request-info strong {
+  display: block;
+  margin-top: 5px;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.request-info span {
+  display: block;
+  color: #8093b2;
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.progress {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.progress > div {
+  min-width: 60px;
+  text-align: center;
+  color: #c1ccdb;
+}
+
+.progress b {
+  width: 30px;
+  height: 30px;
+  margin: 0 auto 5px;
+  border: 1px solid #dce5ef;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.progress small {
+  display: block;
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.progress .done {
+  color: #009d91;
+}
+
+.progress .done b {
+  background: #079d93;
+  border-color: #079d93;
+  color: white;
+}
+
+.progress .current {
+  color: #2948b8;
+}
+
+.progress .current b {
+  background: #2948b8;
+  border-color: #2948b8;
+  color: white;
+}
+
+.progress i {
+  flex: 1;
+  height: 2px;
+  margin: 14px 5px 0;
+  background: #e3eaf1;
+}
+
+.progress i.done-line,
+.progress i.active-line {
+  background: #079d93;
+}
+
+@media (max-width: 1100px) {
+  .stage-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .request {
+    grid-template-columns: 180px 1fr;
+  }
+}
+
+@media (max-width: 800px) {
+  .request {
+    min-width: 800px;
+  }
+
+  .tracker {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .sidebar {
+    width: 70px;
+  }
+
+  .brand > div:last-child,
+  .menu-title,
+  .profile > div:last-child {
+    display: none;
+  }
+
+  .nav-item {
+    justify-content: center;
+    font-size: 0;
+  }
+
+  .nav-item b {
+    display: none;
+  }
+
+  .content {
+    padding: 15px;
+  }
+
+  .stage-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* Icons are Tabler outlines, sized here so every icon renders identically
+   instead of relying on each svg's own attributes. */
+.nav-icon {
+  display: inline-flex;
+  flex: 0 0 20px;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.nav-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  stroke-width: 1.5;
+}
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  background: transparent;
+  color: #c3e6e2;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.logout-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.logout-icon {
+  display: inline-flex;
+  flex: 0 0 18px;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+}
+
+.logout-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  stroke-width: 1.5;
+}

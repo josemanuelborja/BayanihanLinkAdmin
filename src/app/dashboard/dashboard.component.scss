@@ -27,7 +27,7 @@ $shadow: 0 1px 2px rgba(16, 32, 64, 0.06);
   border-radius: 50%;
   background: $blue;
   color: #fff;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -55,8 +55,8 @@ $shadow: 0 1px 2px rgba(16, 32, 64, 0.06);
   }
 
   p {
-    margin: 4px 0 0;
-    font-size: 13px;
+    margin: 2px 0 0;
+    font-size: 14px;
     color: $muted;
   }
 }
@@ -103,7 +103,7 @@ $shadow: 0 1px 2px rgba(16, 32, 64, 0.06);
   }
 
   span {
-    font-size: 12px;
+    font-size: 13px;
     color: $muted;
   }
 }
@@ -113,7 +113,7 @@ $shadow: 0 1px 2px rgba(16, 32, 64, 0.06);
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 24px 30px 40px;
+  padding: 30px;
 }
 
 .stat-grid {
@@ -150,7 +150,7 @@ $shadow: 0 1px 2px rgba(16, 32, 64, 0.06);
   span {
     display: block;
     margin-top: 6px;
-    font-size: 12.5px;
+    font-size: 13px;
     color: $muted;
   }
 }
@@ -200,7 +200,7 @@ $shadow: 0 1px 2px rgba(16, 32, 64, 0.06);
   }
 
   span {
-    font-size: 12.5px;
+    font-size: 13px;
     color: $muted;
   }
 }
@@ -229,7 +229,7 @@ $shadow: 0 1px 2px rgba(16, 32, 64, 0.06);
   }
 
   span {
-    font-size: 12px;
+    font-size: 13px;
     color: $muted;
   }
 }
@@ -292,7 +292,7 @@ $shadow: 0 1px 2px rgba(16, 32, 64, 0.06);
   }
 
   span {
-    font-size: 12px;
+    font-size: 13px;
     color: $muted;
   }
 }
@@ -333,7 +333,7 @@ $shadow: 0 1px 2px rgba(16, 32, 64, 0.06);
     width: 46px;
     text-align: right;
     color: $muted;
-    font-size: 12.5px;
+    font-size: 13px;
   }
 }
 
@@ -366,7 +366,7 @@ i.normal {
     background: transparent;
     color: $blue;
     font-family: inherit;
-    font-size: 13.5px;
+    font-size: 14px;
     font-weight: 500;
     text-decoration: none;
     cursor: pointer;
@@ -380,13 +380,13 @@ i.normal {
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13.5px;
+  font-size: 14px;
 }
 
 th {
   padding: 11px 14px;
   text-align: left;
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.6px;
   color: #6d7f9c;
@@ -413,7 +413,7 @@ tbody tr:hover {
   display: inline-block;
   padding: 4px 10px;
   border-radius: 20px;
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.3px;
 }
@@ -452,7 +452,7 @@ tbody tr:hover {
   background: #fff;
   color: $blue;
   font-family: inherit;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   transition: 0.2s;

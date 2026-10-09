@@ -29,6 +29,12 @@ export class LoginComponent {
     this.showPassword = !this.showPassword;
   }
 
+  /** Hands over to the separate DSWD administrator portal. */
+  goToDswdLogin(): void {
+    this.router.navigate(['/dswd/login']);
+  }
+
+  /** Placeholder until the public user login page exists. */
   goToUserLogin(): void {
     this.notifications.info('User login page');
   }

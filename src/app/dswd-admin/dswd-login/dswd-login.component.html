@@ -2,38 +2,45 @@
 
   <section class="login-brand">
     <div class="brand">
-      <div class="brand-icon" role="img" aria-label="BayanihanLink logo"></div>
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+      </div>
       <span>Bayani<span>hanLink</span></span>
     </div>
 
     <div class="brand-content">
       <h1>
-        Coordinating<br>
-        relief. Connecting<br>
-        communities.
+        DSWD coordination.<br>
+        Shared visibility<br>
+        for every response.
       </h1>
 
       <p>
-        The centralized platform for disaster assistance
-        request management, donor coordination, and
-        government verification.
+        The Department of Social Welfare and Development portal for
+        reviewing assistance requests, verifying offers, and tracking
+        distribution status.
       </p>
     </div>
 
     <div class="brand-stats">
       <div>
-        <strong>142</strong>
-        <span>Total Requests</span>
+        <strong>15</strong>
+        <span>For Attention</span>
       </div>
 
       <div>
-        <strong>54</strong>
-        <span>Donors Active</span>
+        <strong>8</strong>
+        <span>Critical Needs</span>
       </div>
 
       <div>
-        <strong>88</strong>
-        <span>Completed</span>
+        <strong>11</strong>
+        <span>For Verification</span>
       </div>
     </div>
   </section>
@@ -45,40 +52,41 @@
 
       <div class="portal-label">
         <span></span>
-        ADMINISTRATOR PORTAL
+        DSWD ADMINISTRATOR PORTAL
       </div>
 
       <h2>
         Sign in to<br>
-        your account
+        your DSWD account
       </h2>
 
       <p class="login-description">
-        Authorized personnel only. Unauthorized access is
-        prohibited.
+        Authorized DSWD personnel only. This portal supports
+        coordination and record-keeping, and does not replace
+        DSWD's official systems.
       </p>
 
       <form (ngSubmit)="login()">
 
         <div class="form-group">
-          <label for="email">ADMIN EMAIL</label>
+          <label for="dswd-email">DSWD EMAIL</label>
 
           <input
-            id="email"
+            id="dswd-email"
             type="email"
             name="email"
             [(ngModel)]="email"
-            placeholder="admin@bayanihanlink.gov.ph"
+            placeholder="officer@dswd.gov.ph"
             required
           >
         </div>
 
         <div class="form-group">
-          <label for="password">PASSWORD</label>
+          <label for="dswd-password">PASSWORD</label>
 
           <div class="password-input">
             <input
-              id="password"
+              id="dswd-password"
               [type]="showPassword ? 'text' : 'password'"
               name="password"
               [(ngModel)]="password"
@@ -102,30 +110,23 @@
           <div class="warning-icon">!</div>
 
           <span>
-            This portal is restricted to authorized
-            administrators only.
+            Verification and distribution decisions remain the
+            authority of DSWD and government officials.
           </span>
         </div>
 
         <button type="submit" class="login-button">
-          Administrator Login
+          DSWD Administrator Login
         </button>
 
       </form>
-
-      <button
-        class="admin-link"
-        type="button"
-        (click)="goToDswdLogin()"
-      >
-        DSWD Administrator? Log in here →
-      </button>
 
       <button
         class="back-link"
         type="button"
         (click)="goToUserLogin()"
       >
+        ← Back to Admin Login
       </button>
 
     </div>

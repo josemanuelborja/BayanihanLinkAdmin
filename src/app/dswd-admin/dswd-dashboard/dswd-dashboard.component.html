@@ -1,0 +1,233 @@
+<div class="page">
+
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-icon" role="img" aria-label="BayanihanLink logo"></div>
+
+      <div>
+        <strong>BayanihanLink</strong>
+        <span>DSWD Admin</span>
+      </div>
+    </div>
+
+    <div class="menu-title">MENU</div>
+
+    <nav>
+
+      <a routerLink="/dswd/dashboard" class="nav-item active">
+        <span class="nav-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" /><path d="M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" /><path d="M15 12h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" /><path d="M15 4h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" /></svg>
+        </span>
+        Dashboard
+      </a>
+
+      <a routerLink="/dswd/review/BL-000234" class="nav-item">
+        <span class="nav-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" /></svg>
+        </span>
+        Request Review
+        <b>{{ requestsForAttention }}</b>
+      </a>
+
+      <a routerLink="/dswd/status" class="nav-item">
+        <span class="nav-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8l4 -16l3 8h4" /></svg>
+        </span>
+        Status Monitoring
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <div class="profile">
+
+        <div class="avatar">
+          DS
+        </div>
+
+        <div>
+          <strong>DSWD Officer</strong>
+          <span>Logged in</span>
+        </div>
+
+      </div>
+
+      <button class="logout-button" type="button" (click)="logout()">
+        <span class="logout-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>
+        </span>
+        <span>Log Out</span>
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <main>
+
+    <header class="topbar">
+
+      <div>
+        <h1>DSWD Dashboard</h1>
+        <p>BayanihanLink — Disaster Needs Coordination Platform</p>
+      </div>
+
+      <div class="admin">
+
+        <app-notification-bell />
+
+        <div class="top-avatar">
+          DS
+        </div>
+
+        <div>
+          <strong>DSWD Officer</strong>
+          <small>DSWD Admin</small>
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <section class="content">
+
+      <div class="notice">
+
+        <div class="notice-icon">🏛</div>
+
+        <div>
+          <strong>DSWD Coordination View</strong>
+
+          <p>
+            This dashboard supports coordination between BayanihanLink and
+            DSWD. It facilitates record-keeping and status updates.
+            This system does not replace DSWD's official platforms,
+            processes, or decision-making authority.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="stats">
+
+        <div class="stat-card blue">
+          <span class="stat-icon">📋</span>
+          <strong>{{ requestsForAttention }}</strong>
+          <small>Requests for Attention</small>
+        </div>
+
+        <div class="stat-card red">
+          <span class="stat-icon">🚨</span>
+          <strong>8</strong>
+          <small>Critical Needs</small>
+        </div>
+
+        <div class="stat-card pink">
+          <span class="stat-icon">♥</span>
+          <strong>54</strong>
+          <small>Assistance Offers</small>
+        </div>
+
+        <div class="stat-card yellow">
+          <span class="stat-icon">🔍</span>
+          <strong>11</strong>
+          <small>For Verification</small>
+        </div>
+
+        <div class="stat-card teal">
+          <span class="stat-icon">🚚</span>
+          <strong>8</strong>
+          <small>For Distribution</small>
+        </div>
+
+        <div class="stat-card green">
+          <span class="stat-icon">✓</span>
+          <strong>67</strong>
+          <small>Completed</small>
+        </div>
+
+      </div>
+
+
+      <section class="request-card">
+
+        <div class="section-heading">
+
+          <div>
+            <h2>Requests Requiring Attention</h2>
+            <p>Sorted by priority — Critical first</p>
+          </div>
+
+          <button
+            class="review-all"
+            (click)="reviewAll()"
+          >
+            Review All
+          </button>
+
+        </div>
+
+
+        <div class="table">
+
+          <div class="table-header">
+            <span>REQUEST ID</span>
+            <span>ITEM &amp; QUANTITY</span>
+            <span>LOCATION</span>
+            <span>PRIORITY</span>
+            <span>DONATION OFFER</span>
+            <span>STATUS</span>
+            <span>DATE</span>
+            <span>ACTION</span>
+          </div>
+
+
+          <div
+            class="table-row"
+            *ngFor="let request of requests"
+          >
+
+            <span>#{{ request.id }}</span>
+
+            <span>{{ request.item }} · {{ request.quantity }}</span>
+
+            <span>{{ request.location }}</span>
+
+            <span>
+              <em
+                class="priority"
+                [ngClass]="priorityClass(request.priority)"
+              >{{ request.priority }}</em>
+            </span>
+
+            <span>#{{ request.offerId }}</span>
+
+            <span>
+              <em
+                class="status"
+                [ngClass]="statusBadge(request.status).class"
+              >{{ statusBadge(request.status).label }}</em>
+            </span>
+
+            <span>{{ request.date }}</span>
+
+            <button (click)="reviewRequest(request.id)">
+              Review
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+</div>

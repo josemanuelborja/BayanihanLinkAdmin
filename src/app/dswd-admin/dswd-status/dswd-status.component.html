@@ -1,0 +1,498 @@
+<div class="page">
+
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-icon" role="img" aria-label="BayanihanLink logo"></div>
+
+      <div>
+        <strong>BayanihanLink</strong>
+        <span>DSWD Admin</span>
+      </div>
+    </div>
+
+    <div class="menu-title">MENU</div>
+
+    <nav>
+
+      <a routerLink="/dswd/dashboard" class="nav-item">
+        <span class="nav-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" /><path d="M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" /><path d="M15 12h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" /><path d="M15 4h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" /></svg>
+        </span>
+        Dashboard
+      </a>
+
+      <a
+        [routerLink]="['/dswd/review', reviewId]"
+        class="nav-item"
+      >
+        <span class="nav-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" /></svg>
+        </span>
+        Request Review
+        <b>{{ requestsForAttention }}</b>
+      </a>
+
+      <a
+        routerLink="/dswd/status"
+        class="nav-item active"
+      >
+        <span class="nav-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8l4 -16l3 8h4" /></svg>
+        </span>
+        Status Monitoring
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <div class="profile">
+
+        <div class="avatar">
+          DS
+        </div>
+
+        <div>
+          <strong>DSWD Officer</strong>
+          <span>Logged in</span>
+        </div>
+
+      </div>
+
+      <button class="logout-button" type="button" (click)="logout()">
+        <span class="logout-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>
+        </span>
+        <span>Log Out</span>
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <main>
+
+    <header class="topbar">
+
+      <div>
+        <h1>Status Monitoring</h1>
+        <p>BayanihanLink — Disaster Needs Coordination Platform</p>
+      </div>
+
+      <div class="admin">
+
+        <app-notification-bell />
+
+        <div class="top-avatar">
+          DS
+        </div>
+
+        <div>
+          <strong>DSWD Officer</strong>
+          <small>DSWD Admin</small>
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <section class="content">
+
+      <div class="stage-cards">
+
+        <div>
+          <span>1</span>
+          <strong>0</strong>
+          <small>Submitted</small>
+        </div>
+
+        <div>
+          <span>2</span>
+          <strong>1</strong>
+          <small>Verified</small>
+        </div>
+
+        <div>
+          <span>3</span>
+          <strong>1</strong>
+          <small>Assistance Offered</small>
+        </div>
+
+        <div>
+          <span>4</span>
+          <strong>1</strong>
+          <small>Gov't Verification</small>
+        </div>
+
+        <div>
+          <span>5</span>
+          <strong>1</strong>
+          <small>Distributed</small>
+        </div>
+
+        <div>
+          <span>6</span>
+          <strong>1</strong>
+          <small>Completed</small>
+        </div>
+
+      </div>
+
+
+      <section class="tracker">
+
+        <div class="tracker-heading">
+
+          <h2>Assistance Progress Tracker</h2>
+
+          <p>
+            Real-time status of all active assistance requests
+          </p>
+
+        </div>
+
+
+        <div class="request">
+
+          <div class="request-info">
+
+            <div>
+              <a>#BL-000123</a>
+              <em class="urgent">URGENT</em>
+            </div>
+
+            <strong>Maria Santos</strong>
+
+            <span>
+              Typhoon · Food &amp; Water
+            </span>
+
+            <span>CDO City</span>
+
+          </div>
+
+
+          <div class="progress">
+
+            <div class="done">
+              <b>✓</b>
+              <small>Submitted</small>
+            </div>
+
+            <i class="done-line"></i>
+
+            <div class="done">
+              <b>✓</b>
+              <small>Verified</small>
+            </div>
+
+            <i class="done-line"></i>
+
+            <div class="done">
+              <b>✓</b>
+              <small>Assistance<br>Offered</small>
+            </div>
+
+            <i class="active-line"></i>
+
+            <div class="current">
+              <b>4</b>
+              <small>Gov't<br>Verification</small>
+            </div>
+
+            <i></i>
+
+            <div>
+              <b>5</b>
+              <small>Distributed</small>
+            </div>
+
+            <i></i>
+
+            <div>
+              <b>6</b>
+              <small>Completed</small>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="request">
+
+          <div class="request-info">
+
+            <div>
+              <a>#BL-000234</a>
+              <em class="critical">CRITICAL</em>
+            </div>
+
+            <strong>Juan Dela Cruz</strong>
+
+            <span>
+              Flood · Drinking Water
+            </span>
+
+            <span>Iligan City</span>
+
+          </div>
+
+
+          <div class="progress">
+
+            <div class="done">
+              <b>✓</b>
+              <small>Submitted</small>
+            </div>
+
+            <i class="done-line"></i>
+
+            <div class="done">
+              <b>✓</b>
+              <small>Verified</small>
+            </div>
+
+            <i class="done-line"></i>
+
+            <div class="current">
+              <b>3</b>
+              <small>Assistance<br>Offered</small>
+            </div>
+
+            <i></i>
+
+            <div>
+              <b>4</b>
+              <small>Gov't<br>Verification</small>
+            </div>
+
+            <i></i>
+
+            <div>
+              <b>5</b>
+              <small>Distributed</small>
+            </div>
+
+            <i></i>
+
+            <div>
+              <b>6</b>
+              <small>Completed</small>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="request">
+
+          <div class="request-info">
+
+            <div>
+              <a>#BL-000189</a>
+              <em class="normal">NORMAL</em>
+            </div>
+
+            <strong>Ana Reyes</strong>
+
+            <span>
+              Fire · Medicine Kit
+            </span>
+
+            <span>Davao City</span>
+
+          </div>
+
+
+          <div class="progress">
+
+            <div class="done">
+              <b>✓</b>
+              <small>Submitted</small>
+            </div>
+
+            <i class="done-line"></i>
+
+            <div class="done">
+              <b>✓</b>
+              <small>Verified</small>
+            </div>
+
+            <i class="done-line"></i>
+
+            <div class="done">
+              <b>✓</b>
+              <small>Assistance<br>Offered</small>
+            </div>
+
+            <i class="done-line"></i>
+
+            <div class="done">
+              <b>✓</b>
+              <small>Gov't<br>Verification</small>
+            </div>
+
+            <i class="done-line"></i>
+
+            <div class="done">
+              <b>✓</b>
+              <small>Distributed</small>
+            </div>
+
+            <i class="active-line"></i>
+
+            <div class="current">
+              <b>6</b>
+              <small>Completed</small>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="request">
+
+          <div class="request-info">
+
+            <div>
+              <a>#BL-000256</a>
+              <em class="urgent">URGENT</em>
+            </div>
+
+            <strong>Pedro Garcia</strong>
+
+            <span>
+              Typhoon · Blankets &amp; Clothing
+            </span>
+
+            <span>Butuan City</span>
+
+          </div>
+
+
+          <div class="progress">
+
+            <div class="done">
+              <b>✓</b>
+              <small>Submitted</small>
+            </div>
+
+            <i class="done-line"></i>
+
+            <div class="current">
+              <b>2</b>
+              <small>Verified</small>
+            </div>
+
+            <i></i>
+
+            <div>
+              <b>3</b>
+              <small>Assistance<br>Offered</small>
+            </div>
+
+            <i></i>
+
+            <div>
+              <b>4</b>
+              <small>Gov't<br>Verification</small>
+            </div>
+
+            <i></i>
+
+            <div>
+              <b>5</b>
+              <small>Distributed</small>
+            </div>
+
+            <i></i>
+
+            <div>
+              <b>6</b>
+              <small>Completed</small>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="request">
+
+          <div class="request-info">
+
+            <div>
+              <a>#BL-000290</a>
+              <em class="normal">NORMAL</em>
+            </div>
+
+            <strong>Rosa Lopez</strong>
+
+            <span>
+              Earthquake · Hygiene Supplies
+            </span>
+
+            <span>Surigao del Norte</span>
+
+          </div>
+
+
+          <div class="progress">
+
+            <div class="done">
+              <b>✓</b>
+              <small>Submitted</small>
+            </div>
+
+            <i class="done-line"></i>
+
+            <div class="done">
+              <b>✓</b>
+              <small>Verified</small>
+            </div>
+
+            <i class="done-line"></i>
+
+            <div class="done">
+              <b>✓</b>
+              <small>Assistance<br>Offered</small>
+            </div>
+
+            <i class="done-line"></i>
+
+            <div class="done">
+              <b>✓</b>
+              <small>Gov't<br>Verification</small>
+            </div>
+
+            <i class="active-line"></i>
+
+            <div class="current">
+              <b>5</b>
+              <small>Distributed</small>
+            </div>
+
+            <i></i>
+
+            <div>
+              <b>6</b>
+              <small>Completed</small>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+</div>

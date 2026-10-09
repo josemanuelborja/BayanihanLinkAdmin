@@ -8,6 +8,11 @@ import { RequestVerifiedComponent } from './request-management/request-verified/
 import { DonationOffersComponent } from './donation-offers/donation-offers.component';
 import { DswdCoordinationComponent } from './dswd-coordination/dswd-coordination.component';
 import { StatusMonitoringComponent } from './status-monitoring/status-monitoring.component';
+import { DswdDashboardComponent } from './dswd-admin/dswd-dashboard/dswd-dashboard.component';
+import { DswdReviewComponent } from './dswd-admin/dswd-review/dswd-review.component';
+import { DswdStatusComponent } from './dswd-admin/dswd-status/dswd-status.component';
+import { DswdLoginComponent } from './dswd-admin/dswd-login/dswd-login.component';
+import { dswdRequestExistsGuard } from './dswd-admin/dswd-request.guard';
 
 export const routes: Routes = [
 
@@ -65,6 +70,27 @@ export const routes: Routes = [
   {
     path: 'status-monitoring',
     component: StatusMonitoringComponent
+  },
+
+  {
+    path: 'dswd/login',
+    component: DswdLoginComponent
+  },
+
+  {
+    path: 'dswd/dashboard',
+    component: DswdDashboardComponent
+  },
+
+  {
+    path: 'dswd/review/:id',
+    component: DswdReviewComponent,
+    canActivate: [dswdRequestExistsGuard]
+  },
+
+  {
+    path: 'dswd/status',
+    component: DswdStatusComponent
   },
 
   {

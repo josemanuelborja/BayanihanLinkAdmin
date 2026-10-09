@@ -1,0 +1,284 @@
+<div class="page">
+
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-icon" role="img" aria-label="BayanihanLink logo"></div>
+
+      <div>
+        <strong>BayanihanLink</strong>
+        <span>DSWD Admin</span>
+      </div>
+    </div>
+
+    <div class="menu-title">MENU</div>
+
+    <nav>
+
+      <a routerLink="/dswd/dashboard" class="nav-item">
+        <span class="nav-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" /><path d="M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" /><path d="M15 12h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" /><path d="M15 4h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" /></svg>
+        </span>
+        Dashboard
+      </a>
+
+      <a
+        [routerLink]="['/dswd/review', requestId]"
+        class="nav-item active"
+      >
+        <span class="nav-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" /></svg>
+        </span>
+        Request Review
+        <b>15</b>
+      </a>
+
+      <a routerLink="/dswd/status" class="nav-item">
+        <span class="nav-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8l4 -16l3 8h4" /></svg>
+        </span>
+        Status Monitoring
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <div class="profile">
+
+        <div class="avatar">DS</div>
+
+        <div>
+          <strong>DSWD Officer</strong>
+          <span>Logged in</span>
+        </div>
+
+      </div>
+
+      <button class="logout-button" type="button" (click)="logout()">
+        <span class="logout-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>
+        </span>
+        <span>Log Out</span>
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <main>
+
+    <header class="topbar">
+
+      <div>
+        <h1>
+          Request Review (DSWD) — #{{ requestId }}
+        </h1>
+
+        <p>
+          BayanihanLink — Disaster Needs Coordination Platform
+        </p>
+      </div>
+
+      <div class="admin">
+
+        <app-notification-bell />
+
+        <div class="top-avatar">
+          DS
+        </div>
+
+        <div>
+          <strong>DSWD Officer</strong>
+          <small>DSWD Admin</small>
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <section class="content">
+
+      <div class="layout" *ngIf="request as r">
+
+        <div>
+
+          <section class="card">
+
+            <div class="card-title">
+
+              <div>
+                <h2>Request Information</h2>
+                <p>Verified request forwarded from BayanihanLink</p>
+              </div>
+
+              <div class="badges">
+                <span
+                  class="priority-badge"
+                  [ngClass]="priorityClass(r.priority)"
+                >{{ r.priority }}</span>
+                <span [ngClass]="statusBadge(r.status).class">
+                  {{ statusBadge(r.status).label }}
+                </span>
+              </div>
+
+            </div>
+
+
+            <div class="info-grid">
+
+              <div>
+                <small>REQUEST ID</small>
+                <strong>#{{ r.id }}</strong>
+              </div>
+
+              <div>
+                <small>DISASTER TYPE</small>
+                <strong>{{ r.disasterType }}</strong>
+              </div>
+
+              <div>
+                <small>GENERAL LOCATION</small>
+                <strong>{{ r.location }}</strong>
+              </div>
+
+              <div>
+                <small>PERSONS AFFECTED</small>
+                <strong>{{ r.personsAffected }}</strong>
+              </div>
+
+              <div>
+                <small>ITEM NEEDED</small>
+                <strong>{{ r.itemDetail }}</strong>
+              </div>
+
+              <div>
+                <small>QUANTITY NEEDED</small>
+                <strong>{{ r.quantity }}</strong>
+              </div>
+
+              <div>
+                <small>DATE SUBMITTED</small>
+                <strong>{{ r.dateSubmitted }}</strong>
+              </div>
+
+              <div>
+                <small>VERIFIED BY ADMIN</small>
+                <strong>{{ r.verifiedByAdmin }}</strong>
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <section class="card">
+
+            <h2>Associated Donation Offer</h2>
+
+            <div class="info-grid">
+
+              <div>
+                <small>OFFER ID</small>
+                <strong>#{{ r.offerId }}</strong>
+              </div>
+
+              <div>
+                <small>ITEM OFFERED</small>
+                <strong>{{ r.offerItem }}</strong>
+              </div>
+
+              <div>
+                <small>QUANTITY OFFERED</small>
+                <strong>{{ r.offerQuantity }}</strong>
+              </div>
+
+              <div>
+                <small>OFFER DATE</small>
+                <strong>{{ r.offerDate }}</strong>
+              </div>
+
+            </div>
+
+            <div class="donation-note">
+              📦 In-kind donation — No monetary transaction involved.
+            </div>
+
+          </section>
+
+
+          <section class="card">
+
+            <h2>BayanihanLink Administrator Notes</h2>
+
+            <div class="notes">
+              {{ r.notes }}
+            </div>
+
+          </section>
+
+
+          <div class="warning">
+            🏛 &nbsp;
+            This system does not replace DSWD's official systems and
+            processes. All decisions regarding verification and physical
+            distribution remain the authority of DSWD and government officials.
+          </div>
+
+        </div>
+
+
+        <aside>
+
+          <section class="card status-card">
+
+            <h2>Update Status</h2>
+
+            <label
+              *ngFor="let item of statuses"
+              class="status-option"
+              [class.selected]="status === item"
+            >
+
+              <input
+                type="radio"
+                name="status"
+                [value]="item"
+                [(ngModel)]="status"
+              >
+
+              <span class="radio"></span>
+
+              <span>{{ item }}</span>
+
+            </label>
+
+          </section>
+
+
+          <button
+            class="update-button"
+            (click)="updateStatus()"
+          >
+            Update Status
+          </button>
+
+
+          <button
+            class="back-button"
+            (click)="backToDashboard()"
+          >
+            ← Back to Dashboard
+          </button>
+
+        </aside>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>

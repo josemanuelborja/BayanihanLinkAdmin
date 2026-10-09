@@ -68,7 +68,10 @@ describe('sidebar navigation', () => {
         expect(router.url, `clicking ${href} from ${from}`).toBe(href);
         expect(activeComponent(router), `clicking ${href} from ${from}`).toBe(EXPECTED[href]);
       }
-    });
+    // This re-renders the whole page once per sidebar link, and the sidebar
+    // now carries six inline SVGs. jsdom parses SVG far more slowly than
+    // HTML, so the default 5s is not enough for 25 full page renders.
+    }, 30000);
   }
 
   it('dashboard "View All" link goes to request management', async () => {

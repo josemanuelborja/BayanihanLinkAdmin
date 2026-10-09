@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
+import { AdminSidebarComponent } from '../../admin-sidebar/admin-sidebar.component';
 import { NotificationBellComponent } from '../../notification/notification-bell.component';
 import { NotificationService } from '../../notification/notification.service';
 
 @Component({
   selector: 'app-request-review',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, NotificationBellComponent],
+  imports: [CommonModule, FormsModule, NotificationBellComponent, AdminSidebarComponent],
   templateUrl: './request-review.component.html',
   styleUrl: './request-review.component.scss'
 })
