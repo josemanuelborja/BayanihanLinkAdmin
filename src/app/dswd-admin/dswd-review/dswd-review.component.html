@@ -258,20 +258,23 @@
           </section>
 
 
-          <button
-            class="update-button"
-            (click)="updateStatus()"
-          >
-            Update Status
-          </button>
+          <p-button
+            label="Update Status"
+            [fluid]="true"
+            styleClass="update-button"
+            (onClick)="updateStatus()"
+          />
 
 
-          <button
-            class="back-button"
-            (click)="backToDashboard()"
-          >
-            ← Back to Dashboard
-          </button>
+          <p-button
+            label="Back to Dashboard"
+            icon="pi pi-arrow-left"
+            severity="secondary"
+            [outlined]="true"
+            [fluid]="true"
+            styleClass="back-button"
+            (onClick)="backToDashboard()"
+          />
 
         </aside>
 

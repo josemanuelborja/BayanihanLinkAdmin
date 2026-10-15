@@ -60,7 +60,7 @@
       <div class="filter-box">
 
         <div class="search">
-          <span>⌕</span>
+          <i class="pi pi-search" aria-hidden="true"></i>
           <input
             [(ngModel)]="search"
             placeholder="Search by donor, offer ID, or request ID..."
@@ -157,12 +157,12 @@
               <td>{{ item.date }}</td>
 
               <td>
-                <button
-                  class="coordinate"
-                  (click)="coordinate(item)"
-                >
-                  Coordinate
-                </button>
+                <p-button
+                  label="Coordinate"
+                  size="small"
+                  styleClass="coordinate"
+                  (onClick)="coordinate(item)"
+                />
               </td>
 
             </tr>

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Button } from 'primeng/button';
 
 import { AdminUserBadgeComponent } from '../admin-user-badge/admin-user-badge.component';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
@@ -19,7 +20,7 @@ export interface CoordinationNote {
 @Component({
   selector: 'app-dswd-coordination',
   standalone: true,
-  imports: [CommonModule, FormsModule, AdminSidebarComponent, AdminUserBadgeComponent, NotificationBellComponent],
+  imports: [CommonModule, FormsModule, Button, AdminSidebarComponent, AdminUserBadgeComponent, NotificationBellComponent],
   templateUrl: './dswd-coordination.component.html',
   styleUrl: './dswd-coordination.component.scss'
 })

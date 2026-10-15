@@ -167,11 +167,50 @@
       <section class="card requests-card">
 
         <div class="requests-header">
-          <h2>Recent Requests</h2>
 
-          <a class="view-all" routerLink="/request-management">
-            View All →
-          </a>
+          <div>
+            <h2>Recent Requests</h2>
+
+            <p class="request-count">
+              Showing {{ filteredRequests.length }} of {{ requests.length }}
+            </p>
+          </div>
+
+          <div class="request-tools">
+
+            <div class="date-filter" [class.is-active]="hasFilter">
+
+              <p-datepicker
+                [(ngModel)]="dateRange"
+                selectionMode="range"
+                [showIcon]="true"
+                [readonlyInput]="true"
+                dateFormat="M d, yy"
+                placeholder="Filter by date range"
+                styleClass="bayanihan-date-range"
+                appendTo="body"
+              />
+
+              @if (hasFilter) {
+                <p-button
+                  type="button"
+                  icon="pi pi-times"
+                  label="Clear"
+                  severity="secondary"
+                  [text]="true"
+                  styleClass="clear-filter"
+                  (onClick)="clearFilter()"
+                />
+              }
+
+            </div>
+
+            <a class="view-all" routerLink="/request-management">
+              View All →
+            </a>
+
+          </div>
+
         </div>
 
         <div class="table-wrapper">
@@ -194,140 +233,44 @@
 
             <tbody>
 
-              <tr>
-                <td>#BL-000302</td>
-                <td>Ana Reyes</td>
-                <td>Typhoon</td>
-                <td>Food</td>
-                <td>CDO City</td>
-                <td>
-                  <span class="badge priority-critical">
-                    CRITICAL
-                  </span>
-                </td>
-                <td>
-                  <span class="badge status-pending">
-                    Pending
-                  </span>
-                </td>
-                <td>Sep 16, 2026</td>
-                <td>
-                  <button
-                    class="review-button"
-                    (click)="reviewRequest('BL-000302')"
-                  >
-                    Review
-                  </button>
-                </td>
-              </tr>
+              @for (request of filteredRequests; track request.id) {
 
-              <tr>
-                <td>#BL-000301</td>
-                <td>Juan Dela Cruz</td>
-                <td>Flood</td>
-                <td>Water</td>
-                <td>Iligan City</td>
-                <td>
-                  <span class="badge priority-urgent">
-                    URGENT
-                  </span>
-                </td>
-                <td>
-                  <span class="badge status-pending">
-                    Pending
-                  </span>
-                </td>
-                <td>Sep 16, 2026</td>
-                <td>
-                  <button
-                    class="review-button"
-                    (click)="reviewRequest('BL-000301')"
-                  >
-                    Review
-                  </button>
-                </td>
-              </tr>
+                <tr>
+                  <td>#{{ request.id }}</td>
+                  <td>{{ request.requester }}</td>
+                  <td>{{ request.disaster }}</td>
+                  <td>{{ request.category }}</td>
+                  <td>{{ request.location }}</td>
+                  <td>
+                    <span class="badge {{ priorityClass(request.priority) }}">
+                      {{ request.priority }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge {{ statusClass(request.status) }}">
+                      {{ request.status }}
+                    </span>
+                  </td>
+                  <td>{{ request.date }}</td>
+                  <td>
+                    <button
+                      class="review-button"
+                      (click)="reviewRequest(request.id)"
+                    >
+                      Review
+                    </button>
+                  </td>
+                </tr>
 
-              <tr>
-                <td>#BL-000298</td>
-                <td>Rosa Gomez</td>
-                <td>Fire</td>
-                <td>Clothing</td>
-                <td>Davao City</td>
-                <td>
-                  <span class="badge priority-normal">
-                    NORMAL
-                  </span>
-                </td>
-                <td>
-                  <span class="badge status-verified">
-                    Verified
-                  </span>
-                </td>
-                <td>Sep 15, 2026</td>
-                <td>
-                  <button
-                    class="review-button"
-                    (click)="reviewRequest('BL-000298')"
-                  >
-                    Review
-                  </button>
-                </td>
-              </tr>
+              } @empty {
 
-              <tr>
-                <td>#BL-000295</td>
-                <td>Pedro Santos</td>
-                <td>Typhoon</td>
-                <td>Medicine</td>
-                <td>Butuan City</td>
-                <td>
-                  <span class="badge priority-urgent">
-                    URGENT
-                  </span>
-                </td>
-                <td>
-                  <span class="badge status-assisted">
-                    Assisted
-                  </span>
-                </td>
-                <td>Sep 14, 2026</td>
-                <td>
-                  <button
-                    class="review-button"
-                    (click)="reviewRequest('BL-000295')"
-                  >
-                    Review
-                  </button>
-                </td>
-              </tr>
+                <tr class="empty-row">
+                  <td colspan="9">
+                    No requests match the selected date range.
+                  </td>
+                </tr>
 
-              <tr>
-                <td>#BL-000290</td>
-                <td>Maria Lopez</td>
-                <td>Earthquake</td>
-                <td>Blankets</td>
-                <td>Surigao del Norte</td>
-                <td>
-                  <span class="badge priority-normal">
-                    NORMAL
-                  </span>
-                </td>
-                <td>
-                  <span class="badge status-completed">
-                    Completed
-                  </span>
-                </td>
-                <td>Sep 12, 2026</td>
-                <td>
-                  <button
-                    class="review-button"
-                    (click)="reviewRequest('BL-000290')"
-                  >
-                    Review
-                  </button>
-                </td>
-              </tr>
+              }
 
             </tbody>
 

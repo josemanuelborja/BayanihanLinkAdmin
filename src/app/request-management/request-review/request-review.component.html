@@ -300,20 +300,25 @@
           </section>
 
 
-          <button
-            class="verify-button"
-            (click)="verifyRequest()"
-          >
-            ✓ Verify &amp; Post to Needs Board
-          </button>
+          <p-button
+            label="Verify & Post to Needs Board"
+            icon="pi pi-check"
+            severity="success"
+            [fluid]="true"
+            styleClass="verify-button"
+            (onClick)="verifyRequest()"
+          />
 
 
-          <button
-            class="reject-button"
-            (click)="rejectRequest()"
-          >
-            × Reject Request
-          </button>
+          <p-button
+            label="Reject Request"
+            icon="pi pi-times"
+            severity="danger"
+            [outlined]="true"
+            [fluid]="true"
+            styleClass="reject-button"
+            (onClick)="rejectRequest()"
+          />
 
         </aside>
 

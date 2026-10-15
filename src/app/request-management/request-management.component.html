@@ -25,7 +25,7 @@
       <div class="filter-box">
 
         <div class="search">
-          <span>⌕</span>
+          <i class="pi pi-search" aria-hidden="true"></i>
           <input
             type="text"
             [(ngModel)]="search"
@@ -145,20 +145,21 @@
 
               <td class="actions">
 
-                <button
-                  class="review"
-                  (click)="review(request.id)"
-                >
-                  Review
-                </button>
+                <p-button
+                  label="Review"
+                  size="small"
+                  styleClass="review"
+                  (onClick)="review(request.id)"
+                />
 
-                <button
+                <p-button
                   *ngIf="request.status === 'Pending'"
-                  class="verify"
-                  (click)="verify(request.id)"
-                >
-                  Verify
-                </button>
+                  label="Verify"
+                  size="small"
+                  severity="success"
+                  styleClass="verify"
+                  (onClick)="verify(request.id)"
+                />
 
               </td>
 

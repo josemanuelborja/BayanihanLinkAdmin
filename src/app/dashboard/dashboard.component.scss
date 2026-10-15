@@ -352,6 +352,7 @@ i.normal {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   margin-bottom: 18px;
 
   h2 {
@@ -360,8 +361,9 @@ i.normal {
     font-weight: 600;
   }
 
-  button,
-  a {
+  /* Only the "View All" link is a bare text action here; PrimeNG buttons
+     (Clear) keep their own styling. */
+  > a {
     border: 0;
     background: transparent;
     color: $blue;
@@ -371,6 +373,65 @@ i.normal {
     text-decoration: none;
     cursor: pointer;
   }
+}
+
+.request-count {
+  margin: 4px 0 0;
+  color: $muted;
+  font-size: 12px;
+}
+
+.request-tools {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ---------- Calendar filter ---------- */
+.date-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Reshape the PrimeNG range datepicker to sit naturally in the header row. */
+::ng-deep .date-filter .p-datepicker {
+  width: 230px;
+}
+
+::ng-deep .date-filter .p-datepicker-input {
+  height: 38px;
+  padding: 0 10px;
+  font-family: "Poppins", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: $ink;
+  border-radius: 10px;
+}
+
+/* Lights up while a range is applied, so it is obvious the table is filtered. */
+::ng-deep .date-filter.is-active .p-datepicker-input {
+  border-color: $blue;
+  box-shadow: 0 0 0 3px rgba(40, 72, 183, 0.12);
+}
+
+::ng-deep .date-filter .p-datepicker-dropdown {
+  border-radius: 10px;
+}
+
+/* PrimeNG "Clear" text button sits flush with the datepicker. */
+::ng-deep .date-filter .clear-filter .p-button-label {
+  font-family: "Poppins", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.empty-row td {
+  padding: 28px 14px;
+  text-align: center;
+  color: $muted;
+  font-size: 13px;
+  white-space: normal;
 }
 
 .table-wrapper {
@@ -474,6 +535,10 @@ tbody tr:hover {
 @media (max-width: 980px) {
   .charts-grid {
     grid-template-columns: 1fr;
+  }
+
+  .requests-header {
+    flex-wrap: wrap;
   }
 }
 

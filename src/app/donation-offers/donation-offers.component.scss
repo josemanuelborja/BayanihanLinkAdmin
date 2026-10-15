@@ -306,9 +306,9 @@ main {
   padding: 0 12px;
 }
 
-.search span {
+.search i {
   color: #8ca0bf;
-  font-size: 21px;
+  font-size: 15px;
 }
 
 .search input {
@@ -416,16 +416,21 @@ td {
   color: #00a849;
 }
 
-.coordinate {
+/* Teal "Coordinate" action, kept from the original palette but now a
+   PrimeNG button. */
+::ng-deep .coordinate.p-button {
   height: 28px;
   padding: 0 12px;
-  border: 0;
   border-radius: 7px;
   background: #079e91;
-  color: #fff;
-  font-family: inherit;
+  border-color: #079e91;
+  font-family: "Poppins", Arial, sans-serif;
   font-size: 11px;
-  cursor: pointer;
+}
+
+::ng-deep .coordinate.p-button:enabled:hover {
+  background: #067f74;
+  border-color: #067f74;
 }
 
 @media (max-width: 1150px) {

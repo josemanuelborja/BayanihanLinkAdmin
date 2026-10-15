@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-dswd-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, Button],
   templateUrl: './dswd-login.component.html',
   styleUrl: './dswd-login.component.scss'
 })

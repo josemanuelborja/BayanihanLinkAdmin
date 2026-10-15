@@ -158,14 +158,12 @@
 
               <div class="composer-actions">
                 <small>{{ noteDraft.trim().length }}/500</small>
-                <button
-                  type="button"
-                  class="post"
+                <p-button
+                  label="Comment"
+                  styleClass="post"
                   [disabled]="!canPostNote"
-                  (click)="addNote()"
-                >
-                  Comment
-                </button>
+                  (onClick)="addNote()"
+                />
               </div>
             </div>
 
@@ -191,19 +189,22 @@
 
           </div>
 
-          <button
-            class="save"
-            (click)="saveStatus()"
-          >
-            Save & Update Status
-          </button>
+          <p-button
+            label="Save & Update Status"
+            [fluid]="true"
+            styleClass="save"
+            (onClick)="saveStatus()"
+          />
 
-          <button
-            class="back"
-            (click)="backToOffers()"
-          >
-            ← Back to Offers
-          </button>
+          <p-button
+            label="Back to Offers"
+            icon="pi pi-arrow-left"
+            severity="secondary"
+            [outlined]="true"
+            [fluid]="true"
+            styleClass="back"
+            (onClick)="backToOffers()"
+          />
 
         </aside>
 

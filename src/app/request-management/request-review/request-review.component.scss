@@ -318,27 +318,21 @@ main {
   font-size: 12px;
 }
 
-.verify-button,
-.reject-button {
+/* PrimeNG p-button provides the fill; keep the full-width sidebar sizing. */
+::ng-deep .verify-button.p-button {
   width: 100%;
   height: 45px;
   border-radius: 11px;
-  font-family: inherit;
-  cursor: pointer;
-}
-
-.verify-button {
-  border: 0;
-  background: #00c853;
-  color: #fff;
+  font-family: "Poppins", Arial, sans-serif;
   font-size: 13px;
 }
 
-.reject-button {
+::ng-deep .reject-button.p-button {
+  width: 100%;
+  height: 45px;
   margin-top: 10px;
-  border: 1px solid #ffc9ce;
-  background: #fff5f5;
-  color: #ef303d;
+  border-radius: 11px;
+  font-family: "Poppins", Arial, sans-serif;
   font-size: 13px;
 }
 

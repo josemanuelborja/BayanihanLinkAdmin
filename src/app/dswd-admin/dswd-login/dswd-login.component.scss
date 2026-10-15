@@ -236,21 +236,20 @@
   padding-top: 4px;
 }
 
-.login-button {
+/* PrimeNG p-button re-tinted to the DSWD teal; keep the login sizing. */
+::ng-deep .login-button.p-button {
   width: 100%;
   height: clamp(48px, 7vh, 56px);
-  border: 0;
   border-radius: 12px;
   background: #119c91;
-  color: #fff;
-  font-family: inherit;
+  border-color: #119c91;
+  font-family: "Poppins", Arial, sans-serif;
   font-size: 17px;
-  cursor: pointer;
-  transition: .2s;
 }
 
-.login-button:hover {
+::ng-deep .login-button.p-button:enabled:hover {
   background: #0d857c;
+  border-color: #0d857c;
   transform: translateY(-1px);
 }
 

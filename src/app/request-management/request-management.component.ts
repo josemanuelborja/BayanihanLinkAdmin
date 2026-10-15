@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Button } from 'primeng/button';
 
 import { AdminUserBadgeComponent } from '../admin-user-badge/admin-user-badge.component';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
@@ -23,7 +24,7 @@ interface RequestItem {
 @Component({
   selector: 'app-request-management',
   standalone: true,
-  imports: [CommonModule, FormsModule, AdminSidebarComponent, AdminUserBadgeComponent, NotificationBellComponent],
+  imports: [CommonModule, FormsModule, Button, AdminSidebarComponent, AdminUserBadgeComponent, NotificationBellComponent],
   templateUrl: './request-management.component.html',
   styleUrl: './request-management.component.scss'
 })

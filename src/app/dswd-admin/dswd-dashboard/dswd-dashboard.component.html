@@ -163,12 +163,48 @@
             <p>Sorted by priority — Critical first</p>
           </div>
 
-          <button
-            class="review-all"
-            (click)="reviewAll()"
-          >
-            Review All
-          </button>
+          <div class="heading-tools">
+
+            <span class="result-count">
+              {{ filteredRequests.length }} of {{ requests.length }}
+            </span>
+
+            <div class="date-filter" [class.is-active]="hasFilter">
+
+              <p-datepicker
+                [(ngModel)]="dateRange"
+                selectionMode="range"
+                [showIcon]="true"
+                [readonlyInput]="true"
+                dateFormat="M d, yy"
+                placeholder="Filter by date range"
+                styleClass="bayanihan-date-range"
+                appendTo="body"
+              />
+
+              @if (hasFilter) {
+                <p-button
+                  type="button"
+                  icon="pi pi-times"
+                  label="Clear"
+                  severity="secondary"
+                  [text]="true"
+                  styleClass="clear-filter"
+                  (onClick)="clearFilter()"
+                />
+              }
+
+            </div>
+
+            <p-button
+              label="Review All"
+              icon="pi pi-arrow-right"
+              iconPos="right"
+              styleClass="review-all"
+              (onClick)="reviewAll()"
+            />
+
+          </div>
 
         </div>
 
@@ -189,7 +225,7 @@
 
           <div
             class="table-row"
-            *ngFor="let request of requests"
+            *ngFor="let request of filteredRequests"
           >
 
             <span>#{{ request.id }}</span>
@@ -220,6 +256,13 @@
               Review
             </button>
 
+          </div>
+
+          <div
+            class="table-empty"
+            *ngIf="filteredRequests.length === 0"
+          >
+            No requests match the selected date range.
           </div>
 
         </div>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Button } from 'primeng/button';
 
 import { NotificationBellComponent } from '../../notification/notification-bell.component';
 import { NotificationService } from '../../notification/notification.service';
@@ -18,7 +19,7 @@ import {
 @Component({
   selector: 'app-dswd-review',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, NotificationBellComponent],
+  imports: [CommonModule, FormsModule, Button, RouterLink, NotificationBellComponent],
   templateUrl: './dswd-review.component.html',
   styleUrl: './dswd-review.component.scss'
 })

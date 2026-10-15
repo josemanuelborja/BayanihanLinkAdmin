@@ -246,9 +246,9 @@ main {
   padding: 0 12px;
 }
 
-.search span {
+.search i {
   color: #8ca0bf;
-  font-size: 21px;
+  font-size: 15px;
 }
 
 .search input {
@@ -392,23 +392,14 @@ td {
   gap: 5px;
 }
 
-.actions button {
-  border: 0;
+/* PrimeNG p-button owns the fill (Review = primary blue, Verify = success
+   green); this only pins the compact table sizing. */
+::ng-deep .actions .p-button {
   height: 28px;
   padding: 0 12px;
   border-radius: 7px;
-  color: #fff;
-  font-family: inherit;
+  font-family: "Poppins", Arial, sans-serif;
   font-size: 11px;
-  cursor: pointer;
-}
-
-.review {
-  background: #2948b8;
-}
-
-.verify {
-  background: #00bc51;
 }
 
 @media (max-width: 1100px) {

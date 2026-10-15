@@ -220,21 +220,16 @@
   padding-top: 4px;
 }
 
-.login-button {
+/* PrimeNG p-button uses the branded primary (#2848b7); keep the login sizing. */
+::ng-deep .login-button.p-button {
   width: 100%;
   height: clamp(48px, 7vh, 54px);
-  border: 0;
   border-radius: 12px;
-  background: #2848b7;
-  color: #fff;
-  font-family: inherit;
+  font-family: "Poppins", Arial, sans-serif;
   font-size: 17px;
-  cursor: pointer;
-  transition: .2s;
 }
 
-.login-button:hover {
-  background: #1e3ca2;
+::ng-deep .login-button.p-button:enabled:hover {
   transform: translateY(-1px);
 }
 
@@ -328,7 +323,7 @@
     padding: 8px 12px;
   }
 
-  .login-button {
+  ::ng-deep .login-button.p-button {
     height: 48px;
   }
 

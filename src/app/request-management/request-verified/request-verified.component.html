@@ -57,18 +57,23 @@
 
         <div class="success-actions">
 
-          <button
-            class="primary"
-            (click)="proceedToCoordination()"
-          >
-            Proceed to DSWD Coordination
-          </button>
+          <p-button
+            label="Proceed to DSWD Coordination"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            severity="success"
+            [fluid]="true"
+            styleClass="primary"
+            (onClick)="proceedToCoordination()"
+          />
 
-          <button
-            (click)="backToRequests()"
-          >
-            Back to Request Management
-          </button>
+          <p-button
+            label="Back to Request Management"
+            severity="secondary"
+            [outlined]="true"
+            [fluid]="true"
+            (onClick)="backToRequests()"
+          />
 
         </div>
 

@@ -392,26 +392,28 @@ main {
   border: 5px solid #119c91;
 }
 
-.update-button,
-.back-button {
+/* PrimeNG p-button owns the fill; keep the full-width sidebar sizing. */
+::ng-deep .update-button.p-button,
+::ng-deep .back-button.p-button {
   width: 100%;
   height: 45px;
   border-radius: 10px;
-  font-family: inherit;
-  cursor: pointer;
+  font-family: "Poppins", Arial, sans-serif;
 }
 
-.update-button {
-  border: 0;
+/* Re-tint the primary action from the global blue to DSWD teal. */
+::ng-deep .update-button.p-button {
   background: #119c91;
-  color: white;
+  border-color: #119c91;
 }
 
-.back-button {
+::ng-deep .update-button.p-button:enabled:hover {
+  background: #0d6b63;
+  border-color: #0d6b63;
+}
+
+::ng-deep .back-button.p-button {
   margin-top: 10px;
-  border: 0;
-  background: #eef3f8;
-  color: #425a79;
 }
 
 @media (max-width: 1000px) {
