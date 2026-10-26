@@ -11,82 +11,8 @@ import {
   Toast
 } from './notification.model';
 
-// Older toasts drop off the top once the stack is this deep.
 const MAX_VISIBLE_TOASTS = 4;
 const DEFAULT_DURATION = 4000;
-
-function timeAgo(minutes: number): string {
-  if (minutes < 1) {
-    return 'Just now';
-  }
-
-  if (minutes < 60) {
-    return `${minutes} min ago`;
-  }
-
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) {
-    return `${hours} hr${hours === 1 ? '' : 's'} ago`;
-  }
-
-  const days = Math.floor(hours / 24);
-  return `${days} day${days === 1 ? '' : 's'} ago`;
-}
-
-function seedItems(startId: number): AppNotification[] {
-  const seeds: Array<NotificationInput & { minutesAgo: number; read: boolean }> = [
-    {
-      minutesAgo: 4,
-      read: false,
-      type: 'warning',
-      category: 'request',
-      title: 'Urgent request needs review',
-      message: '#BL-000123 · Typhoon · Food & Water · CDO City'
-    },
-    {
-      minutesAgo: 18,
-      read: false,
-      type: 'info',
-      category: 'donation',
-      title: 'New donation offer',
-      message: 'DO-000089 · Blankets & Clothing · 240 units'
-    },
-    {
-      minutesAgo: 52,
-      read: false,
-      type: 'success',
-      category: 'coordination',
-      title: 'Distribution completed',
-      message: 'Request #BL-000189 · Hygiene Supplies · Davao City'
-    },
-    {
-      minutesAgo: 145,
-      read: true,
-      type: 'error',
-      category: 'request',
-      title: 'Verification failed',
-      message: 'Request #BL-000234 · Iligan City · Documents unreadable'
-    },
-    {
-      minutesAgo: 320,
-      read: true,
-      type: 'info',
-      category: 'system',
-      title: 'System maintenance scheduled',
-      message: 'The portal will be unavailable on Sunday, 02:00–04:00'
-    }
-  ];
-
-  return seeds.map((seed, index) => ({
-    id: startId + index,
-    type: seed.type ?? 'info',
-    category: seed.category ?? 'system',
-    title: seed.title,
-    message: seed.message,
-    time: timeAgo(seed.minutesAgo),
-    read: seed.read
-  }));
-}
 
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
@@ -103,8 +29,8 @@ export class NotificationService {
   private readonly timers = new Map<number, ReturnType<typeof setTimeout>>();
 
   constructor() {
-    this.itemState.set(seedItems(this.nextId));
-    this.nextId += 5;
+    // Start empty. Real notifications will be loaded or pushed dynamically.
+    this.itemState.set([]);
   }
 
   /* ---------- Toasts ---------- */

@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AdminUserBadgeComponent } from '../admin-user-badge/admin-user-badge.component';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { NotificationBellComponent } from '../notification/notification-bell.component';
+import { ApiService, ApiRequest } from '../api/api.service';
 
 interface TrackingItem {
   id: string;
@@ -20,50 +21,13 @@ interface TrackingItem {
   templateUrl: './status-monitoring.component.html',
   styleUrl: './status-monitoring.component.scss'
 })
-export class StatusMonitoringComponent {
+export class StatusMonitoringComponent implements OnInit {
+  private readonly api = inject(ApiService);
 
-  tracking: TrackingItem[] = [
-    {
-      id: '#BL-000123',
-      name: 'Maria Santos',
-      priority: 'URGENT',
-      disaster: 'Typhoon · Food & Water',
-      location: 'CDO City',
-      current: 4
-    },
-    {
-      id: '#BL-000234',
-      name: 'Juan Dela Cruz',
-      priority: 'CRITICAL',
-      disaster: 'Flood · Drinking Water',
-      location: 'Iligan City',
-      current: 3
-    },
-    {
-      id: '#BL-000189',
-      name: 'Ana Reyes',
-      priority: 'NORMAL',
-      disaster: 'Fire · Medicine Kit',
-      location: 'Davao City',
-      current: 6
-    },
-    {
-      id: '#BL-000256',
-      name: 'Pedro Cruz',
-      priority: 'URGENT',
-      disaster: 'Typhoon · Blankets & Clothing',
-      location: 'Butuan City',
-      current: 2
-    },
-    {
-      id: '#BL-000290',
-      name: 'Rosa Lopez',
-      priority: 'NORMAL',
-      disaster: 'Earthquake · Hygiene Supplies',
-      location: 'Surigao del Norte',
-      current: 5
-    }
-  ];
+  tracking: TrackingItem[] = [];
+  loading = true;
+
+  stageCounts: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
 
   stages = [
     'Submitted',
@@ -74,4 +38,30 @@ export class StatusMonitoringComponent {
     'Completed'
   ];
 
+  async ngOnInit(): Promise<void> {
+    const requests = await this.api.getRequests();
+
+    this.tracking = requests.map(r => this.toTracking(r));
+
+    const counts: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
+    for (const r of requests) {
+      const step = r.currentTimelineStep ?? 1;
+      if (step >= 1 && step <= 6) {
+        counts[step] = (counts[step] ?? 0) + 1;
+      }
+    }
+    this.stageCounts = counts;
+    this.loading = false;
+  }
+
+  private toTracking(r: ApiRequest): TrackingItem {
+    return {
+      id: '#' + r.id,
+      name: r.userId,
+      priority: r.urgency,
+      disaster: r.disasterType + ' · ' + r.category,
+      location: r.location,
+      current: r.currentTimelineStep ?? 1
+    };
+  }
 }

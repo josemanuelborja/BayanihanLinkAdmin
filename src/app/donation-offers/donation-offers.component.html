@@ -2,7 +2,6 @@
 
   <app-admin-sidebar />
 
-
   <main>
 
     <header class="topbar">
@@ -19,43 +18,41 @@
 
     </header>
 
-
     <section class="content">
 
       <div class="stats">
 
         <div class="stat blue">
-          <strong>54</strong>
+          <strong>{{ totalOffers }}</strong>
           <span>Total Offers</span>
         </div>
 
         <div class="stat yellow">
-          <strong>12</strong>
+          <strong>{{ pendingCount }}</strong>
           <span>Pending</span>
         </div>
 
         <div class="stat purple">
-          <strong>8</strong>
+          <strong>{{ coordinatingCount }}</strong>
           <span>Coordinating</span>
         </div>
 
         <div class="stat blue2">
-          <strong>6</strong>
+          <strong>{{ verificationCount }}</strong>
           <span>For Verification</span>
         </div>
 
         <div class="stat teal">
-          <strong>9</strong>
+          <strong>{{ distributedCount }}</strong>
           <span>Distributed</span>
         </div>
 
         <div class="stat green">
-          <strong>19</strong>
+          <strong>{{ completedCount }}</strong>
           <span>Completed</span>
         </div>
 
       </div>
-
 
       <div class="filter-box">
 
@@ -108,7 +105,6 @@
 
       </div>
 
-
       <div class="table-card">
 
         <table>
@@ -128,6 +124,14 @@
           </thead>
 
           <tbody>
+
+            <tr *ngIf="loading">
+              <td colspan="9" style="text-align: center; padding: 2rem;">Loading donation offers...</td>
+            </tr>
+
+            <tr *ngIf="!loading && filteredDonations.length === 0">
+              <td colspan="9" style="text-align: center; padding: 2rem;">No donation offers found.</td>
+            </tr>
 
             <tr *ngFor="let item of filteredDonations">
 

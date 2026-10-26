@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { Button } from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 
 import { NotificationBellComponent } from '../../notification/notification-bell.component';
@@ -23,7 +23,7 @@ import {
     CommonModule,
     FormsModule,
     DatePickerModule,
-    Button,
+    ButtonModule,
     RouterLink,
     NotificationBellComponent
   ],

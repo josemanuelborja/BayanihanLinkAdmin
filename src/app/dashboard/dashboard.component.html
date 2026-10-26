@@ -2,7 +2,6 @@
 
   <app-admin-sidebar />
 
-
   <main class="main-content">
 
     <header class="topbar">
@@ -24,38 +23,37 @@
 
     </header>
 
-
     <section class="dashboard-body">
 
       <div class="stat-grid">
 
         <div class="stat-card blue">
-          <strong>142</strong>
+          <strong>{{ totalRequests }}</strong>
           <span>Total Requests</span>
         </div>
 
         <div class="stat-card yellow">
-          <strong>23</strong>
+          <strong>{{ pendingCount }}</strong>
           <span>Pending Verification</span>
         </div>
 
         <div class="stat-card red">
-          <strong>8</strong>
+          <strong>{{ criticalCount }}</strong>
           <span>Critical Requests</span>
         </div>
 
         <div class="stat-card teal">
-          <strong>31</strong>
+          <strong>{{ assistedCount }}</strong>
           <span>Active Assistance</span>
         </div>
 
         <div class="stat-card green">
-          <strong>88</strong>
+          <strong>{{ completedCount }}</strong>
           <span>Completed</span>
         </div>
 
         <div class="stat-card purple">
-          <strong>54</strong>
+          <strong>{{ totalOffers }}</strong>
           <span>Donation Offers</span>
         </div>
 

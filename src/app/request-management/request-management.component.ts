@@ -1,13 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Button } from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 
 import { AdminUserBadgeComponent } from '../admin-user-badge/admin-user-badge.component';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { NotificationBellComponent } from '../notification/notification-bell.component';
 import { NotificationService } from '../notification/notification.service';
+import { ApiService, ApiRequest } from '../api/api.service';
+import { AuthService } from '../auth/auth.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 interface RequestItem {
   id: string;
@@ -19,125 +23,71 @@ interface RequestItem {
   priority: string;
   status: string;
   date: string;
+  rawId: string;
 }
 
 @Component({
   selector: 'app-request-management',
   standalone: true,
-  imports: [CommonModule, FormsModule, Button, AdminSidebarComponent, AdminUserBadgeComponent, NotificationBellComponent],
+  imports: [CommonModule, FormsModule, ButtonModule, AdminSidebarComponent, AdminUserBadgeComponent, NotificationBellComponent],
   templateUrl: './request-management.component.html',
   styleUrl: './request-management.component.scss'
 })
-export class RequestManagementComponent {
+export class RequestManagementComponent implements OnInit {
 
   search = '';
   statusFilter = 'All';
   priorityFilter = 'All';
-
-  requests: RequestItem[] = [
-    {
-      id: '#BL-000302',
-      requester: 'Ana Reyes',
-      disaster: 'Typhoon',
-      category: 'Food',
-      quantity: '20 sacks',
-      location: 'CDO City',
-      priority: 'CRITICAL',
-      status: 'Pending',
-      date: 'Sep 16, 2026'
-    },
-    {
-      id: '#BL-000301',
-      requester: 'Juan Dela Cruz',
-      disaster: 'Flood',
-      category: 'Water',
-      quantity: '50 bottles',
-      location: 'Iligan City',
-      priority: 'URGENT',
-      status: 'Pending',
-      date: 'Sep 16, 2026'
-    },
-    {
-      id: '#BL-000298',
-      requester: 'Rosa Gomez',
-      disaster: 'Fire',
-      category: 'Clothing',
-      quantity: '30 sets',
-      location: 'Davao City',
-      priority: 'NORMAL',
-      status: 'Verified',
-      date: 'Sep 15, 2026'
-    },
-    {
-      id: '#BL-000295',
-      requester: 'Pedro Santos',
-      disaster: 'Typhoon',
-      category: 'Medicine',
-      quantity: '10 kits',
-      location: 'Butuan City',
-      priority: 'URGENT',
-      status: 'Assisted',
-      date: 'Sep 14, 2026'
-    },
-    {
-      id: '#BL-000290',
-      requester: 'Maria Lopez',
-      disaster: 'Earthquake',
-      category: 'Blankets',
-      quantity: '25 pieces',
-      location: 'Surigao del Norte',
-      priority: 'NORMAL',
-      status: 'Completed',
-      date: 'Sep 12, 2026'
-    },
-    {
-      id: '#BL-000285',
-      requester: 'Carlo Reyes',
-      disaster: 'Flood',
-      category: 'Food',
-      quantity: '15 sacks',
-      location: 'Cagayan de Oro',
-      priority: 'CRITICAL',
-      status: 'Pending',
-      date: 'Sep 11, 2026'
-    },
-    {
-      id: '#BL-000280',
-      requester: 'Lita Santos',
-      disaster: 'Typhoon',
-      category: 'Hygiene',
-      quantity: '40 packs',
-      location: 'General Santos',
-      priority: 'NORMAL',
-      status: 'Verified',
-      date: 'Sep 10, 2026'
-    },
-    {
-      id: '#BL-000275',
-      requester: 'Ramon Garcia',
-      disaster: 'Fire',
-      category: 'Clothing',
-      quantity: '20 sets',
-      location: 'Davao del Sur',
-      priority: 'URGENT',
-      status: 'Completed',
-      date: 'Sep 9, 2026'
-    }
-  ];
+  requests: RequestItem[] = [];
+  loading = true;
 
   constructor(
     private router: Router,
-    private notifications: NotificationService
+    private notifications: NotificationService,
+    private api: ApiService,
+    private auth: AuthService,
+    private http: HttpClient
   ) {}
+
+  async ngOnInit(): Promise<void> {
+    await this.loadRequests();
+  }
+
+  private async loadRequests(): Promise<void> {
+    this.loading = true;
+    const raw = await this.api.getRequests();
+    this.requests = raw.map(r => this.toDisplay(r));
+    this.loading = false;
+  }
+
+  private toDisplay(r: ApiRequest): RequestItem {
+    const statusMap: Record<string, string> = {
+      PENDING: 'Pending', VERIFIED: 'Verified', ASSISTED: 'Assisted', COMPLETED: 'Completed'
+    };
+    return {
+      id: '#' + r.id,
+      rawId: r.id,
+      requester: r.userId,
+      disaster: r.disasterType,
+      category: r.category,
+      quantity: `${r.quantity} ${r.unit}`,
+      location: r.location,
+      priority: r.urgency,
+      status: statusMap[r.status] ?? r.status,
+      date: new Date(r.dateSubmitted).toLocaleDateString('en-PH', { year: 'numeric', month: 'short', day: 'numeric' })
+    };
+  }
 
   get filteredRequests(): RequestItem[] {
     return this.requests.filter(request => {
-      const term = this.search.toLowerCase();
+      const term = this.search.trim().toLowerCase();
 
       const matchesSearch =
         !term ||
         request.id.toLowerCase().includes(term) ||
         request.requester.toLowerCase().includes(term) ||
+        request.disaster.toLowerCase().includes(term) ||
+        request.category.toLowerCase().includes(term) ||
         request.location.toLowerCase().includes(term);
 
       const matchesStatus =
@@ -161,14 +111,22 @@ export class RequestManagementComponent {
   }
 
   review(id: string): void {
-    this.router.navigate([
-      '/request-review',
-      id.replace(/^#/, '')
-    ]);
+    this.router.navigate(['/request-review', id.replace(/^#/, '')]);
   }
 
-  verify(id: string): void {
-    this.notifications.success(`${id} marked for verification.`);
-  }
+  async verify(id: string): Promise<void> {
+    const rawId = id.replace(/^#/, '');
+    const token = this.auth.authToken();
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
+    try {
+      await firstValueFrom(
+        this.http.patch(`/api/requests/${rawId}/status`, { status: 'VERIFIED', currentTimelineStep: 2 }, { headers })
+      );
+      this.notifications.success(`${id} has been verified.`);
+      await this.loadRequests();
+    } catch (err: any) {
+      this.notifications.error(err?.error?.error ?? 'Could not verify request.');
+    }
+  }
 }

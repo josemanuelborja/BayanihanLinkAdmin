@@ -2,7 +2,6 @@
 
   <app-admin-sidebar />
 
-
   <main>
 
     <header class="topbar">
@@ -18,7 +17,6 @@
       </div>
 
     </header>
-
 
     <section class="content">
 
@@ -87,11 +85,10 @@
         </div>
 
         <span class="result-count">
-          {{ filteredRequests.length }} of 8 results
+          {{ filteredRequests.length }} of {{ requests.length }} results
         </span>
 
       </div>
-
 
       <div class="table-card">
 
@@ -113,6 +110,14 @@
           </thead>
 
           <tbody>
+
+            <tr *ngIf="loading">
+              <td colspan="10" style="text-align:center; padding: 2rem;">Loading...</td>
+            </tr>
+
+            <tr *ngIf="!loading && filteredRequests.length === 0">
+              <td colspan="10" style="text-align:center; padding: 2rem;">No requests found.</td>
+            </tr>
 
             <tr *ngFor="let request of filteredRequests">
 

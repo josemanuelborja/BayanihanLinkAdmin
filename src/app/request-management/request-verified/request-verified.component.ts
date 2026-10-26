@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Button } from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 
 import { AdminSidebarComponent } from '../../admin-sidebar/admin-sidebar.component';
 import { NotificationBellComponent } from '../../notification/notification-bell.component';
@@ -8,7 +9,7 @@ import { NotificationBellComponent } from '../../notification/notification-bell.
 @Component({
   selector: 'app-request-verified',
   standalone: true,
-  imports: [Button, NotificationBellComponent, AdminSidebarComponent],
+  imports: [CommonModule, ButtonModule, NotificationBellComponent, AdminSidebarComponent],
   templateUrl: './request-verified.component.html',
   styleUrl: './request-verified.component.scss'
 })

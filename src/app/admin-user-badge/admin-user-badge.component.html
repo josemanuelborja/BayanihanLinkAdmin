@@ -1,7 +1,7 @@
 <div class="admin-user">
-  <div class="avatar" aria-label="Admin User">AD</div>
+  <div class="avatar" [attr.aria-label]="name">{{ initials }}</div>
   <div class="details">
-    <strong>Admin User</strong>
+    <strong>{{ name }}</strong>
     <span>Administrator</span>
   </div>
 </div>

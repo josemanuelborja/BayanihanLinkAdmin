@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Button } from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 
 import { NotificationBellComponent } from '../../notification/notification-bell.component';
 import { NotificationService } from '../../notification/notification.service';
@@ -19,40 +19,55 @@ import {
 @Component({
   selector: 'app-dswd-review',
   standalone: true,
-  imports: [CommonModule, FormsModule, Button, RouterLink, NotificationBellComponent],
+  imports: [CommonModule, FormsModule, ButtonModule, RouterLink, NotificationBellComponent],
   templateUrl: './dswd-review.component.html',
   styleUrl: './dswd-review.component.scss'
 })
 export class DswdReviewComponent {
 
-  /**
-   * Undefined only before the route params arrive; unknown ids are turned
-   * away by dswdRequestExistsGuard before this component is built.
-   */
-  request?: DswdRequest;
-
+  request: DswdRequest | undefined;
+  requestId = 'BL-000301';
+  selectedStatus: DswdStatus = 'Submitted for Verification';
   status: DswdStatus = 'Submitted for Verification';
-
-  readonly statuses = DSWD_STATUSES;
+  statuses = DSWD_STATUSES;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private notifications: NotificationService
   ) {
-    this.route.paramMap.subscribe(params => {
-      const found = findDswdRequest(params.get('id'));
-
-      if (!found) return;
-
-      this.request = found;
-      this.status = found.status;
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if (id) {
+        this.requestId = id;
+        this.request = findDswdRequest(id);
+        if (this.request) {
+          this.selectedStatus = this.request.status;
+          this.status = this.request.status;
+        }
+      }
     });
   }
 
-  /** Kept for the sidebar link, which points back at the open request. */
-  get requestId(): string {
-    return this.request?.id ?? '';
+  selectStatus(status: DswdStatus): void {
+    this.selectedStatus = status;
+    this.status = status;
+  }
+
+  saveStatus(): void {
+    if (this.request) {
+      this.request.status = this.selectedStatus;
+    }
+    this.notifications.success('Status updated successfully');
+    this.router.navigate(['/dswd/dashboard']);
+  }
+
+  updateStatus(): void {
+    this.saveStatus();
+  }
+
+  backToDashboard(): void {
+    this.router.navigate(['/dswd/dashboard']);
   }
 
   priorityClass(priority: DswdRequest['priority']): string {
@@ -61,32 +76,6 @@ export class DswdReviewComponent {
 
   statusBadge(status: DswdStatus): DswdStatusBadge {
     return statusBadge(status);
-  }
-
-  updateStatus(): void {
-    if (!this.request) return;
-
-    // Written back to the shared record so the dashboard table and the
-    // status tracker show the new stage until the page is reloaded.
-    this.request.status = this.status;
-    this.notifications.success(
-      `Request #${this.request.id} updated to ${this.status}.`
-    );
-
-    // Also filed in the bell inbox, so the change is still there after the
-    // toast fades.
-    this.notifications.notify({
-      type: 'success',
-      category: 'request',
-      title: `Status updated · ${this.status}`,
-      message:
-        `#${this.request.id} · ${this.request.disasterType} · ` +
-        `${this.request.item} · ${this.request.location}`
-    });
-  }
-
-  backToDashboard(): void {
-    this.router.navigate(['/dswd/dashboard']);
   }
 
   logout(): void {

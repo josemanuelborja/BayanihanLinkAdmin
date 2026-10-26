@@ -19,25 +19,7 @@
         government verification.
       </p>
     </div>
-
-    <div class="brand-stats">
-      <div>
-        <strong>142</strong>
-        <span>Total Requests</span>
-      </div>
-
-      <div>
-        <strong>54</strong>
-        <span>Donors Active</span>
-      </div>
-
-      <div>
-        <strong>88</strong>
-        <span>Completed</span>
-      </div>
-    </div>
   </section>
-
 
   <section class="login-form-section">
 
@@ -112,6 +94,8 @@
           label="Administrator Login"
           styleClass="login-button"
           [fluid]="true"
+          [loading]="loading"
+          [disabled]="loading"
         />
 
       </form>

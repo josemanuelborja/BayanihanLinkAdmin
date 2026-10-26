@@ -2,29 +2,45 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
-import { API_BASE_URL } from '../dashboard-api';
-import { REQUESTS_BY_PRIORITY_FALLBACK, RequestsByPriority } from './requests-by-priority.data';
+import { RequestsByPriority } from './requests-by-priority.data';
+import { ApiRequest } from '../../api/api.service';
+
+const EMPTY_PRIORITY_DATA: RequestsByPriority = {
+  period: new Date().toLocaleString('default', { month: 'long', year: 'numeric' }),
+  priorities: [
+    { id: 'critical', label: 'Critical', count: 0 },
+    { id: 'urgent', label: 'Urgent', count: 0 },
+    { id: 'normal', label: 'Normal', count: 0 }
+  ]
+};
 
 @Injectable({ providedIn: 'root' })
 export class RequestsByPriorityService {
-  private readonly http = inject(HttpClient, { optional: true });
-  private readonly baseUrl = inject(API_BASE_URL);
-  private readonly dataState = signal<RequestsByPriority>(REQUESTS_BY_PRIORITY_FALLBACK);
+  private readonly http = inject(HttpClient);
+  private readonly dataState = signal<RequestsByPriority>(EMPTY_PRIORITY_DATA);
 
   readonly data = this.dataState.asReadonly();
 
-  async refresh(): Promise<void> {
-    if (!this.http) {
-      return;
-    }
+  constructor() {
+    void this.refresh();
+  }
 
+  async refresh(): Promise<void> {
     try {
-      const data = await firstValueFrom(
-        this.http.get<RequestsByPriority>(`${this.baseUrl}/dashboard/requests-by-priority`)
+      const requests = await firstValueFrom(
+        this.http.get<ApiRequest[]>('/api/requests')
       );
-      this.dataState.set(data);
+
+      this.dataState.set({
+        period: new Date().toLocaleString('default', { month: 'long', year: 'numeric' }),
+        priorities: [
+          { id: 'critical', label: 'Critical', count: requests.filter(r => r.urgency === 'CRITICAL').length },
+          { id: 'urgent',   label: 'Urgent',   count: requests.filter(r => r.urgency === 'URGENT').length },
+          { id: 'normal',   label: 'Normal',   count: requests.filter(r => r.urgency === 'NORMAL').length }
+        ]
+      });
     } catch {
-      // Keep the seeded fallback while the API is unavailable.
+      this.dataState.set(EMPTY_PRIORITY_DATA);
     }
   }
 }

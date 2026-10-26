@@ -2,7 +2,6 @@
 
   <app-admin-sidebar />
 
-
   <main>
 
     <header class="topbar">
@@ -10,7 +9,7 @@
       <div>
         <h1>DSWD Coordination</h1>
         <p>
-          Request #{{ requestId }} · Offer #{{ offerId }}
+          Request #{{ requestId }} <span *ngIf="offerId">· Offer #{{ offerId }}</span>
         </p>
       </div>
 
@@ -21,10 +20,9 @@
 
     </header>
 
-
     <section class="content">
 
-      <div class="layout">
+      <div class="layout" *ngIf="request; else emptyState">
 
         <div class="left">
 
@@ -33,7 +31,7 @@
             <div class="case-title">
               <small>COORDINATION CASE</small>
 
-              <h2>Typhoon Assistance · Drinking Water</h2>
+              <h2>{{ request?.disasterType || 'Disaster' }} Assistance · {{ request?.itemNeeded || 'Relief Goods' }}</h2>
             </div>
 
             <div class="case-status">
@@ -48,20 +46,19 @@
                 <strong>#{{ requestId }}</strong>
               </div>
 
-              <div>
+              <div *ngIf="offerId">
                 <small>Donation Offer ID</small>
                 <strong>#{{ offerId }}</strong>
               </div>
 
               <div>
                 <small>Priority</small>
-                <strong>CRITICAL</strong>
+                <strong>{{ request?.urgency || 'NORMAL' }}</strong>
               </div>
 
             </div>
 
           </section>
-
 
           <section class="card details">
 
@@ -76,27 +73,22 @@
 
               <div>
                 <small>GENERAL LOCATION</small>
-                <strong>Brgy. 14, Cagayan de Oro City</strong>
+                <strong>{{ request?.location || 'N/A' }}</strong>
               </div>
 
               <div>
                 <small>ITEM NEEDED</small>
-                <strong>Drinking Water (1L bottles)</strong>
+                <strong>{{ request?.itemNeeded || 'N/A' }}</strong>
               </div>
 
               <div>
                 <small>QUANTITY NEEDED</small>
-                <strong>100 bottles</strong>
+                <strong>{{ request?.quantity || 0 }} {{ request?.unit || '' }}</strong>
               </div>
 
-              <div>
+              <div *ngIf="offerId">
                 <small>DONATION OFFER</small>
-                <strong>#{{ offerId }} · Ramon Garcia</strong>
-              </div>
-
-              <div>
-                <small>QUANTITY OFFERED</small>
-                <strong>30 bottles</strong>
+                <strong>#{{ offerId }}</strong>
               </div>
 
               <div>
@@ -106,13 +98,12 @@
 
               <div>
                 <small>PERSONS AFFECTED</small>
-                <strong>50 families</strong>
+                <strong>{{ request?.personsAffected || 0 }} persons</strong>
               </div>
 
             </div>
 
           </section>
-
 
           <section class="card notes">
 
@@ -171,7 +162,6 @@
 
         </div>
 
-
         <aside class="update-card">
 
           <h2>Update Coordination Status</h2>
@@ -211,6 +201,18 @@
       </div>
 
     </section>
+
+    <ng-template #emptyState>
+      <div style="text-align: center; padding: 4rem;">
+        <p>No coordination case or request found for ID #{{ requestId }}.</p>
+        <p-button
+          label="Back to Offers"
+          icon="pi pi-arrow-left"
+          styleClass="mt-3"
+          (onClick)="backToOffers()"
+        />
+      </div>
+    </ng-template>
 
   </main>
 
