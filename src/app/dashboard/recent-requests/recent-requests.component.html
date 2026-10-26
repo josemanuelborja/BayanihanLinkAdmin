@@ -1,0 +1,68 @@
+<section class="card recent-requests-card">
+  <div class="requests-header">
+    <div>
+      <h2>Recent Requests</h2>
+      <p class="request-count">Showing {{ filteredRequests.length }} of {{ requests.length }}</p>
+    </div>
+
+    <div class="request-tools">
+      <div class="search-filter-wrap">
+        <input
+          type="text"
+          class="search-input"
+          [(ngModel)]="searchTerm"
+          placeholder="Search..."
+          aria-label="Search requests"
+        />
+      </div>
+
+      <a class="view-all" routerLink="/request-management">View All →</a>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>REQUEST ID</th>
+          <th>REQUESTER</th>
+          <th>DISASTER</th>
+          <th>CATEGORY</th>
+          <th>LOCATION</th>
+          <th>PRIORITY</th>
+          <th>STATUS</th>
+          <th>DATE</th>
+          <th>ACTION</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @if (filteredRequests.length) {
+          @for (request of filteredRequests; track request.id) {
+            <tr>
+              <td>#{{ request.id }}</td>
+              <td>{{ request.requester }}</td>
+              <td>{{ request.disaster }}</td>
+              <td>{{ request.category }}</td>
+              <td>{{ request.location }}</td>
+              <td>
+                <span class="badge {{ priorityClass(request.priority) }}">{{ request.priority }}</span>
+              </td>
+              <td>
+                <span class="badge {{ statusClass(request.status) }}">{{ request.status }}</span>
+              </td>
+              <td>{{ request.date }}</td>
+              <td>
+                <button class="review-button" (click)="reviewRequest(request.id)">Review</button>
+              </td>
+            </tr>
+          }
+        } @else {
+          <tr class="empty-row">
+            <td colspan="9">No Results.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

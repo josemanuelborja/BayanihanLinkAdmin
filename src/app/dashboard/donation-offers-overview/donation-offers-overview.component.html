@@ -1,0 +1,32 @@
+<section class="card">
+  <header class="card-header">
+    <div>
+      <h2>Donation Offers Overview</h2>
+      <p>Current status of donation offers submitted by donors and volunteers.</p>
+    </div>
+    <span>{{ data().period }}</span>
+  </header>
+
+  <div class="legend" role="group" aria-label="Donation offers chart legend">
+    @for (item of legendItems; track item.seriesName) {
+      <button
+        type="button"
+        [class.is-hidden]="isSeriesHidden(item.seriesName)"
+        [attr.aria-pressed]="!isSeriesHidden(item.seriesName)"
+        [attr.aria-label]="(isSeriesHidden(item.seriesName) ? 'Show ' : 'Hide ') + item.label + ' line'"
+        (click)="toggleSeries(item.seriesName)"
+      >
+        <span class="legend-box" [style.background]="item.color" aria-hidden="true"></span>
+        <span class="legend-label">{{ item.label }}</span>
+      </button>
+    }
+  </div>
+
+  <div class="chart">
+    <canvas
+      #chart
+      role="img"
+      aria-label="Line chart of donation offers and their current statuses over the last eight months"
+    ></canvas>
+  </div>
+</section>

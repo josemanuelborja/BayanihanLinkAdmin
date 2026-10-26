@@ -1,0 +1,66 @@
+<section class="card recent-donation-offers-card">
+  <div class="requests-header">
+    <div>
+      <h2>Recent Donation Offers</h2>
+      <p class="request-count">Showing {{ filteredOffers.length }} of {{ recentOffers.length }}</p>
+    </div>
+
+    <div class="request-tools">
+      <div class="search-filter-wrap">
+        <input
+          type="text"
+          class="search-input"
+          [(ngModel)]="searchTerm"
+          placeholder="Search..."
+          aria-label="Search donation offers"
+        />
+      </div>
+
+      <a class="view-all" routerLink="/donation-offers">View All →</a>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>OFFER ID</th>
+          <th>DONOR</th>
+          <th>TYPE</th>
+          <th>ITEM</th>
+          <th>QUANTITY</th>
+          <th>LOCATION</th>
+          <th>STATUS</th>
+          <th>DATE</th>
+          <th>ACTION</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @if (filteredOffers.length) {
+          @for (offer of filteredOffers; track offer.id) {
+            <tr>
+              <td>#{{ offer.id }}</td>
+              <td>{{ offer.donor }}</td>
+              <td>{{ offer.type }}</td>
+              <td>{{ offer.item }}</td>
+              <td>{{ offer.quantity }}</td>
+              <td>{{ offer.location }}</td>
+              <td>
+                <span class="badge {{ statusClass(offer.status) }}">{{ offer.status }}</span>
+              </td>
+              <td>{{ offer.date }}</td>
+              <td>
+                <button class="review-button" (click)="reviewOffer(offer.id)">Review</button>
+              </td>
+            </tr>
+          }
+        } @else {
+          <tr class="empty-row">
+            <td colspan="9">No Results.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

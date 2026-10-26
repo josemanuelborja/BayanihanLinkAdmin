@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { Button } from 'primeng/button';
-import { DatePickerModule } from 'primeng/datepicker';
+import { Router } from '@angular/router';
 
 import { AdminUserBadgeComponent } from '../admin-user-badge/admin-user-badge.component';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { NotificationBellComponent } from '../notification/notification-bell.component';
 import { dateToIso, inDateRange } from '../date-filter.util';
+import { DonationOffersOverviewComponent } from './donation-offers-overview/donation-offers-overview.component';
+import { RequestsByPriorityComponent } from './requests-by-priority/requests-by-priority.component';
+import { RequestsByStatusComponent } from './requests-by-status/requests-by-status.component';
+import { RequestsByDisasterTypeComponent } from './requests-by-disaster-type/requests-by-disaster-type.component';
+import { RecentRequestsComponent } from './recent-requests/recent-requests.component';
+import { RecentDonationOffersComponent } from './recent-donation-offers/recent-donation-offers.component';
 
 export interface DashboardRequest {
   id: string;
@@ -79,24 +83,28 @@ const DASHBOARD_REQUESTS: readonly DashboardRequest[] = [
   standalone: true,
   imports: [
     FormsModule,
-    DatePickerModule,
-    Button,
     AdminSidebarComponent,
     AdminUserBadgeComponent,
-    RouterLink,
-    NotificationBellComponent
+    NotificationBellComponent,
+    RequestsByStatusComponent,
+    RequestsByPriorityComponent,
+    RequestsByDisasterTypeComponent,
+    DonationOffersOverviewComponent,
+    RecentRequestsComponent,
+    RecentDonationOffersComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
+  private readonly router = inject(Router);
 
   readonly requests: readonly DashboardRequest[] = DASHBOARD_REQUESTS;
 
   /** Calendar filter, as picked in the PrimeNG range datepicker. */
   dateRange: Date[] | null = null;
 
-  constructor(private router: Router) {}
+  constructor() {}
 
   /** Requests inside the selected date range (all of them by default). */
   get filteredRequests(): readonly DashboardRequest[] {

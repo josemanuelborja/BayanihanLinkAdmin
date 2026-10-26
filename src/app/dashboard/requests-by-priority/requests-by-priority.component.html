@@ -1,0 +1,16 @@
+<section class="card">
+  <header class="card-header">
+    <div>
+      <h2>Requests by Priority</h2>
+      <p>How the current request load is distributed.</p>
+    </div>
+    <span>{{ data().period }}</span>
+  </header>
+
+  <div
+    #chart
+    class="chart"
+    role="img"
+    aria-label="Requests by priority donut chart"
+  ></div>
+</section>
