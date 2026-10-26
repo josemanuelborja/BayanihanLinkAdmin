@@ -4,7 +4,7 @@
       <h2>Requests by Status</h2>
       <p>Click a status to see its priority breakdown.</p>
     </div>
-    <span>{{ data().period }}</span>
+    <app-dashboard-chart-filter (periodChange)="filterPeriod($event)" />
   </header>
 
   <div

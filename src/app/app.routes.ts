@@ -4,15 +4,14 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RequestManagementComponent } from './request-management/request-management.component';
 import { RequestReviewComponent } from './request-management/request-review/request-review.component';
-import { RequestVerifiedComponent } from './request-management/request-verified/request-verified.component';
+import { RequestReviewRecordedComponent } from './request-management/request-review-recorded/request-review-recorded.component';
 import { DonationOffersComponent } from './donation-offers/donation-offers.component';
-import { DswdCoordinationComponent } from './dswd-coordination/dswd-coordination.component';
+import { ExternalPartnerCoordinationComponent } from './external-coordination/external-coordination.component';
 import { StatusMonitoringComponent } from './status-monitoring/status-monitoring.component';
+import { DswdLoginComponent } from './dswd-admin/dswd-login/dswd-login.component';
 import { DswdDashboardComponent } from './dswd-admin/dswd-dashboard/dswd-dashboard.component';
 import { DswdReviewComponent } from './dswd-admin/dswd-review/dswd-review.component';
-import { DswdStatusComponent } from './dswd-admin/dswd-status/dswd-status.component';
-import { DswdLoginComponent } from './dswd-admin/dswd-login/dswd-login.component';
-import { dswdRequestExistsGuard } from './dswd-admin/dswd-request.guard';
+import { dswdRequestExistsGuard, dswdSessionGuard } from './dswd-admin/dswd-request.guard';
 
 export const routes: Routes = [
 
@@ -43,8 +42,8 @@ export const routes: Routes = [
   },
 
   {
-    path: 'request-verified/:id',
-    component: RequestVerifiedComponent
+    path: 'request-review-recorded/:id',
+    component: RequestReviewRecordedComponent
   },
 
   {
@@ -53,23 +52,18 @@ export const routes: Routes = [
   },
 
   {
-    path: 'dswd-coordination',
-    component: DswdCoordinationComponent
+    path: 'external-coordination',
+    component: ExternalPartnerCoordinationComponent
   },
 
   {
-    path: 'dswd-coordination/:requestId',
-    component: DswdCoordinationComponent
+    path: 'external-coordination/:requestId',
+    component: ExternalPartnerCoordinationComponent
   },
 
   {
-    path: 'dswd-coordination/:requestId/:offerId',
-    component: DswdCoordinationComponent
-  },
-
-  {
-    path: 'status-monitoring',
-    component: StatusMonitoringComponent
+    path: 'external-coordination/:requestId/:offerId',
+    component: ExternalPartnerCoordinationComponent
   },
 
   {
@@ -79,18 +73,19 @@ export const routes: Routes = [
 
   {
     path: 'dswd/dashboard',
-    component: DswdDashboardComponent
+    component: DswdDashboardComponent,
+    canActivate: [dswdSessionGuard]
   },
 
   {
     path: 'dswd/review/:id',
     component: DswdReviewComponent,
-    canActivate: [dswdRequestExistsGuard]
+    canActivate: [dswdSessionGuard, dswdRequestExistsGuard]
   },
 
   {
-    path: 'dswd/status',
-    component: DswdStatusComponent
+    path: 'status-monitoring',
+    component: StatusMonitoringComponent
   },
 
   {

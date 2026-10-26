@@ -13,6 +13,7 @@ import {
 import { Router } from '@angular/router';
 import type { Chart } from 'chart.js';
 
+import { DashboardChartFilterComponent, DashboardChartPeriod } from '../dashboard-chart-filter.component';
 import {
   DONATION_SERIES_COLORS,
   buildDonationOffersOverviewData,
@@ -27,13 +28,7 @@ interface DonationLegendItem {
   color: string;
 }
 
-export type DonationOfferStatus =
-  | 'Pending Coordination'
-  | 'Coordinating'
-  | 'For Verification'
-  | 'Verified'
-  | 'Distributed'
-  | 'Completed';
+type DonationOfferStatus = 'Pending Coordination' | 'Coordinating' | 'For Verification' | 'Verified' | 'Distributed' | 'Completed';
 
 interface DonationOffer {
   id: string;
@@ -48,6 +43,7 @@ interface DonationOffer {
 @Component({
   selector: 'app-donation-offers-overview',
   standalone: true,
+  imports: [DashboardChartFilterComponent],
   templateUrl: './donation-offers-overview.component.html',
   styleUrl: './donation-offers-overview.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -62,44 +58,9 @@ export class DonationOffersOverviewComponent {
 
   protected readonly data = this.store.data;
 
-  protected readonly recentOffers: readonly DonationOffer[] = [
-    {
-      id: 'DO-000089',
-      donor: 'Ramon Garcia',
-      item: 'Drinking Water (1L)',
-      quantity: '30 bottles',
-      date: 'Sep 16, 2026',
-      status: 'Pending Coordination',
-      requestId: 'BL-000234'
-    },
-    {
-      id: 'DO-000085',
-      donor: 'Liza Cruz',
-      item: 'Rice (5kg sacks)',
-      quantity: '10 sacks',
-      date: 'Sep 15, 2026',
-      status: 'Coordinating',
-      requestId: 'BL-000241'
-    },
-    {
-      id: 'DO-000079',
-      donor: 'Mike Santos',
-      item: 'Blankets',
-      quantity: '25 pieces',
-      date: 'Sep 14, 2026',
-      status: 'For Verification',
-      requestId: 'BL-000220'
-    },
-    {
-      id: 'DO-000071',
-      donor: 'Grace Lee',
-      item: 'Medicine Kit (First Aid)',
-      quantity: '15 kits',
-      date: 'Sep 10, 2026',
-      status: 'Verified',
-      requestId: 'BL-000189'
-    }
-  ];
+  protected filterPeriod(period: DashboardChartPeriod): void {
+    void this.store.refresh(period.month, period.year);
+  }
 
   protected readonly legendItems: DonationLegendItem[] = [
     {
@@ -190,7 +151,7 @@ export class DonationOffersOverviewComponent {
 
   protected openOffer(offer: DonationOffer): void {
     this.router.navigate([
-      '/dswd-coordination',
+      '/external-coordination',
       offer.requestId.replace(/^#/, ''),
       offer.id.replace(/^#/, '')
     ]);

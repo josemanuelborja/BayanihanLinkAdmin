@@ -2,45 +2,32 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
-import { RequestsByPriority } from './requests-by-priority.data';
-import { ApiRequest } from '../../api/api.service';
-
-const EMPTY_PRIORITY_DATA: RequestsByPriority = {
-  period: new Date().toLocaleString('default', { month: 'long', year: 'numeric' }),
-  priorities: [
-    { id: 'critical', label: 'Critical', count: 0 },
-    { id: 'urgent', label: 'Urgent', count: 0 },
-    { id: 'normal', label: 'Normal', count: 0 }
-  ]
-};
+import { API_BASE_URL, API_ENABLED } from '../dashboard-api';
+import { REQUESTS_BY_PRIORITY_FALLBACK, RequestsByPriority } from './requests-by-priority.data';
 
 @Injectable({ providedIn: 'root' })
 export class RequestsByPriorityService {
-  private readonly http = inject(HttpClient);
-  private readonly dataState = signal<RequestsByPriority>(EMPTY_PRIORITY_DATA);
+  private readonly http = inject(HttpClient, { optional: true });
+  private readonly baseUrl = inject(API_BASE_URL);
+  private readonly apiEnabled = inject(API_ENABLED);
+  private readonly dataState = signal<RequestsByPriority>(REQUESTS_BY_PRIORITY_FALLBACK);
 
   readonly data = this.dataState.asReadonly();
-
-  constructor() {
-    void this.refresh();
-  }
-
-  async refresh(): Promise<void> {
-    try {
-      const requests = await firstValueFrom(
-        this.http.get<ApiRequest[]>('/api/requests')
-      );
-
-      this.dataState.set({
-        period: new Date().toLocaleString('default', { month: 'long', year: 'numeric' }),
-        priorities: [
-          { id: 'critical', label: 'Critical', count: requests.filter(r => r.urgency === 'CRITICAL').length },
-          { id: 'urgent',   label: 'Urgent',   count: requests.filter(r => r.urgency === 'URGENT').length },
-          { id: 'normal',   label: 'Normal',   count: requests.filter(r => r.urgency === 'NORMAL').length }
-        ]
-      });
-    } catch {
-      this.dataState.set(EMPTY_PRIORITY_DATA);
+  async refresh(month: number | null = null, year: number | null = null): Promise<void> {
+    if (!this.apiEnabled || !this.http) {
+      return;
     }
+
+    try {
+      const data = await firstValueFrom(
+        this.http.get<RequestsByPriority>(`${this.baseUrl}/dashboard/requests-by-priority`, {
+          params: {
+            ...(month !== null ? { month: String(month) } : {}),
+            ...(year !== null ? { year: String(year) } : {})
+          }
+        })
+      );
+      this.dataState.set(data);
+    } catch { /* Keep the chart empty while the API is unavailable. */ }
   }
 }

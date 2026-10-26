@@ -10,12 +10,14 @@ import {
 } from '@angular/core';
 import type ApexCharts from 'apexcharts';
 
+import { DashboardChartFilterComponent, DashboardChartPeriod } from '../dashboard-chart-filter.component';
 import { buildRequestsByPriorityOptions } from './requests-by-priority.chart';
 import { RequestsByPriorityService } from './requests-by-priority.service';
 
 @Component({
   selector: 'app-requests-by-priority',
   standalone: true,
+  imports: [DashboardChartFilterComponent],
   templateUrl: './requests-by-priority.component.html',
   styleUrl: './requests-by-priority.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -28,6 +30,10 @@ export class RequestsByPriorityComponent {
   private destroyed = false;
 
   protected readonly data = this.store.data;
+
+  protected filterPeriod(period: DashboardChartPeriod): void {
+    void this.store.refresh(period.month, period.year);
+  }
 
   constructor() {
     afterNextRender(() => {

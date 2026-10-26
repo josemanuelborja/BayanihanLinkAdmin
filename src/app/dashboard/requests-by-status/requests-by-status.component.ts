@@ -10,12 +10,14 @@ import {
 } from '@angular/core';
 import type ApexCharts from 'apexcharts';
 
+import { DashboardChartFilterComponent, DashboardChartPeriod } from '../dashboard-chart-filter.component';
 import { buildRequestsByStatusOptions } from './requests-by-status.chart';
 import { RequestsByStatusService } from './requests-by-status.service';
 
 @Component({
   selector: 'app-requests-by-status',
   standalone: true,
+  imports: [DashboardChartFilterComponent],
   templateUrl: './requests-by-status.component.html',
   styleUrl: './requests-by-status.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -28,6 +30,10 @@ export class RequestsByStatusComponent {
   private destroyed = false;
 
   protected readonly data = this.store.data;
+
+  protected filterPeriod(period: DashboardChartPeriod): void {
+    void this.store.refresh(period.month, period.year);
+  }
 
   constructor() {
     afterNextRender(() => {

@@ -1,19 +1,18 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
+import { Button } from 'primeng/button';
 
 import { AdminSidebarComponent } from '../../admin-sidebar/admin-sidebar.component';
 import { NotificationBellComponent } from '../../notification/notification-bell.component';
 
 @Component({
-  selector: 'app-request-verified',
+  selector: 'app-request-review-recorded',
   standalone: true,
-  imports: [CommonModule, ButtonModule, NotificationBellComponent, AdminSidebarComponent],
-  templateUrl: './request-verified.component.html',
-  styleUrl: './request-verified.component.scss'
+  imports: [Button, NotificationBellComponent, AdminSidebarComponent],
+  templateUrl: './request-review-recorded.component.html',
+  styleUrl: './request-review-recorded.component.scss'
 })
-export class RequestVerifiedComponent {
+export class RequestReviewRecordedComponent {
 
   requestId = 'BL-000301';
 
@@ -30,7 +29,7 @@ export class RequestVerifiedComponent {
 
   proceedToCoordination(): void {
     this.router.navigate([
-      '/dswd-coordination',
+      '/external-coordination',
       this.requestId
     ]);
   }

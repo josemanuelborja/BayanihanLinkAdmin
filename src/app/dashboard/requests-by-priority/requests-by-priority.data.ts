@@ -1,4 +1,4 @@
-export interface PrioritySlice {
+﻿export interface PrioritySlice {
   id: string;
   label: string;
   count: number;

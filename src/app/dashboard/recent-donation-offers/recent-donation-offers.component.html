@@ -37,34 +37,29 @@
       </thead>
 
       <tbody>
-        <tr *ngIf="loading">
-          <td colspan="9" style="text-align: center; padding: 2rem;">Loading recent donation offers...</td>
-        </tr>
-        <ng-container *ngIf="!loading">
-          @if (filteredOffers.length) {
-            @for (offer of filteredOffers; track offer.rawId) {
-              <tr>
-                <td>{{ offer.id }}</td>
-                <td>{{ offer.donor }}</td>
-                <td>{{ offer.type }}</td>
-                <td>{{ offer.item }}</td>
-                <td>{{ offer.quantity }}</td>
-                <td>{{ offer.location }}</td>
-                <td>
-                  <span class="badge {{ statusClass(offer.status) }}">{{ offer.status }}</span>
-                </td>
-                <td>{{ offer.date }}</td>
-                <td>
-                  <button class="review-button" (click)="reviewOffer(offer.rawId)">Review</button>
-                </td>
-              </tr>
-            }
-          } @else {
-            <tr class="empty-row">
-              <td colspan="9">No Results.</td>
+        @if (filteredOffers.length) {
+          @for (offer of filteredOffers; track offer.id) {
+            <tr>
+              <td>#{{ offer.id }}</td>
+              <td>{{ offer.donor }}</td>
+              <td>{{ offer.type }}</td>
+              <td>{{ offer.item }}</td>
+              <td>{{ offer.quantity }}</td>
+              <td>{{ offer.location }}</td>
+              <td>
+                <span class="badge {{ statusClass(offer.status) }}">{{ statusLabel(offer.status) }}</span>
+              </td>
+              <td>{{ offer.date }}</td>
+              <td>
+                <button class="review-button" (click)="reviewOffer(offer.id)">Review</button>
+              </td>
             </tr>
           }
-        </ng-container>
+        } @else {
+          <tr class="empty-row">
+            <td colspan="9">No Results.</td>
+          </tr>
+        }
       </tbody>
     </table>
   </div>

@@ -2,14 +2,15 @@
 
   <app-admin-sidebar />
 
+
   <main>
 
     <header class="topbar">
 
       <div>
-        <h1>DSWD Coordination</h1>
+        <h1>External Partner Coordination</h1>
         <p>
-          Request #{{ requestId }} <span *ngIf="offerId">· Offer #{{ offerId }}</span>
+          App Admin workspace · Request #{{ requestId }} · Offer #{{ offerId }}
         </p>
       </div>
 
@@ -20,18 +21,19 @@
 
     </header>
 
+
     <section class="content">
 
-      <div class="layout" *ngIf="request; else emptyState">
+      <div class="layout">
 
         <div class="left">
 
           <section class="case-header">
 
             <div class="case-title">
-              <small>COORDINATION CASE</small>
+              <small>APP ADMIN · EXTERNAL COORDINATION CASE</small>
 
-              <h2>{{ request.disasterType || 'Disaster' }} Assistance · {{ request.itemNeeded || 'Relief Goods' }}</h2>
+              <h2>Typhoon Assistance · Drinking Water</h2>
             </div>
 
             <div class="case-status">
@@ -46,23 +48,29 @@
                 <strong>#{{ requestId }}</strong>
               </div>
 
-              <div *ngIf="offerId">
+              <div>
                 <small>Donation Offer ID</small>
                 <strong>#{{ offerId }}</strong>
               </div>
 
               <div>
                 <small>Priority</small>
-                <strong>{{ request.urgency || 'NORMAL' }}</strong>
+                <strong>CRITICAL</strong>
               </div>
 
             </div>
 
           </section>
 
+
           <section class="card details">
 
-            <h2>Coordination Details</h2>
+            <h2>External Validation Requested</h2>
+            <p class="validation-guidance">
+              DSWD is the external authority that confirms whether a reported disaster is genuine and eligible,
+              and whether the proposed donation is appropriate. The App Admin contacts DSWD outside this system
+              and records only confirmed updates here. BayanihanLink does not send requests to DSWD.
+            </p>
 
             <div class="detail-grid">
 
@@ -73,37 +81,43 @@
 
               <div>
                 <small>GENERAL LOCATION</small>
-                <strong>{{ request.location || 'N/A' }}</strong>
+                <strong>Brgy. 14, Cagayan de Oro City</strong>
               </div>
 
               <div>
                 <small>ITEM NEEDED</small>
-                <strong>{{ request.itemNeeded || 'N/A' }}</strong>
+                <strong>Drinking Water (1L bottles)</strong>
               </div>
 
               <div>
                 <small>QUANTITY NEEDED</small>
-                <strong>{{ request.quantity || 0 }} {{ request.unit || '' }}</strong>
-              </div>
-
-              <div *ngIf="offerId">
-                <small>DONATION OFFER</small>
-                <strong>#{{ offerId }}</strong>
+                <strong>100 bottles</strong>
               </div>
 
               <div>
-                <small>GOVERNMENT PARTNER</small>
+                <small>DONATION OFFER</small>
+                <strong>#{{ offerId }} · Ramon Garcia</strong>
+              </div>
+
+              <div>
+                <small>QUANTITY OFFERED</small>
+                <strong>30 bottles</strong>
+              </div>
+
+              <div>
+                <small>EXTERNAL PARTNER</small>
                 <strong>DSWD Region X</strong>
               </div>
 
               <div>
                 <small>PERSONS AFFECTED</small>
-                <strong>{{ request.personsAffected || 0 }} persons</strong>
+                <strong>50 families</strong>
               </div>
 
             </div>
 
           </section>
+
 
           <section class="card notes">
 
@@ -119,7 +133,7 @@
                   <div class="note-avatar">{{ note.author.slice(0, 2) }}</div>
                   <div>
                     <strong>{{ note.author }}</strong>
-                    <small>{{ note.role }} · {{ note.time }}</small>
+                    <small>{{ note.authorRole }} · {{ note.time }}</small>
                   </div>
                   <button
                     class="remove"
@@ -142,9 +156,10 @@
             <div class="note-composer">
               <textarea
                 [(ngModel)]="noteDraft"
-                placeholder="Add a note for DSWD Region X..."
+                placeholder="Record an externally confirmed update (no message is sent from BayanihanLink)..."
                 rows="3"
                 maxlength="500"
+                (keydown.enter)="$event.preventDefault(); addNote()"
               ></textarea>
 
               <div class="composer-actions">
@@ -162,9 +177,10 @@
 
         </div>
 
+
         <aside class="update-card">
 
-          <h2>Update Coordination Status</h2>
+            <h2>Record External Confirmation</h2>
 
           <div class="status-options">
 
@@ -180,7 +196,7 @@
           </div>
 
           <p-button
-            label="Save & Update Status"
+            label="Save Recorded Status"
             [fluid]="true"
             styleClass="save"
             (onClick)="saveStatus()"
@@ -201,18 +217,6 @@
       </div>
 
     </section>
-
-    <ng-template #emptyState>
-      <div style="text-align: center; padding: 4rem;">
-        <p>No coordination case or request found for ID #{{ requestId }}.</p>
-        <p-button
-          label="Back to Offers"
-          icon="pi pi-arrow-left"
-          styleClass="mt-3"
-          (onClick)="backToOffers()"
-        />
-      </div>
-    </ng-template>
 
   </main>
 

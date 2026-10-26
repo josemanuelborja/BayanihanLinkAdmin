@@ -1,9 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+﻿import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { DatePickerModule } from 'primeng/datepicker';
 
-import { ApiService, ApiRequest } from '../../api/api.service';
+import { dateToIso, inDateRange } from '../../date-filter.util';
 
 export interface DashboardRequest {
   id: string;
@@ -11,66 +11,89 @@ export interface DashboardRequest {
   disaster: string;
   category: string;
   location: string;
-  priority: string;
-  status: string;
+  priority: 'CRITICAL' | 'URGENT' | 'NORMAL';
+  status: 'Pending' | 'Verified' | 'Assisted' | 'Completed';
   date: string;
 }
+
+const DASHBOARD_REQUESTS: readonly DashboardRequest[] = [
+  {
+    id: 'BL-000302',
+    requester: 'Ana Reyes',
+    disaster: 'Typhoon',
+    category: 'Food',
+    location: 'CDO City',
+    priority: 'CRITICAL',
+    status: 'Pending',
+    date: 'Sep 16, 2026'
+  },
+  {
+    id: 'BL-000301',
+    requester: 'Juan Dela Cruz',
+    disaster: 'Flood',
+    category: 'Water',
+    location: 'Iligan City',
+    priority: 'URGENT',
+    status: 'Pending',
+    date: 'Sep 16, 2026'
+  },
+  {
+    id: 'BL-000298',
+    requester: 'Rosa Gomez',
+    disaster: 'Fire',
+    category: 'Clothing',
+    location: 'Davao City',
+    priority: 'NORMAL',
+    status: 'Verified',
+    date: 'Sep 15, 2026'
+  },
+  {
+    id: 'BL-000295',
+    requester: 'Pedro Santos',
+    disaster: 'Typhoon',
+    category: 'Medicine',
+    location: 'Butuan City',
+    priority: 'URGENT',
+    status: 'Assisted',
+    date: 'Sep 14, 2026'
+  },
+  {
+    id: 'BL-000290',
+    requester: 'Maria Lopez',
+    disaster: 'Earthquake',
+    category: 'Blankets',
+    location: 'Surigao del Norte',
+    priority: 'NORMAL',
+    status: 'Completed',
+    date: 'Sep 12, 2026'
+  }
+];
 
 @Component({
   selector: 'app-recent-requests',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
+    DatePickerModule,
     RouterLink
   ],
   templateUrl: './recent-requests.component.html',
   styleUrl: './recent-requests.component.scss'
 })
-export class RecentRequestsComponent implements OnInit {
+export class RecentRequestsComponent {
   private readonly router = inject(Router);
-  private readonly api = inject(ApiService);
 
-  requests: DashboardRequest[] = [];
+  readonly requests: readonly DashboardRequest[] = DASHBOARD_REQUESTS;
   searchTerm = '';
-  loading = true;
 
-  async ngOnInit(): Promise<void> {
-    await this.loadRecentRequests();
-  }
-
-  private async loadRecentRequests(): Promise<void> {
-    this.loading = true;
-    try {
-      const raw = await this.api.getRequests();
-      this.requests = raw.map(r => this.toDisplay(r));
-    } catch {
-      this.requests = [];
-    }
-    this.loading = false;
-  }
-
-  private toDisplay(r: ApiRequest): DashboardRequest {
-    const statusMap: Record<string, string> = {
-      PENDING: 'Pending', VERIFIED: 'Verified', ASSISTED: 'Assisted', COMPLETED: 'Completed'
-    };
-    return {
-      id: r.id,
-      requester: r.userId,
-      disaster: r.disasterType,
-      category: r.category,
-      location: r.location,
-      priority: r.urgency,
-      status: statusMap[r.status] ?? r.status,
-      date: new Date(r.dateSubmitted).toLocaleDateString('en-PH', { year: 'numeric', month: 'short', day: 'numeric' })
-    };
-  }
-
-  get filteredRequests(): DashboardRequest[] {
+  get filteredRequests(): readonly DashboardRequest[] {
     const term = this.searchTerm.trim().toLowerCase();
-    if (!term) return this.requests;
 
     return this.requests.filter((request) => {
+      if (!term) {
+        return true;
+      }
+
       const values = [
         request.id,
         request.requester,
@@ -86,12 +109,16 @@ export class RecentRequestsComponent implements OnInit {
     });
   }
 
-  priorityClass(priority: string): string {
+  priorityClass(priority: DashboardRequest['priority']): string {
     return 'priority-' + priority.toLowerCase();
   }
 
-  statusClass(status: string): string {
+  statusClass(status: DashboardRequest['status']): string {
     return 'status-' + status.toLowerCase();
+  }
+
+  statusLabel(status: DashboardRequest['status']): string {
+    return status === 'Verified' ? 'DSWD confirmed' : status;
   }
 
   reviewRequest(id: string): void {

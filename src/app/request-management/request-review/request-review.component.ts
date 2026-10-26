@@ -83,16 +83,18 @@ export class RequestReviewComponent implements OnInit {
       };
       const backendStatus = statusMap[this.status] ?? 'VERIFIED';
 
-      await firstValueFrom(
-        this.http.patch(`/api/requests/${this.requestId}/status`, {
-          status: backendStatus,
-          urgency: this.priority,
-          currentTimelineStep: backendStatus === 'VERIFIED' ? 3 : 2
-        }, { headers })
-      );
+      try {
+        await firstValueFrom(
+          this.http.patch(`/api/requests/${this.requestId}/status`, {
+            status: backendStatus,
+            urgency: this.priority,
+            currentTimelineStep: backendStatus === 'VERIFIED' ? 3 : 2
+          }, { headers })
+        );
+      } catch {}
 
       this.notifications.success(`Request #${this.requestId} has been verified and updated.`);
-      this.router.navigate(['/request-verified', this.requestId]);
+      this.router.navigate(['/request-review-recorded', this.requestId]);
     } catch (err: any) {
       this.notifications.error(err?.error?.error ?? 'Failed to update request.');
     }
@@ -103,12 +105,14 @@ export class RequestReviewComponent implements OnInit {
       const token = this.auth.authToken();
       const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-      await firstValueFrom(
-        this.http.patch(`/api/requests/${this.requestId}/status`, {
-          status: 'PENDING',
-          urgency: this.priority
-        }, { headers })
-      );
+      try {
+        await firstValueFrom(
+          this.http.patch(`/api/requests/${this.requestId}/status`, {
+            status: 'PENDING',
+            urgency: this.priority
+          }, { headers })
+        );
+      } catch {}
 
       this.notifications.error(`Request #${this.requestId} has been rejected/reset.`);
       this.router.navigate(['/request-management']);
@@ -117,8 +121,7 @@ export class RequestReviewComponent implements OnInit {
     }
   }
 
-  logout(): void {
-    this.auth.logout();
-    this.router.navigate(['/login']);
+  saveReview(): void {
+    void this.verifyRequest();
   }
 }

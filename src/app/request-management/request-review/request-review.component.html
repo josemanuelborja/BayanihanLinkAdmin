@@ -149,8 +149,8 @@
                 </div>
 
                 <small>
-                  Pending<br>
-                  Verification
+                  Awaiting DSWD<br>
+                  confirmation
                 </small>
 
               </div>
@@ -164,7 +164,7 @@
                 </div>
 
                 <small>
-                  Verified
+                  DSWD Confirmed
                 </small>
 
               </div>
@@ -275,6 +275,7 @@
           <section class="card status-card">
 
             <h2>Update Status</h2>
+            <p class="status-guidance">The App Admin records workflow status. DSWD alone assesses whether the disaster is genuine/eligible and whether an offer is suitable.</p>
 
             <select [(ngModel)]="status">
 
@@ -292,21 +293,23 @@
 
           <section class="card notes-card">
 
+            <h2>Administrator Notes</h2>
+
             <textarea
               [(ngModel)]="adminNotes"
-              placeholder="Administrator notes..."
+              placeholder="Add review notes, instructions or follow-up details..."
             ></textarea>
 
           </section>
 
 
           <p-button
-            label="Verify & Post to Needs Board"
+            label="Save Review & Record External Follow-up"
             icon="pi pi-check"
             severity="success"
             [fluid]="true"
             styleClass="verify-button"
-            (onClick)="verifyRequest()"
+            (onClick)="saveReview()"
           />
 
 

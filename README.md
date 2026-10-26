@@ -1,59 +1,30 @@
-# BayanihanLinkAdmin
+# BayanihanLink Admin
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.24.
+BayanihanLink has two application roles with deliberately separate permissions:
 
-## Development server
+- **App Admin** manages the platform, request completeness and priority, donation/assistance offers, coordination, and overall workflow/status records.
+- **DSWD Officer** uses a limited validation workspace to assess whether a reported disaster is genuine/eligible and whether an associated donation is suitable. DSWD does not manage platform users, assign request priority, or administer overall distribution/status workflows.
 
-To start a local development server, run:
+The DSWD validation workspace does not replace official DSWD systems. There is no external DSWD API, automatic integration, or automatic transfer to external systems. The current validation queue and decisions are prototype data held in browser memory.
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Development
 
 ```bash
-ng generate component component-name
+npm install
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+The Angular app runs at `http://localhost:4200`. The companion JavaScript API is in `C:\Users\ASUS\OneDrive\Desktop\bayanihanlink-be`; start it with `npm run dev` from that folder (default port 3000). Its current data source is `data/db.json`.
 
-```bash
-ng generate --help
-```
+## Documentation
 
-## Building
+- [Role and system architecture](docs/architecture.md)
+- [Validation activity diagram](docs/activity-diagram.md)
+- [Data model and ERD](docs/data-model.md)
+- [Scope and delimitations](docs/scope-and-delimitations.md)
 
-To build the project run:
+## Validation
 
-```bash
-ng build
-```
+Run `npm test -- --watch=false` and `npm run build`.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+> **Prototype security/data limitation:** Both login handlers are front-end placeholders; the DSWD flow sets a browser session marker, not a verified identity. The Express API has no authentication/authorization middleware. The DSWD validation data is not persisted to the backend. Do not treat this as production-secure until identity, role enforcement, persistence, and audit requirements are implemented.

@@ -48,7 +48,7 @@
           <button
             [class.active]="statusFilter === 'Verified'"
             (click)="setStatus('Verified')"
-          >Verified</button>
+          >DSWD confirmed</button>
 
           <button
             [class.active]="statusFilter === 'Assisted'"
@@ -73,14 +73,14 @@
           >CRITICAL</button>
 
           <button
-            [class.active]="priorityFilter === 'URGENT'"
-            (click)="setPriority('URGENT')"
-          >URGENT</button>
-
-          <button
             [class.active]="priorityFilter === 'NORMAL'"
             (click)="setPriority('NORMAL')"
           >NORMAL</button>
+
+          <button
+            [class.active]="priorityFilter === 'URGENT'"
+            (click)="setPriority('URGENT')"
+          >URGENT</button>
 
         </div>
 
@@ -105,7 +105,7 @@
               <th>PRIORITY</th>
               <th>STATUS</th>
               <th>DATE</th>
-              <th>ACTIONS</th>
+              <th class="action-column">ACTIONS</th>
             </tr>
           </thead>
 
@@ -142,28 +142,19 @@
                   class="badge status"
                   [ngClass]="'status-' + request.status.toLowerCase()"
                 >
-                  {{ request.status }}
+                  {{ statusLabel(request.status) }}
                 </span>
               </td>
 
               <td>{{ request.date }}</td>
 
-              <td class="actions">
+              <td class="actions action-column">
 
                 <p-button
                   label="Review"
                   size="small"
                   styleClass="review"
                   (onClick)="review(request.id)"
-                />
-
-                <p-button
-                  *ngIf="request.status === 'Pending'"
-                  label="Verify"
-                  size="small"
-                  severity="success"
-                  styleClass="verify"
-                  (onClick)="verify(request.id)"
                 />
 
               </td>

@@ -1,512 +1,68 @@
-* {
-  box-sizing: border-box;
-}
-
-.page {
-  min-height: 100vh;
-  display: flex;
-  background: #f7f9fc;
-  color: #10264b;
-  font-family: "Poppins", Arial, sans-serif;
-}
-
-.sidebar {
-  /* Stays viewport-height and sticks, like the admin sidebar. Without this it
-     stretched to the full page height and `margin-top: auto` pushed the
-     profile and Log Out button off the bottom of long pages. */
-  position: sticky;
-  top: 0;
-  align-self: flex-start;
-  width: 258px;
-  height: 100vh;
-  min-height: 0;
-  background: #0d6b63;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  overflow-y: auto;
-}
-
-.brand {
-  height: 73px;
-  padding: 0 18px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-bottom: 1px solid rgba(255,255,255,.15);
-}
-
-.brand-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: rgba(255,255,255,.18);
-  background-image: url('../../assets/bayanihanlinklogo.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  display: grid;
-  place-items: center;
-}
-
-.brand strong,
-.brand span,
-.profile strong,
-.profile span {
-  display: block;
-}
-
-.brand strong {
-  font-size: 14px;
-}
-
-.brand span {
-  color: #b9e3de;
-  font-size: 11px;
-}
-
-.menu-title {
-  padding: 18px 20px 8px;
-  color: #8fcfc8;
-  font-size: 11px;
-}
-
-nav {
-  padding: 0 10px;
-}
-
-.nav-item {
-  min-height: 40px;
-  padding: 8px 12px;
-  margin-bottom: 3px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #c3e6e2;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.nav-item.active,
-.nav-item:hover {
-  background: #ffffff;
-  color: #0a4f49;
-}
-
-.nav-item b {
-  margin-left: auto;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #ffedd5;
-  color: #9a3412;
-  display: grid;
-  place-items: center;
-  font-size: 11px;
-}
-
-.sidebar-bottom {
-  margin-top: auto;
-  padding: 14px;
-  border-top: 1px solid rgba(255,255,255,.15);
-}
-
-.profile {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* The sidebar avatar is larger than the topbar one, matching the admin
-   sidebar. `.top-avatar` below stays small. */
-.profile .avatar {
-  width: 40px;
-  height: 40px;
-  flex: 0 0 40px;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.avatar,
-.top-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: rgba(255,255,255,.2);
-  font-size: 11px;
-}
-
-.profile strong {
-  font-size: 14px;
-}
-
-.profile span {
-  color: #a7d8d2;
-  font-size: 12px;
-}
-
-main {
-  flex: 1;
-  min-width: 0;
-}
-
-.topbar {
-  height: 81px;
-  padding: 0 28px;
-  background: white;
-  border-bottom: 1px solid #dce4ed;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.topbar h1 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 400;
-}
-
-.topbar p {
-  margin: 2px 0 0;
-  color: #8295b5;
-  font-size: 12px;
-}
-
-.admin {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-}
-
-.top-avatar {
-  background: #2948b8;
-  color: white;
-}
-
-.admin strong,
-.admin small {
-  display: block;
-}
-
-.admin strong {
-  font-size: 13px;
-}
-
-.admin small {
-  color: #8a9bb6;
-  font-size: 11px;
-}
-
-.content {
-  padding: 30px;
-}
-
-.layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 400px;
-  gap: 22px;
-}
-
-.card {
-  padding: 23px;
-  margin-bottom: 18px;
-  background: white;
-  border: 1px solid #dce4ed;
-  border-radius: 15px;
-}
-
-.card h2 {
-  margin: 0 0 15px;
-  font-size: 15px;
-  font-weight: 400;
-}
-
-.card-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 18px;
-}
-
-.card-title h2 {
-  margin: 0;
-}
-
-.card-title p {
-  margin: 4px 0 0;
-  color: #8b9db8;
-  font-size: 11px;
-}
-
-.badges {
-  display: flex;
-  gap: 7px;
-}
-
-.badges span {
-  padding: 6px 10px;
-  border-radius: 20px;
-  font-size: 10px;
-}
-
-.critical {
-  color: #ed3341;
-  background: #ffe3e5;
-}
-
-.urgent {
-  color: #f37a00;
-  background: #fff0dc;
-}
-
-.normal {
-  color: #0a8f4a;
-  background: #d7f5e4;
-}
-
-.verification {
-  color: #365bd2;
-  background: #e2eaff;
-}
-
-.verified {
-  color: #3963d6;
-  background: #dfeaff;
-}
-
-.distribution {
-  color: #008f87;
-  background: #d9faf5;
-}
-
-.distributed {
-  color: #0a8f4a;
-  background: #d7f5e4;
-}
-
-.coordination {
-  color: #5b6f8f;
-  background: #f1f4f9;
-}
-
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-}
-
-.info-grid div {
-  min-height: 65px;
-  padding: 11px;
-  border-radius: 10px;
-  background: #f7f9fb;
-}
-
-.info-grid small,
-.info-grid strong {
-  display: block;
-}
-
-.info-grid small {
-  color: #8297b7;
-  font-size: 10px;
-}
-
-.info-grid strong {
-  margin-top: 5px;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.35;
-}
-
-.donation-note {
-  margin-top: 15px;
-  padding: 10px;
-  border: 1px solid #bcefe9;
-  border-radius: 9px;
-  background: #effcfb;
-  color: #00948b;
-  font-size: 11px;
-}
-
-.notes {
-  padding: 15px;
-  border-radius: 10px;
-  background: #f7f9fb;
-  color: #466080;
-  font-size: 12px;
-  line-height: 1.6;
-}
-
-.warning {
-  padding: 17px 20px;
-  border: 1px solid #ffcf9b;
-  border-radius: 13px;
-  background: #fff9ef;
-  color: #ef5b00;
-  font-size: 11px;
-  line-height: 1.5;
-}
-
-.status-card {
-  padding: 23px;
-}
-
-.status-option {
-  min-height: 44px;
-  margin-bottom: 8px;
-  padding: 10px;
-  border: 1px solid #e1e7ef;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #637795;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.status-option.selected {
-  border-color: #119c91;
-  background: #effcfb;
-  color: #008f87;
-}
-
-.status-option input {
-  display: none;
-}
-
-.radio {
-  width: 19px;
-  height: 19px;
-  border: 1px solid #cbd8e7;
-  border-radius: 50%;
-  position: relative;
-}
-
-.selected .radio {
-  border: 5px solid #119c91;
-}
-
-/* PrimeNG p-button owns the fill; keep the full-width sidebar sizing. */
-::ng-deep .update-button.p-button,
-::ng-deep .back-button.p-button {
-  width: 100%;
-  height: 45px;
-  border-radius: 10px;
-  font-family: "Poppins", Arial, sans-serif;
-}
-
-/* Re-tint the primary action from the global blue to DSWD teal. */
-::ng-deep .update-button.p-button {
-  background: #119c91;
-  border-color: #119c91;
-}
-
-::ng-deep .update-button.p-button:enabled:hover {
-  background: #0d6b63;
-  border-color: #0d6b63;
-}
-
-::ng-deep .back-button.p-button {
-  margin-top: 10px;
-}
-
-@media (max-width: 1000px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-
-  .info-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 700px) {
-  .sidebar {
-    width: 70px;
-  }
-
-  .brand > div:last-child,
-  .menu-title,
-  .profile > div:last-child {
-    display: none;
-  }
-
-  .nav-item {
-    justify-content: center;
-    font-size: 0;
-  }
-
-  .nav-item b {
-    display: none;
-  }
-
-  .content {
-    padding: 15px;
-  }
-
-  .info-grid {
-    grid-template-columns: 1fr;
-  }
-}
-/* Icons are Tabler outlines, sized here so every icon renders identically
-   instead of relying on each svg's own attributes. */
-.nav-icon {
-  display: inline-flex;
-  flex: 0 0 20px;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-}
-
-.nav-icon svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  stroke-width: 1.5;
-}
-
-.logout-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  margin-top: 14px;
-  padding: 11px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 10px;
-  background: transparent;
-  color: #c3e6e2;
-  font-family: inherit;
-  font-size: 14px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.logout-button:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-}
-
-.logout-icon {
-  display: inline-flex;
-  flex: 0 0 18px;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-}
-
-.logout-icon svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  stroke-width: 1.5;
-}
+* { box-sizing: border-box; }
+:host { display: block; min-height: 100vh; }
+.page { display: flex; min-height: 100vh; background: #f7f9fc; color: #14284c; font-family: "Poppins",Arial,sans-serif; }
+main { flex: 1; min-width: 0; }
+.topbar { display: flex; align-items: center; justify-content: space-between; height: 81px; gap: 20px; padding: 0 28px; border-bottom: 1px solid #dce3ec; background: #fff; }
+.topbar h1 { margin: 0; font-size: 22px; font-weight: 400; }
+.topbar p { margin: 2px 0 0; color: #8295b5; font-size: 14px; }
+.topbar-user { display: flex; align-items: center; gap: 11px; }
+.topbar-user>span { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #2948b8; color: white; font-size: 14px; font-weight: 700; }
+.topbar-user strong,.topbar-user small { display: block; }
+.topbar-user strong { font-size: 13px; }
+.topbar-user small { color: #8a9bb6; font-size: 11px; }
+.content { padding: 24px 30px 32px; }
+.review-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.back-link { display: inline-block; margin-bottom: 9px; color: #627694; font-size: 12px; text-decoration: none; }
+.back-link:hover { color: #2848b7; }
+.review-heading h2 { margin: 0; color: #14284c; font-size: 21px; font-weight: 500; }
+.review-heading h2 span { color: #7486a2; font-weight: 400; }
+.path-badge { display: inline-flex; align-items: center; min-height: 27px; padding: 5px 10px; border-radius: 16px; background: #edf3ff; color: #3156b7; font-size: 11px; font-weight: 600; }
+.path-badge.open { background: #eaf7f3; color: #19816f; }
+.review-layout { display: grid; grid-template-columns: minmax(0,1fr) 390px; align-items: start; gap: 20px; }
+.case-details { min-width: 0; }
+.card { margin-bottom: 18px; padding: 22px; border: 1px solid #dce4ed; border-radius: 15px; background: #fff; }
+.card-title { display: flex; align-items: center; gap: 12px; margin-bottom: 19px; }
+.title-icon { display: grid; flex: 0 0 38px; place-items: center; width: 38px; height: 38px; border-radius: 11px; font-size: 14px; font-weight: 700; }
+.request-icon { background: #edf2ff; color: #3859b5; }
+.donation-icon { background: #e9f7f4; color: #168676; }
+.card-title h3,.decision-title h3 { margin: 0; color: #1a2e50; font-size: 15px; font-weight: 500; }
+.card-title p,.decision-title p { margin: 3px 0 0; color: #8295b5; font-size: 11px; }
+.reference { margin-left: auto; color: #3156b7; font-size: 12px; font-weight: 600; }
+.info-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+.info-grid>div { min-height: 60px; padding: 11px 12px; border-radius: 10px; background: #f7f9fb; }
+.info-grid small,.info-grid strong { display: block; }
+.info-grid small { margin-bottom: 5px; color: #8297b8; font-size: 9px; letter-spacing: .35px; }
+.info-grid strong { color: #263c60; font-size: 12px; font-weight: 500; line-height: 1.45; }
+.priority-badge { display: inline-flex; align-items: center; min-height: 22px; padding: 3px 9px; border-radius: 12px; font-size: 10px !important; font-weight: 600 !important; }
+.priority-badge.critical { background: #ffe4e6; color: #c93849; }
+.priority-badge.urgent { background: #fff0df; color: #b96417; }
+.priority-badge.normal { background: #def9e9; color: #16834a; }
+.info-grid .item-highlight { background: #f0f5ff; }
+.donation-grid>div:first-child { grid-column: 1/-1; }
+.scope-note { display: flex; align-items: flex-start; gap: 11px; padding: 15px 16px; border: 1px solid #dce8fb; border-radius: 12px; background: #f2f6fd; }
+.scope-icon { display: grid; flex: 0 0 22px; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #3156b7; color: #fff; font-size: 12px; font-weight: 700; }
+.scope-note p { margin: 1px 0 0; color: #647692; font-size: 11px; line-height: 1.6; }
+.scope-note strong { color: #31486d; }
+.decision { position: sticky; top: 20px; padding: 22px; }
+.decision-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.decision-title h3 { font-size: 16px; }
+.decision-mark { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #edf2ff; color: #3156b7; font-size: 15px; }
+.form-divider { height: 1px; margin: 17px 0; background: #e8edf3; }
+.assessment-guidance { margin: 0 0 16px; color: #687b98; font-size: 12px; line-height: 1.6; }
+.decision label { display: block; margin-top: 15px; color: #354a69; font-size: 11px; font-weight: 600; line-height: 1.45; }
+.decision label span { color: #8a9bb6; font-weight: 400; }
+.decision select,.decision textarea,.decision input { display: block; width: 100%; margin-top: 7px; padding: 10px 11px; border: 1px solid #dce3ed; border-radius: 8px; background: #fff; color: #263a5a; font: 12px "Poppins",Arial,sans-serif; }
+.decision select:focus,.decision textarea:focus,.decision input:focus { border-color: #2848b7; outline: 2px solid rgba(40,72,183,.12); }
+.decision textarea { resize: vertical; }
+.actions { display: grid; gap: 9px; margin-top: 20px; }
+.actions button { min-height: 40px; padding: 10px 14px; border: 0; border-radius: 8px; font: 12px "Poppins",Arial,sans-serif; cursor: pointer; }
+.save { background: #2948b8; color: #fff; }
+.save:hover:not(:disabled) { background: #203a98; }
+.save:disabled { opacity: .48; cursor: not-allowed; }
+.cancel { background: #f1f4f8; color: #526582; }
+.cancel:hover { background: #e8edf4; }
+.disclaimer { display: block; margin-top: 14px; color: #8996aa; font-size: 10px; line-height: 1.5; }
+@media(max-width:1100px) { .review-layout { grid-template-columns: minmax(0,1fr) 340px; gap: 14px; } .content { padding: 22px; } }
+@media(max-width:850px) { .review-layout { grid-template-columns: 1fr; } .decision { position: static; } }
+@media(max-width:700px) { .topbar { padding: 0 18px; } .content { padding: 18px; } }
+@media(max-width:600px) { .page { display: block; } .topbar { height: auto; min-height: 74px; } .topbar-user>div { display: none; } .topbar h1 { font-size: 19px; } .content { padding: 14px; } .review-heading { align-items: flex-start; flex-direction: column; gap: 8px; } .card { padding: 17px; } }

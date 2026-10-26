@@ -1,4 +1,4 @@
-export interface PriorityBreakdown {
+﻿export interface PriorityBreakdown {
   label: string;
   count: number;
 }
@@ -30,7 +30,7 @@ export const REQUESTS_BY_STATUS_FALLBACK: RequestsByStatus = {
     },
     {
       id: 'verified',
-      label: 'Verified',
+      label: 'DSWD Confirmed',
       count: 31,
       priorities: [
         { label: 'Critical', count: 7 },

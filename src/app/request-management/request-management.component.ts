@@ -102,6 +102,10 @@ export class RequestManagementComponent implements OnInit {
     });
   }
 
+  statusLabel(status: string): string {
+    return status;
+  }
+
   setStatus(status: string): void {
     this.statusFilter = status;
   }

@@ -1,57 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { CommonModule } from '@angular/common';
-
+import { Button } from 'primeng/button';
 import { AuthService } from '../auth/auth.service';
-import { NotificationService } from '../notification/notification.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, ButtonModule],
+  imports: [FormsModule, Button],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
+
+  loading = false;
   email = '';
   password = '';
   showPassword = false;
-  loading = false;
-
-  constructor(
-    private router: Router,
-    private auth: AuthService,
-    private notifications: NotificationService
-  ) {}
+  errorMessage = '';
 
   async login(): Promise<void> {
-    if (!this.email || !this.password) {
-      this.notifications.error('Please enter your email and password.');
-      return;
-    }
-
+    if (!this.email.trim() || !this.password) return;
     this.loading = true;
-    const result = await this.auth.login(this.email, this.password);
+    this.errorMessage = '';
+    const res = await this.auth.login(this.email, this.password);
     this.loading = false;
-
-    if (result.success) {
+    if (res.success) {
       this.router.navigate(['/dashboard']);
     } else {
-      this.notifications.error(result.error ?? 'Login failed.');
+      this.errorMessage = res.error || 'Login failed';
     }
-  }
-
-  togglePassword(): void {
-    this.showPassword = !this.showPassword;
   }
 
   goToDswdLogin(): void {
     this.router.navigate(['/dswd/login']);
   }
 
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  /** Placeholder until the public user login page exists. */
   goToUserLogin(): void {
-    this.notifications.info('User login page');
+    // Public-user authentication is outside this App Admin portal.
   }
 }

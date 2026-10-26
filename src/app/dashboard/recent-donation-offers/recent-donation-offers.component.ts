@@ -1,86 +1,93 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+﻿import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
 
-import { AuthService } from '../../auth/auth.service';
-import { ApiOffer } from '../../api/api.service';
+export type DonationOfferStatus =
+  | 'Pending'
+  | 'Coordinating'
+  | 'Verification'
+  | 'Verified'
+  | 'Distributed'
+  | 'Completed';
 
 export interface DonationOffer {
   id: string;
-  rawId: string;
   donor: string;
   type: string;
   item: string;
   quantity: string;
   location: string;
   date: string;
-  status: string;
+  status: DonationOfferStatus;
   requestId: string;
 }
+
+const RECENT_DONATION_OFFERS: readonly DonationOffer[] = [
+  {
+    id: 'DO-000089',
+    donor: 'Ramon Garcia',
+    type: 'In-kind',
+    item: 'Drinking Water (1L)',
+    quantity: '30 bottles',
+    location: 'Tondo, Manila',
+    date: 'Sep 16, 2026',
+    status: 'Pending',
+    requestId: 'BL-000234'
+  },
+  {
+    id: 'DO-000085',
+    donor: 'Liza Cruz',
+    type: 'Food Relief',
+    item: 'Rice (5kg sacks)',
+    quantity: '10 sacks',
+    location: 'Cebu City',
+    date: 'Sep 15, 2026',
+    status: 'Coordinating',
+    requestId: 'BL-000241'
+  },
+  {
+    id: 'DO-000079',
+    donor: 'Mike Santos',
+    type: 'Essential Goods',
+    item: 'Blankets',
+    quantity: '25 pieces',
+    location: 'Davao City',
+    date: 'Sep 14, 2026',
+    status: 'Verification',
+    requestId: 'BL-000220'
+  },
+  {
+    id: 'DO-000071',
+    donor: 'Grace Lee',
+    type: 'Medical Supply',
+    item: 'Medicine Kit (First Aid)',
+    quantity: '15 kits',
+    location: 'Baguio City',
+    date: 'Sep 10, 2026',
+    status: 'Verified',
+    requestId: 'BL-000189'
+  }
+];
 
 @Component({
   selector: 'app-recent-donation-offers',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink],
   templateUrl: './recent-donation-offers.component.html',
   styleUrl: './recent-donation-offers.component.scss'
 })
-export class RecentDonationOffersComponent implements OnInit {
+export class RecentDonationOffersComponent {
   private readonly router = inject(Router);
-  private readonly auth = inject(AuthService);
-  private readonly http = inject(HttpClient);
 
-  recentOffers: DonationOffer[] = [];
+  readonly recentOffers: readonly DonationOffer[] = RECENT_DONATION_OFFERS;
   searchTerm = '';
-  loading = true;
 
-  async ngOnInit(): Promise<void> {
-    await this.loadRecentOffers();
-  }
-
-  private async loadRecentOffers(): Promise<void> {
-    this.loading = true;
-    try {
-      const token = this.auth.authToken();
-      const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-      const raw = await firstValueFrom(
-        this.http.get<ApiOffer[]>('/api/offers/admin/all', { headers })
-      );
-
-      this.recentOffers = raw.map(o => this.toDisplay(o));
-    } catch {
-      this.recentOffers = [];
-    }
-    this.loading = false;
-  }
-
-  private toDisplay(o: ApiOffer): DonationOffer {
-    const statusMap: Record<string, string> = {
-      PENDING: 'Pending',
-      ACCEPTED: 'Coordinating',
-      REJECTED: 'Rejected',
-      COMPLETED: 'Completed'
-    };
-    return {
-      id: '#' + o._id.slice(-8),
-      rawId: o._id,
-      donor: o.donorId,
-      type: 'In-kind',
-      item: o.unit || 'Relief Goods',
-      quantity: o.quantityOffered,
-      location: 'N/A',
-      date: new Date(o.createdAt).toLocaleDateString('en-PH', { year: 'numeric', month: 'short', day: 'numeric' }),
-      status: statusMap[o.status] ?? o.status,
-      requestId: o.requestId
-    };
-  }
-
-  get filteredOffers(): DonationOffer[] {
+  get filteredOffers(): readonly DonationOffer[] {
     const term = this.searchTerm.trim().toLowerCase();
-    if (!term) return this.recentOffers;
+
+    if (!term) {
+      return this.recentOffers;
+    }
 
     return this.recentOffers.filter((offer) => {
       const values = [
@@ -98,21 +105,27 @@ export class RecentDonationOffersComponent implements OnInit {
     });
   }
 
-  statusClass(status: string): string {
+  statusClass(status: DonationOfferStatus): string {
     return 'offer-status-' + status.toLowerCase().replace(/\s+/g, '-');
   }
 
+  statusLabel(status: DonationOfferStatus): string {
+    if (status === 'Verification') return 'Awaiting DSWD validation';
+    if (status === 'Verified') return 'DSWD confirmed';
+    return status;
+  }
+
   reviewOffer(offerId: string): void {
-    const offer = this.recentOffers.find((item) => item.id === offerId || item.rawId === offerId);
+    const offer = this.recentOffers.find((item) => item.id === offerId);
 
     if (!offer) {
       return;
     }
 
     this.router.navigate([
-      '/dswd-coordination',
+      '/external-coordination',
       offer.requestId.replace(/^#/, ''),
-      offer.rawId
+      offer.id.replace(/^#/, '')
     ]);
   }
 }

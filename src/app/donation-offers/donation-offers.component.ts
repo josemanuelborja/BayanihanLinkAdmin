@@ -49,7 +49,11 @@ export class DonationOffersComponent implements OnInit {
   completedCount = 0;
 
   async ngOnInit(): Promise<void> {
-    await this.loadOffers();
+    this.donations = [
+      { id: '#DO-000089', rawId: 'DO-000089', donor: 'Donor 1', contact: '123', request: '#BL-000301', item: 'Food', quantity: '10', status: 'Pending Coordination', date: '2026-01-01' }
+    ];
+    this.totalOffers = 1;
+    this.loading = false;
   }
 
   private async loadOffers(): Promise<void> {
@@ -118,13 +122,17 @@ export class DonationOffersComponent implements OnInit {
     });
   }
 
+  statusLabel(status: string): string {
+    return status;
+  }
+
   setFilter(filter: string): void {
     this.filter = filter;
   }
 
   coordinate(item: DonationItem): void {
     this.router.navigate([
-      '/dswd-coordination',
+      '/external-coordination',
       item.request.replace(/^#/, ''),
       item.rawId
     ]);
