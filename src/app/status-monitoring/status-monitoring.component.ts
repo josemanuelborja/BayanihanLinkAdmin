@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+﻿import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AdminUserBadgeComponent } from '../admin-user-badge/admin-user-badge.component';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
@@ -27,7 +27,7 @@ export class StatusMonitoringComponent {
       id: '#BL-000123',
       name: 'Maria Santos',
       priority: 'URGENT',
-      disaster: 'Typhoon · Food & Water',
+      disaster: 'Typhoon ┬╖ Food & Water',
       location: 'CDO City',
       current: 4
     },
@@ -35,7 +35,7 @@ export class StatusMonitoringComponent {
       id: '#BL-000234',
       name: 'Juan Dela Cruz',
       priority: 'CRITICAL',
-      disaster: 'Flood · Drinking Water',
+      disaster: 'Flood ┬╖ Drinking Water',
       location: 'Iligan City',
       current: 3
     },
@@ -43,7 +43,7 @@ export class StatusMonitoringComponent {
       id: '#BL-000189',
       name: 'Ana Reyes',
       priority: 'NORMAL',
-      disaster: 'Fire · Medicine Kit',
+      disaster: 'Fire ┬╖ Medicine Kit',
       location: 'Davao City',
       current: 6
     },
@@ -51,7 +51,7 @@ export class StatusMonitoringComponent {
       id: '#BL-000256',
       name: 'Pedro Cruz',
       priority: 'URGENT',
-      disaster: 'Typhoon · Blankets & Clothing',
+      disaster: 'Typhoon ┬╖ Blankets & Clothing',
       location: 'Butuan City',
       current: 2
     },
@@ -59,7 +59,7 @@ export class StatusMonitoringComponent {
       id: '#BL-000290',
       name: 'Rosa Lopez',
       priority: 'NORMAL',
-      disaster: 'Earthquake · Hygiene Supplies',
+      disaster: 'Earthquake ┬╖ Hygiene Supplies',
       location: 'Surigao del Norte',
       current: 5
     }
@@ -67,9 +67,9 @@ export class StatusMonitoringComponent {
 
   stages = [
     'Submitted',
-    'Verified',
+    'DSWD Confirmed',
     'Assistance Offered',
-    "Gov't Verification",
+    'External DSWD Review',
     'Distributed',
     'Completed'
   ];

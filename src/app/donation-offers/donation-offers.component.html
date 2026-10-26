@@ -87,12 +87,12 @@
           <button
             [class.active]="filter === 'For Verification'"
             (click)="setFilter('For Verification')"
-          >For Verification</button>
+          >Awaiting DSWD validation</button>
 
           <button
             [class.active]="filter === 'Verified'"
             (click)="setFilter('Verified')"
-          >Verified</button>
+          >DSWD confirmed</button>
 
           <button
             [class.active]="filter === 'Distributed'"
@@ -123,7 +123,7 @@
               <th>QUANTITY</th>
               <th>STATUS</th>
               <th>DATE</th>
-              <th>ACTIONS</th>
+              <th class="action-column">ACTIONS</th>
             </tr>
           </thead>
 
@@ -138,7 +138,7 @@
               <td>{{ item.item }}</td>
               <td>{{ item.quantity }}</td>
 
-              <td>
+              <td class="action-column">
                 <span
                   class="status"
                   [ngClass]="{
@@ -150,7 +150,7 @@
                     'completed': item.status === 'Completed'
                   }"
                 >
-                  {{ item.status }}
+                  {{ statusLabel(item.status) }}
                 </span>
               </td>
 

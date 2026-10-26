@@ -49,7 +49,7 @@
                 <span class="badge {{ priorityClass(request.priority) }}">{{ request.priority }}</span>
               </td>
               <td>
-                <span class="badge {{ statusClass(request.status) }}">{{ request.status }}</span>
+                <span class="badge {{ statusClass(request.status) }}">{{ statusLabel(request.status) }}</span>
               </td>
               <td>{{ request.date }}</td>
               <td>

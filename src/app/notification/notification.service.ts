@@ -1,4 +1,4 @@
-// BayanihanLink — notification store
+﻿// BayanihanLink ΓÇö notification store
 // Holds the transient toast queue and the persistent bell-dropdown inbox.
 
 import { Injectable, computed, signal } from '@angular/core';
@@ -41,7 +41,7 @@ function seedItems(startId: number): AppNotification[] {
       type: 'warning',
       category: 'request',
       title: 'Urgent request needs review',
-      message: '#BL-000123 · Typhoon · Food & Water · CDO City'
+      message: '#BL-000123 ┬╖ Typhoon ┬╖ Food & Water ┬╖ CDO City'
     },
     {
       minutesAgo: 18,
@@ -49,7 +49,7 @@ function seedItems(startId: number): AppNotification[] {
       type: 'info',
       category: 'donation',
       title: 'New donation offer',
-      message: 'DO-000089 · Blankets & Clothing · 240 units'
+      message: 'DO-000089 ┬╖ Blankets & Clothing ┬╖ 240 units'
     },
     {
       minutesAgo: 52,
@@ -57,7 +57,7 @@ function seedItems(startId: number): AppNotification[] {
       type: 'success',
       category: 'coordination',
       title: 'Distribution completed',
-      message: 'Request #BL-000189 · Hygiene Supplies · Davao City'
+      message: 'Request #BL-000189 ┬╖ Hygiene Supplies ┬╖ Davao City'
     },
     {
       minutesAgo: 145,
@@ -65,7 +65,7 @@ function seedItems(startId: number): AppNotification[] {
       type: 'error',
       category: 'request',
       title: 'Verification failed',
-      message: 'Request #BL-000234 · Iligan City · Documents unreadable'
+      message: 'Request #BL-000234 ┬╖ Iligan City ┬╖ Documents unreadable'
     },
     {
       minutesAgo: 320,
@@ -73,7 +73,7 @@ function seedItems(startId: number): AppNotification[] {
       type: 'info',
       category: 'system',
       title: 'System maintenance scheduled',
-      message: 'The portal will be unavailable on Sunday, 02:00–04:00'
+      message: 'The portal will be unavailable on Sunday, 02:00ΓÇô04:00'
     }
   ];
 

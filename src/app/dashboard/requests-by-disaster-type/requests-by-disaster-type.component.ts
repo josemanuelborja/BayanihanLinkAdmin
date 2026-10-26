@@ -10,12 +10,14 @@ import {
 } from '@angular/core';
 import type ApexCharts from 'apexcharts';
 
+import { DashboardChartFilterComponent, DashboardChartPeriod } from '../dashboard-chart-filter.component';
 import { buildRequestsByDisasterTypeOptions } from './requests-by-disaster-type.chart';
 import { RequestsByDisasterTypeService } from './requests-by-disaster-type.service';
 
 @Component({
   selector: 'app-requests-by-disaster-type',
   standalone: true,
+  imports: [DashboardChartFilterComponent],
   templateUrl: './requests-by-disaster-type.component.html',
   styleUrl: './requests-by-disaster-type.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -28,6 +30,10 @@ export class RequestsByDisasterTypeComponent {
   private destroyed = false;
 
   protected readonly data = this.store.data;
+
+  protected filterPeriod(period: DashboardChartPeriod): void {
+    void this.store.refresh(period.month, period.year);
+  }
 
   constructor() {
     afterNextRender(() => {

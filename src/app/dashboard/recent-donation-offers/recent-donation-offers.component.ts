@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+﻿import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
@@ -109,6 +109,12 @@ export class RecentDonationOffersComponent {
     return 'offer-status-' + status.toLowerCase().replace(/\s+/g, '-');
   }
 
+  statusLabel(status: DonationOfferStatus): string {
+    if (status === 'Verification') return 'Awaiting DSWD validation';
+    if (status === 'Verified') return 'DSWD confirmed';
+    return status;
+  }
+
   reviewOffer(offerId: string): void {
     const offer = this.recentOffers.find((item) => item.id === offerId);
 
@@ -117,7 +123,7 @@ export class RecentDonationOffersComponent {
     }
 
     this.router.navigate([
-      '/dswd-coordination',
+      '/external-coordination',
       offer.requestId.replace(/^#/, ''),
       offer.id.replace(/^#/, '')
     ]);

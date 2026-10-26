@@ -1,4 +1,4 @@
-export interface DonationOfferTrendPoint {
+﻿export interface DonationOfferTrendPoint {
   date: string;
   count: number;
 }

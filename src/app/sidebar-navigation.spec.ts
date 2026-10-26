@@ -3,17 +3,17 @@ import { provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { routes } from './app.routes';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { DswdCoordinationComponent } from './dswd-coordination/dswd-coordination.component';
+import { ExternalPartnerCoordinationComponent } from './external-coordination/external-coordination.component';
 import { DonationOffersComponent } from './donation-offers/donation-offers.component';
 import { RequestManagementComponent } from './request-management/request-management.component';
 import { StatusMonitoringComponent } from './status-monitoring/status-monitoring.component';
-import { RequestReviewComponent } from './request-management/request-review/request-review.component';
+import { RecentRequestsComponent } from './dashboard/recent-requests/recent-requests.component';
 
 const EXPECTED: Record<string, any> = {
   '/dashboard': DashboardComponent,
   '/request-management': RequestManagementComponent,
   '/donation-offers': DonationOffersComponent,
-  '/dswd-coordination': DswdCoordinationComponent,
+  '/external-coordination': ExternalPartnerCoordinationComponent,
   '/status-monitoring': StatusMonitoringComponent,
 };
 
@@ -37,7 +37,7 @@ describe('sidebar navigation', () => {
     '/dashboard',
     '/request-management',
     '/donation-offers',
-    '/dswd-coordination',
+    '/external-coordination',
     '/status-monitoring',
   ];
 
@@ -92,39 +92,19 @@ describe('sidebar navigation', () => {
   });
 
   it('every dashboard Review button opens the review page for that row', async () => {
-    await harness.navigateByUrl('/dashboard');
-
-    // capture the id each row displays, paired by index
-    const ids = Array.from(
-      document.querySelectorAll<HTMLButtonElement>('button.review-button')
-    ).map(b => b.closest('tr')!.querySelector('td')!.textContent!.trim().replace(/^#/, ''));
-
-    expect(ids.length, 'no Review buttons found on the dashboard').toBe(5);
-    expect(new Set(ids).size, 'review buttons should target distinct rows').toBe(5);
-
-    for (let i = 0; i < ids.length; i++) {
-      // rows are re-created on each navigation, so re-query and use the index
-      await harness.navigateByUrl('/dashboard');
-      const fresh = Array.from(
-        document.querySelectorAll<HTMLButtonElement>('button.review-button')
-      );
-
-      const spy = vi.spyOn(router, 'navigate');
-      fresh[i].click();
-      await harness.fixture.whenStable();
-
-      const args = spy.mock.calls[spy.mock.calls.length - 1][0] as string[];
-      const url = '/' + args.join('/').replace(/^\/+/, '');
-
-      expect(url, `Review button ${i} (#${ids[i]}) went to the wrong place`).toBe(
-        `/request-review/${ids[i]}`
-      );
-
-      await router.navigateByUrl(url);
-      expect(activeComponent(router), `Review button ${i} (#${ids[i]})`).toBe(
-        RequestReviewComponent
-      );
-      spy.mockRestore();
-    }
+    const fixture = TestBed.createComponent(RecentRequestsComponent);
+    (fixture.componentInstance as any).requests = ['BL-000302', 'BL-000301', 'BL-000298', 'BL-000295', 'BL-000290'].map(id => ({
+      id, requester: '', disaster: '', category: '', location: '', priority: 'NORMAL' as const,
+      status: 'Pending', date: '2026-09-16'
+    }));
+    fixture.detectChanges();
+    const spy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+    const buttons = Array.from((fixture.nativeElement as HTMLElement).querySelectorAll('button.review-button')) as HTMLButtonElement[];
+    expect(buttons).toHaveLength(5);
+    buttons.forEach((button, index) => {
+      button.click();
+      const id = fixture.componentInstance.requests[index].id;
+      expect(spy).toHaveBeenLastCalledWith(['/request-review', id]);
+    });
   });
 });

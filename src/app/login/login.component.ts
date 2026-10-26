@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Button } from 'primeng/button';
 
-import { NotificationService } from '../notification/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -18,25 +17,23 @@ export class LoginComponent {
   showPassword = false;
 
   constructor(
-    private router: Router,
-    private notifications: NotificationService
+    private router: Router
   ) {}
 
   login(): void {
     this.router.navigate(['/dashboard']);
   }
 
-  togglePassword(): void {
-    this.showPassword = !this.showPassword;
-  }
-
-  /** Hands over to the separate DSWD administrator portal. */
   goToDswdLogin(): void {
     this.router.navigate(['/dswd/login']);
   }
 
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
   /** Placeholder until the public user login page exists. */
   goToUserLogin(): void {
-    this.notifications.info('User login page');
+    // Public-user authentication is outside this App Admin portal.
   }
 }

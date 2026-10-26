@@ -1,0 +1,27 @@
+:host { position: relative; display: inline-flex; font-family: "Poppins",Arial,sans-serif; }
+.notification-wrap { position: relative; }
+.notification-button { position: relative; display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid #e3e9f2; border-radius: 50%; background: #fff; color: #617490; cursor: pointer; transition: .16s ease; }
+.notification-button:hover,.notification-button.is-open { border-color: #cbd6f1; background: #f4f7fc; color: #2848b7; }
+.notification-button svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.notification-count { position: absolute; top: -3px; right: -3px; display: grid; place-items: center; min-width: 18px; height: 18px; padding: 0 4px; border: 2px solid #fff; border-radius: 12px; background: #e2483c; color: #fff; font-size: 10px; font-weight: 700; }
+.notification-panel { position: absolute; z-index: 1200; top: calc(100% + 11px); right: 0; width: min(370px,calc(100vw - 24px)); overflow: hidden; border: 1px solid #e3e9f2; border-radius: 13px; background: #fff; box-shadow: 0 14px 38px rgba(16,32,64,.18); }
+.notification-panel>header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 16px; border-bottom: 1px solid #e9edf3; }
+.notification-panel h2 { margin: 0; color: #16233d; font-size: 14px; font-weight: 600; }
+.notification-panel header p { margin: 4px 0 0; color: #7d8ea9; font-size: 11px; }
+.demo-tag { padding: 4px 7px; border-radius: 8px; background: #f1f4fa; color: #7788a2; font-size: 9px; font-weight: 700; letter-spacing: .4px; }
+.notification-panel ul { max-height: 360px; margin: 0; padding: 0; overflow-y: auto; list-style: none; }
+.notification-panel li+li { border-top: 1px solid #f0f3f7; }
+.notification-item { display: flex; align-items: flex-start; gap: 11px; width: 100%; padding: 13px 15px; border: 0; background: #fff; text-align: left; cursor: pointer; }
+.notification-item:hover { background: #f7f9fc; }
+.item-icon { display: grid; flex: 0 0 32px; place-items: center; width: 32px; height: 32px; border-radius: 10px; }
+.item-icon svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.request-icon { background: #eef2ff; color: #3556b5; }
+.donation-icon { background: #e9f7f4; color: #178575; }
+.item-copy { display: block; flex: 1; min-width: 0; }
+.item-copy strong,.item-copy span,.item-copy small { display: block; }
+.item-copy strong { color: #233958; font-size: 12px; font-weight: 600; }
+.item-copy span { margin-top: 3px; color: #63748e; font-size: 11px; line-height: 1.45; }
+.item-copy small { margin-top: 5px; color: #9aa6b8; font-size: 10px; }
+.item-chevron { color: #9aa8bb; font-size: 22px; line-height: 24px; }
+.empty { margin: 0; padding: 28px 16px; color: #7d8ea9; text-align: center; font-size: 12px; }
+@media(max-width:600px) { .notification-panel { position: fixed; top: 68px; right: 12px; } }

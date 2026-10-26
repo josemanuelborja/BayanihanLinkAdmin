@@ -1,287 +1,62 @@
-<div class="page">
-
-  <aside class="sidebar">
-
-    <div class="brand">
-      <div class="brand-icon" role="img" aria-label="BayanihanLink logo"></div>
-
-      <div>
-        <strong>BayanihanLink</strong>
-        <span>DSWD Admin</span>
-      </div>
-    </div>
-
-    <div class="menu-title">MENU</div>
-
-    <nav>
-
-      <a routerLink="/dswd/dashboard" class="nav-item">
-        <span class="nav-icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" /><path d="M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" /><path d="M15 12h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" /><path d="M15 4h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" /></svg>
-        </span>
-        Dashboard
-      </a>
-
-      <a
-        [routerLink]="['/dswd/review', requestId]"
-        class="nav-item active"
-      >
-        <span class="nav-icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" /></svg>
-        </span>
-        Request Review
-        <b>15</b>
-      </a>
-
-      <a routerLink="/dswd/status" class="nav-item">
-        <span class="nav-icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8l4 -16l3 8h4" /></svg>
-        </span>
-        Status Monitoring
-      </a>
-
-    </nav>
-
-    <div class="sidebar-bottom">
-
-      <div class="profile">
-
-        <div class="avatar">DS</div>
-
-        <div>
-          <strong>DSWD Officer</strong>
-          <span>Logged in</span>
-        </div>
-
-      </div>
-
-      <button class="logout-button" type="button" (click)="logout()">
-        <span class="logout-icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>
-        </span>
-        <span>Log Out</span>
-      </button>
-
-    </div>
-
-  </aside>
-
-
+﻿<div class="page" *ngIf="request as item">
+  <app-dswd-sidebar activePage="review" />
   <main>
-
-    <header class="topbar">
-
-      <div>
-        <h1>
-          Request Review (DSWD) — #{{ requestId }}
-        </h1>
-
-        <p>
-          BayanihanLink — Disaster Needs Coordination Platform
-        </p>
-      </div>
-
-      <div class="admin">
-
-        <app-notification-bell />
-
-        <div class="top-avatar">
-          DS
-        </div>
-
-        <div>
-          <strong>DSWD Officer</strong>
-          <small>DSWD Admin</small>
-        </div>
-
-      </div>
-
-    </header>
-
-
+    <header class="topbar"><div><h1>Review Donation</h1><p>BayanihanLink · DSWD Assessment Workspace</p></div><div class="topbar-user"><app-dswd-notification-bell /><span>DS</span><div><strong>DSWD Officer</strong><small>Validation role</small></div></div></header>
     <section class="content">
-
-      <div class="layout" *ngIf="request as r">
-
-        <div>
-
-          <section class="card">
-
-            <div class="card-title">
-
-              <div>
-                <h2>Request Information</h2>
-                <p>Verified request forwarded from BayanihanLink</p>
-              </div>
-
-              <div class="badges">
-                <span
-                  class="priority-badge"
-                  [ngClass]="priorityClass(r.priority)"
-                >{{ r.priority }}</span>
-                <span [ngClass]="statusBadge(r.status).class">
-                  {{ statusBadge(r.status).label }}
-                </span>
-              </div>
-
-            </div>
-
-
+      <div class="review-heading">
+        <div><a class="back-link" routerLink="/dswd/dashboard">← Back to review queue</a><h2>Donation <span>#{{ item.offerId }}</span></h2></div>
+        <span class="path-badge" [class.open]="item.donationType === 'Open donation'">{{ item.donationType }}</span>
+      </div>
+      <div class="review-layout">
+        <div class="case-details">
+          <section class="card" *ngIf="item.donationType === 'Request-linked donation'">
+            <div class="card-title"><div class="title-icon request-icon">R</div><div><h3>User Request</h3><p>Review the recipient’s reported needs</p></div><strong class="reference">#{{ item.requestId }}</strong></div>
             <div class="info-grid">
-
-              <div>
-                <small>REQUEST ID</small>
-                <strong>#{{ r.id }}</strong>
-              </div>
-
-              <div>
-                <small>DISASTER TYPE</small>
-                <strong>{{ r.disasterType }}</strong>
-              </div>
-
-              <div>
-                <small>GENERAL LOCATION</small>
-                <strong>{{ r.location }}</strong>
-              </div>
-
-              <div>
-                <small>PERSONS AFFECTED</small>
-                <strong>{{ r.personsAffected }}</strong>
-              </div>
-
-              <div>
-                <small>ITEM NEEDED</small>
-                <strong>{{ r.itemDetail }}</strong>
-              </div>
-
-              <div>
-                <small>QUANTITY NEEDED</small>
-                <strong>{{ r.quantity }}</strong>
-              </div>
-
-              <div>
-                <small>DATE SUBMITTED</small>
-                <strong>{{ r.dateSubmitted }}</strong>
-              </div>
-
-              <div>
-                <small>VERIFIED BY ADMIN</small>
-                <strong>{{ r.verifiedByAdmin }}</strong>
-              </div>
-
+              <div><small>DISASTER TYPE</small><strong>{{ item.disasterType }}</strong></div>
+              <div><small>LOCATION</small><strong>{{ item.location }}</strong></div>
+              <div><small>PEOPLE AFFECTED</small><strong>{{ item.personsAffected }}</strong></div>
+              <div><small>REQUEST PRIORITY</small><strong><span class="priority-badge" [ngClass]="item.priority.toLowerCase()">{{ item.priority }}</span></strong></div>
+              <div class="item-highlight"><small>ITEMS REQUESTED</small><strong>{{ item.item }} · {{ item.quantity }}</strong></div>
             </div>
-
           </section>
 
-
-          <section class="card">
-
-            <h2>Associated Donation Offer</h2>
-
-            <div class="info-grid">
-
-              <div>
-                <small>OFFER ID</small>
-                <strong>#{{ r.offerId }}</strong>
-              </div>
-
-              <div>
-                <small>ITEM OFFERED</small>
-                <strong>{{ r.offerItem }}</strong>
-              </div>
-
-              <div>
-                <small>QUANTITY OFFERED</small>
-                <strong>{{ r.offerQuantity }}</strong>
-              </div>
-
-              <div>
-                <small>OFFER DATE</small>
-                <strong>{{ r.offerDate }}</strong>
-              </div>
-
+          <section class="card donation-card">
+            <div class="card-title"><div class="title-icon donation-icon">D</div><div><h3>{{ item.donationType === 'Open donation' ? 'Open Donation Offer' : 'Donated Items' }}</h3><p>{{ item.donationType === 'Open donation' ? 'Donor is offering these items without selecting a recipient' : 'Items offered for the selected request' }}</p></div><strong class="reference">#{{ item.offerId }}</strong></div>
+            <div class="info-grid donation-grid">
+              <div><small>DONATED ITEMS</small><strong>{{ item.offerItem }}</strong></div>
+              <div><small>QUANTITY</small><strong>{{ item.offerQuantity }}</strong></div>
+              <div><small>DONATION PATH</small><strong>{{ item.donationType }}</strong></div>
+              <div *ngIf="item.donationType === 'Open donation'" class="item-highlight"><small>DESTINATION ASSESSMENT</small><strong>{{ item.suggestedDestination || 'Not yet assessed' }}</strong></div>
             </div>
-
-            <div class="donation-note">
-              📦 In-kind donation — No monetary transaction involved.
-            </div>
-
           </section>
 
-
-          <section class="card">
-
-            <h2>BayanihanLink Administrator Notes</h2>
-
-            <div class="notes">
-              {{ r.notes }}
-            </div>
-
-          </section>
-
-
-          <div class="warning">
-            🏛 &nbsp;
-            This system does not replace DSWD's official systems and
-            processes. All decisions regarding verification and physical
-            distribution remain the authority of DSWD and government officials.
-          </div>
-
+          <section class="scope-note"><span class="scope-icon">i</span><p><strong>DSWD authority:</strong> Assess the reported needs and donated items, and recommend a destination for open offers. App Admin retains platform priorities and workflow status.</p></section>
         </div>
 
-
-        <aside>
-
-          <section class="card status-card">
-
-            <h2>Update Status</h2>
-
-            <label
-              *ngFor="let item of statuses"
-              class="status-option"
-              [class.selected]="status === item"
-            >
-
-              <input
-                type="radio"
-                name="status"
-                [value]="item"
-                [(ngModel)]="status"
-              >
-
-              <span class="radio"></span>
-
-              <span>{{ item }}</span>
-
-            </label>
-
-          </section>
-
-
-          <p-button
-            label="Update Status"
-            [fluid]="true"
-            styleClass="update-button"
-            (onClick)="updateStatus()"
-          />
-
-
-          <p-button
-            label="Back to Dashboard"
-            icon="pi pi-arrow-left"
-            severity="secondary"
-            [outlined]="true"
-            [fluid]="true"
-            styleClass="back-button"
-            (onClick)="backToDashboard()"
-          />
-
-        </aside>
-
+        <section class="decision card">
+          <div class="decision-title"><div><h3>DSWD Assessment</h3><p>Record an outcome for this donation</p></div><span class="decision-mark">✓</span></div>
+          <div class="form-divider"></div>
+          <p class="assessment-guidance" *ngIf="item.donationType === 'Open donation'">Assess the items and recommend the community, location, or response where they should be directed.</p>
+          <p class="assessment-guidance" *ngIf="item.donationType === 'Request-linked donation'">Check the reported disaster and requested items, then assess whether the donation is appropriate for this request.</p>
+          <label *ngIf="item.donationType === 'Request-linked donation'">Disaster is genuine and eligible
+            <select [(ngModel)]="disasterEligibility"><option *ngFor="let outcome of outcomes" [value]="outcome">{{ outcome }}</option></select>
+          </label>
+          <label *ngIf="item.donationType === 'Request-linked donation'">Requested items are valid and appropriate
+            <select [(ngModel)]="requestedItemsAssessment"><option *ngFor="let outcome of outcomes" [value]="outcome">{{ outcome }}</option></select>
+          </label>
+          <label>{{ item.donationType === 'Open donation' ? 'Items are safe and suitable for relief' : 'Donation is suitable for this request' }}
+            <select [(ngModel)]="donatedItemsAssessment"><option *ngFor="let outcome of outcomes" [value]="outcome">{{ outcome }}</option></select>
+          </label>
+          <label *ngIf="item.donationType === 'Open donation'">Recommended destination / response
+            <input [(ngModel)]="suggestedDestination" maxlength="180" placeholder="e.g. Flood response, Brgy. 14, CDO City" />
+          </label>
+          <label class="note-label">Assessment notes <span>(optional)</span>
+            <textarea [(ngModel)]="note" rows="4" maxlength="500" placeholder="Add the basis for this assessment or routing recommendation"></textarea>
+          </label>
+          <div class="actions"><button type="button" class="save" [disabled]="!canSave" (click)="saveAssessment()">Save assessment</button><button type="button" class="cancel" (click)="backToDashboard()">Cancel</button></div>
+          <small class="disclaimer">Demo only · Decisions are held in browser memory and are not persisted.</small>
+        </section>
       </div>
-
     </section>
-
   </main>
-
 </div>

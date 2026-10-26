@@ -6,13 +6,13 @@ import { AdminSidebarComponent } from '../../admin-sidebar/admin-sidebar.compone
 import { NotificationBellComponent } from '../../notification/notification-bell.component';
 
 @Component({
-  selector: 'app-request-verified',
+  selector: 'app-request-review-recorded',
   standalone: true,
   imports: [Button, NotificationBellComponent, AdminSidebarComponent],
-  templateUrl: './request-verified.component.html',
-  styleUrl: './request-verified.component.scss'
+  templateUrl: './request-review-recorded.component.html',
+  styleUrl: './request-review-recorded.component.scss'
 })
-export class RequestVerifiedComponent {
+export class RequestReviewRecordedComponent {
 
   requestId = 'BL-000301';
 
@@ -29,7 +29,7 @@ export class RequestVerifiedComponent {
 
   proceedToCoordination(): void {
     this.router.navigate([
-      '/dswd-coordination',
+      '/external-coordination',
       this.requestId
     ]);
   }

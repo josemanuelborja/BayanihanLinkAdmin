@@ -71,7 +71,8 @@
               "buildTarget": "BayanihanLinkAdmin:build:production"
             },
             "development": {
-              "buildTarget": "BayanihanLinkAdmin:build:development"
+              "buildTarget": "BayanihanLinkAdmin:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

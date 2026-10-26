@@ -15,7 +15,7 @@ describe('notification feature', () => {
   });
 
   describe('NotificationService toasts', () => {
-    it('starts with no toasts but a seeded inbox', () => {
+    it('starts with no toasts and a seeded inbox', () => {
       expect(service.toasts()).toEqual([]);
       expect(service.items().length).toBeGreaterThan(0);
     });
@@ -91,6 +91,7 @@ describe('notification feature', () => {
     });
 
     it('marks a single item as read', () => {
+      service.notify({ title: 'Test', message: 'Test notification' });
       const target = service.items().find(i => !i.read)!;
       service.markRead(target.id);
       expect(service.items().find(i => i.id === target.id)!.read).toBe(true);
@@ -103,6 +104,7 @@ describe('notification feature', () => {
     });
 
     it('removes a single item', () => {
+      service.notify({ title: 'Test', message: 'Test notification' });
       const target = service.items()[0];
       service.removeItem(target.id);
       expect(service.items().some(i => i.id === target.id)).toBe(false);
@@ -154,6 +156,7 @@ describe('notification feature', () => {
 
   describe('NotificationBellComponent', () => {
     it('shows the unread count and hides the panel until clicked', async () => {
+      service.notify({ title: 'Test', message: 'Test notification' });
       const fixture = TestBed.createComponent(NotificationBellComponent);
       await fixture.whenStable();
 
@@ -165,6 +168,7 @@ describe('notification feature', () => {
     });
 
     it('opens the panel and marks everything read on click', async () => {
+      service.notify({ title: 'Test', message: 'Test notification' });
       const fixture = TestBed.createComponent(NotificationBellComponent);
       await fixture.whenStable();
 
@@ -178,6 +182,7 @@ describe('notification feature', () => {
     });
 
     it('lists every inbox item and closes on an outside click', async () => {
+      service.notify({ title: 'Test', message: 'Test notification' });
       const total = service.items().length;
 
       const fixture = TestBed.createComponent(NotificationBellComponent);

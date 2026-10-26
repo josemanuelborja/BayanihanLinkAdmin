@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Button } from 'primeng/button';
@@ -19,6 +19,9 @@ export class DswdLoginComponent {
   constructor(private router: Router) {}
 
   login(): void {
+    if (!this.email.trim() || !this.password) return;
+    // Prototype-only client marker; this is not credential authentication.
+    sessionStorage.setItem('bayanihanlink-dswd-demo-session', 'true');
     this.router.navigate(['/dswd/dashboard']);
   }
 

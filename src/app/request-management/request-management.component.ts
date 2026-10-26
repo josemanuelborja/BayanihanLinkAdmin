@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+﻿import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -7,7 +7,6 @@ import { Button } from 'primeng/button';
 import { AdminUserBadgeComponent } from '../admin-user-badge/admin-user-badge.component';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { NotificationBellComponent } from '../notification/notification-bell.component';
-import { NotificationService } from '../notification/notification.service';
 
 interface RequestItem {
   id: string;
@@ -125,10 +124,7 @@ export class RequestManagementComponent {
     }
   ];
 
-  constructor(
-    private router: Router,
-    private notifications: NotificationService
-  ) {}
+  constructor(private router: Router) {}
 
   get filteredRequests(): RequestItem[] {
     return this.requests.filter(request => {
@@ -160,15 +156,17 @@ export class RequestManagementComponent {
     this.priorityFilter = priority;
   }
 
+  statusLabel(status: string): string {
+    if (status === 'Verified') return 'DSWD Confirmed';
+    if (status === 'For Verification' || status === 'Submitted for Verification') return 'Awaiting DSWD Confirmation';
+    return status;
+  }
+
   review(id: string): void {
     this.router.navigate([
       '/request-review',
       id.replace(/^#/, '')
     ]);
-  }
-
-  verify(id: string): void {
-    this.notifications.success(`${id} marked for verification.`);
   }
 
 }

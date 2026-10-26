@@ -47,7 +47,7 @@
               <td>{{ offer.quantity }}</td>
               <td>{{ offer.location }}</td>
               <td>
-                <span class="badge {{ statusClass(offer.status) }}">{{ offer.status }}</span>
+                <span class="badge {{ statusClass(offer.status) }}">{{ statusLabel(offer.status) }}</span>
               </td>
               <td>{{ offer.date }}</td>
               <td>

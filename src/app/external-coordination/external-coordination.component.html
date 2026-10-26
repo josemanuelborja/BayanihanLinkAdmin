@@ -8,9 +8,9 @@
     <header class="topbar">
 
       <div>
-        <h1>DSWD Coordination</h1>
+        <h1>External Partner Coordination</h1>
         <p>
-          Request #{{ requestId }} · Offer #{{ offerId }}
+          App Admin workspace · Request #{{ requestId }} · Offer #{{ offerId }}
         </p>
       </div>
 
@@ -31,7 +31,7 @@
           <section class="case-header">
 
             <div class="case-title">
-              <small>COORDINATION CASE</small>
+              <small>APP ADMIN · EXTERNAL COORDINATION CASE</small>
 
               <h2>Typhoon Assistance · Drinking Water</h2>
             </div>
@@ -65,7 +65,12 @@
 
           <section class="card details">
 
-            <h2>Coordination Details</h2>
+            <h2>External Validation Requested</h2>
+            <p class="validation-guidance">
+              DSWD is the external authority that confirms whether a reported disaster is genuine and eligible,
+              and whether the proposed donation is appropriate. The App Admin contacts DSWD outside this system
+              and records only confirmed updates here. BayanihanLink does not send requests to DSWD.
+            </p>
 
             <div class="detail-grid">
 
@@ -100,7 +105,7 @@
               </div>
 
               <div>
-                <small>GOVERNMENT PARTNER</small>
+                <small>EXTERNAL PARTNER</small>
                 <strong>DSWD Region X</strong>
               </div>
 
@@ -128,7 +133,7 @@
                   <div class="note-avatar">{{ note.author.slice(0, 2) }}</div>
                   <div>
                     <strong>{{ note.author }}</strong>
-                    <small>{{ note.role }} · {{ note.time }}</small>
+                    <small>{{ note.authorRole }} · {{ note.time }}</small>
                   </div>
                   <button
                     class="remove"
@@ -151,7 +156,7 @@
             <div class="note-composer">
               <textarea
                 [(ngModel)]="noteDraft"
-                placeholder="Add a note for DSWD Region X..."
+                placeholder="Record an externally confirmed update (no message is sent from BayanihanLink)..."
                 rows="3"
                 maxlength="500"
               ></textarea>
@@ -174,7 +179,7 @@
 
         <aside class="update-card">
 
-          <h2>Update Coordination Status</h2>
+            <h2>Record External Confirmation</h2>
 
           <div class="status-options">
 
@@ -190,7 +195,7 @@
           </div>
 
           <p-button
-            label="Save & Update Status"
+            label="Save Recorded Status"
             [fluid]="true"
             styleClass="save"
             (onClick)="saveStatus()"

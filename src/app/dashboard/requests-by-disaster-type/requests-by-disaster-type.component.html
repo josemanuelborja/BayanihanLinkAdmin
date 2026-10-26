@@ -4,7 +4,7 @@
       <h2>Requests by Disaster Type</h2>
       <p>How many assistance requests are associated with each disaster.</p>
     </div>
-    <span>{{ data().period }}</span>
+    <app-dashboard-chart-filter (periodChange)="filterPeriod($event)" />
   </header>
 
   <div

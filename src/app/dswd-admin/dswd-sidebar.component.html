@@ -1,0 +1,28 @@
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-logo" role="img" aria-label="BayanihanLink logo"></div>
+    <div><strong>BayanihanLink</strong><span>DSWD Officer</span></div>
+  </div>
+
+  <div class="menu-label">MENU</div>
+  <nav class="sidebar-nav" aria-label="DSWD workspace">
+    <a routerLink="/dswd/dashboard" routerLinkActive="active" [class.active]="activePage === 'review'" class="nav-item">
+      <span class="nav-icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1"/><path d="M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1"/><path d="M15 12h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1"/><path d="M15 4h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1"/></svg>
+      </span>
+      <span>Review Queue</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <div class="admin-profile">
+      <div class="admin-avatar">DS</div>
+      <div><strong>DSWD Officer</strong><span>Logged in</span></div>
+    </div>
+    <button class="logout-button" type="button" (click)="logout()">
+      <span class="logout-icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"/><path d="M9 12h12l-3 -3"/><path d="M18 15l3 -3"/></svg>
+      </span><span>Log Out</span>
+    </button>
+  </div>
+</aside>

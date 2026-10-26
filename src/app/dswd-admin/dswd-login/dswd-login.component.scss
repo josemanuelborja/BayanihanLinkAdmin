@@ -1,4 +1,4 @@
-* {
+﻿* {
   box-sizing: border-box;
 }
 
@@ -223,17 +223,19 @@
 }
 
 .warning-icon {
-  width: 22px;
-  height: 22px;
-  background: #ffbd45;
-  color: #fff;
-  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  color: #ffbd45;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 14px;
-  padding-top: 4px;
+}
+
+.warning-icon svg {
+  display: block;
+  width: 24px;
+  height: 24px;
 }
 
 /* PrimeNG p-button re-tinted to the DSWD teal; keep the login sizing. */

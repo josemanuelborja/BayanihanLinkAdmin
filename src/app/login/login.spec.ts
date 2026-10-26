@@ -72,25 +72,12 @@ describe('LoginComponent', () => {
     expect(spy).toHaveBeenCalledWith(['/dashboard']);
   });
 
-  it('sends the DSWD link to the DSWD portal, not the admin dashboard', async () => {
+  it('links to the separate DSWD validation sign-in', async () => {
     const link = el<HTMLButtonElement>('.admin-link');
-
-    expect(link.textContent).toContain('DSWD Administrator');
-
+    expect(link.textContent).toContain('DSWD Login');
     link.click();
     await fixture.whenStable();
-
     expect(router.url).toBe('/dswd/login');
-  });
-
-  it('does not point the DSWD link at a route the router cannot resolve', async () => {
-    // A link to a missing route falls through to `**` and lands on /login,
-    // which looks identical to the button doing nothing.
-    const link = el<HTMLButtonElement>('.admin-link');
-    link.click();
-    await fixture.whenStable();
-
-    expect(router.url).not.toBe('/login');
   });
 
   it('labels the admin email and password inputs', () => {

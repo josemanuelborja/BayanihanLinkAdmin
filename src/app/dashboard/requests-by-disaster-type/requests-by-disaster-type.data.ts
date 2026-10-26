@@ -1,4 +1,4 @@
-export interface DisasterTypeSlice {
+﻿export interface DisasterTypeSlice {
   id: string;
   label: string;
   count: number;

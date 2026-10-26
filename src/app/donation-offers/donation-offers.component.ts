@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+﻿import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -119,9 +119,15 @@ export class DonationOffersComponent {
     this.filter = filter;
   }
 
+  statusLabel(status: string): string {
+    if (status === 'For Verification' || status === 'Verification') return 'Awaiting DSWD validation';
+    if (status === 'Verified') return 'DSWD confirmed';
+    return status;
+  }
+
   coordinate(item: Donation): void {
     this.router.navigate([
-      '/dswd-coordination',
+      '/external-coordination',
       item.request.replace(/^#/, ''),
       item.id.replace(/^#/, '')
     ]);

@@ -12,28 +12,29 @@ import { NotificationService } from '../notification/notification.service';
 export interface CoordinationNote {
   id: number;
   author: string;
-  role: string;
+  authorRole: string;
   time: string;
   text: string;
 }
 
 @Component({
-  selector: 'app-dswd-coordination',
+  selector: 'app-external-coordination',
   standalone: true,
   imports: [CommonModule, FormsModule, Button, AdminSidebarComponent, AdminUserBadgeComponent, NotificationBellComponent],
-  templateUrl: './dswd-coordination.component.html',
-  styleUrl: './dswd-coordination.component.scss'
+  templateUrl: './external-coordination.component.html',
+  styleUrl: './external-coordination.component.scss'
 })
-export class DswdCoordinationComponent {
+export class ExternalPartnerCoordinationComponent {
 
   requestId = 'BL-000234';
   offerId = 'DO-000089';
-  selectedStatus = 'Submitted for Verification';
+  selectedStatus = 'Awaiting DSWD Confirmation';
 
   statuses = [
     'For Coordination',
-    'Submitted for Verification',
-    'Verified',
+    'Awaiting DSWD Confirmation',
+    'Confirmed by DSWD',
+    'Not confirmed by DSWD',
     'For Distribution',
     'Distributed'
   ];
@@ -42,9 +43,9 @@ export class DswdCoordinationComponent {
     {
       id: 1,
       author: 'Admin User',
-      role: 'Administrator',
+      authorRole: 'App Admin',
       time: 'Sep 16, 2026',
-      text: 'Coordination submitted to DSWD Region X. Awaiting verification response. Donor confirmed availability on Sep 16, 2026.'
+      text: 'No external confirmation recorded yet. The App Admin must contact DSWD outside BayanihanLink to confirm disaster eligibility and donation suitability.'
     }
   ];
 
@@ -66,15 +67,15 @@ export class DswdCoordinationComponent {
       ...this.notes,
       {
         id: this.nextNoteId++,
-        author: 'Admin User',
-        role: 'Administrator',
+        author: 'App Admin',
+        authorRole: 'App Admin',
         time: 'Just now',
         text
       }
     ];
 
     this.noteDraft = '';
-    this.notifications.success('Note added to coordination case');
+    this.notifications.success('External coordination note recorded');
   }
 
   removeNote(id: number): void {
@@ -103,7 +104,7 @@ export class DswdCoordinationComponent {
   }
 
   saveStatus(): void {
-    this.notifications.success(`Status updated to ${this.selectedStatus}`);
+    this.notifications.success(`Coordination status recorded as ${this.selectedStatus}`);
   }
 
   backToOffers(): void {

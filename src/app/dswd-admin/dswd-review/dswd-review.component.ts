@@ -1,95 +1,57 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Button } from 'primeng/button';
-
-import { NotificationBellComponent } from '../../notification/notification-bell.component';
-import { NotificationService } from '../../notification/notification.service';
-import {
-  DSWD_STATUSES,
-  DswdRequest,
-  DswdStatus,
-  DswdStatusBadge,
-  findDswdRequest,
-  priorityClass,
-  statusBadge
-} from '../dswd-request.data';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { DSWD_VALIDATION_CASES, DswdValidationCase, ValidationOutcome } from '../dswd-request.data';
+import { DswdSidebarComponent } from '../dswd-sidebar.component';
+import { DswdNotificationBellComponent } from '../dswd-notification-bell.component';
 
 @Component({
   selector: 'app-dswd-review',
   standalone: true,
-  imports: [CommonModule, FormsModule, Button, RouterLink, NotificationBellComponent],
+  imports: [CommonModule, FormsModule, RouterLink, DswdSidebarComponent, DswdNotificationBellComponent],
   templateUrl: './dswd-review.component.html',
   styleUrl: './dswd-review.component.scss'
 })
 export class DswdReviewComponent {
+  request?: DswdValidationCase;
+  disasterEligibility: ValidationOutcome = 'Pending';
+  requestedItemsAssessment: ValidationOutcome = 'Pending';
+  donatedItemsAssessment: ValidationOutcome = 'Pending';
+  suggestedDestination = '';
+  note = '';
+  readonly outcomes: ValidationOutcome[] = ['Pending', 'Confirmed', 'Not confirmed'];
 
-  /**
-   * Undefined only before the route params arrive; unknown ids are turned
-   * away by dswdRequestExistsGuard before this component is built.
-   */
-  request?: DswdRequest;
-
-  status: DswdStatus = 'Submitted for Verification';
-
-  readonly statuses = DSWD_STATUSES;
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private notifications: NotificationService
-  ) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.route.paramMap.subscribe(params => {
-      const found = findDswdRequest(params.get('id'));
-
-      if (!found) return;
-
-      this.request = found;
-      this.status = found.status;
+      this.request = DSWD_VALIDATION_CASES.find(item => item.id === params.get('id'));
+      if (this.request) {
+        this.disasterEligibility = this.request.disasterEligibility;
+        this.requestedItemsAssessment = this.request.requestedItemsAssessment;
+        this.donatedItemsAssessment = this.request.donatedItemsAssessment;
+        this.suggestedDestination = this.request.suggestedDestination;
+      }
     });
   }
 
-  /** Kept for the sidebar link, which points back at the open request. */
-  get requestId(): string {
-    return this.request?.id ?? '';
+  get canSave(): boolean {
+    if (!this.request || this.donatedItemsAssessment === 'Pending') return false;
+    return this.request.donationType === 'Open donation'
+      ? !!this.suggestedDestination.trim()
+      : this.disasterEligibility !== 'Pending' && this.requestedItemsAssessment !== 'Pending';
   }
 
-  priorityClass(priority: DswdRequest['priority']): string {
-    return priorityClass(priority);
-  }
-
-  statusBadge(status: DswdStatus): DswdStatusBadge {
-    return statusBadge(status);
-  }
-
-  updateStatus(): void {
-    if (!this.request) return;
-
-    // Written back to the shared record so the dashboard table and the
-    // status tracker show the new stage until the page is reloaded.
-    this.request.status = this.status;
-    this.notifications.success(
-      `Request #${this.request.id} updated to ${this.status}.`
-    );
-
-    // Also filed in the bell inbox, so the change is still there after the
-    // toast fades.
-    this.notifications.notify({
-      type: 'success',
-      category: 'request',
-      title: `Status updated · ${this.status}`,
-      message:
-        `#${this.request.id} · ${this.request.disasterType} · ` +
-        `${this.request.item} · ${this.request.location}`
-    });
-  }
-
-  backToDashboard(): void {
+  saveAssessment(): void {
+    if (!this.request || !this.canSave) return;
+    this.request.disasterEligibility = this.disasterEligibility;
+    this.request.requestedItemsAssessment = this.requestedItemsAssessment;
+    this.request.donatedItemsAssessment = this.donatedItemsAssessment;
+    this.request.suggestedDestination = this.suggestedDestination.trim();
+    if (this.note.trim()) this.request.notes = this.note.trim();
     this.router.navigate(['/dswd/dashboard']);
   }
 
-  logout(): void {
-    this.router.navigate(['/login']);
-  }
+  backToDashboard(): void { this.router.navigate(['/dswd/dashboard']); }
+  logout(): void { sessionStorage.removeItem('bayanihanlink-dswd-demo-session'); this.router.navigate(['/login']); }
 }

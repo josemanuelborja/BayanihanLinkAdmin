@@ -4,7 +4,7 @@
       <h2>Donation Offers Overview</h2>
       <p>Current status of donation offers submitted by donors and volunteers.</p>
     </div>
-    <span>{{ data().period }}</span>
+    <app-dashboard-chart-filter (periodChange)="filterPeriod($event)" />
   </header>
 
   <div class="legend" role="group" aria-label="Donation offers chart legend">

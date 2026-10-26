@@ -334,6 +334,14 @@ td {
   white-space: nowrap;
 }
 
+th.action-column,
+td.action-column {
+  width: 136px;
+  min-width: 136px;
+  padding-right: 28px;
+  padding-left: 18px;
+}
+
 .id {
   color: #2048b6;
 }
@@ -389,17 +397,20 @@ td {
 
 .actions {
   display: flex;
+  align-items: center;
   gap: 5px;
 }
 
 /* PrimeNG p-button owns the fill (Review = primary blue, Verify = success
    green); this only pins the compact table sizing. */
 ::ng-deep .actions .p-button {
+  min-width: 76px;
   height: 28px;
-  padding: 0 12px;
+  padding: 0 14px;
   border-radius: 7px;
   font-family: "Poppins", Arial, sans-serif;
   font-size: 11px;
+  white-space: nowrap;
 }
 
 @media (max-width: 1100px) {

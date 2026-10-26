@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+﻿import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -115,6 +115,10 @@ export class RecentRequestsComponent {
 
   statusClass(status: DashboardRequest['status']): string {
     return 'status-' + status.toLowerCase();
+  }
+
+  statusLabel(status: DashboardRequest['status']): string {
+    return status === 'Verified' ? 'DSWD confirmed' : status;
   }
 
   reviewRequest(id: string): void {

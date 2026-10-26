@@ -24,7 +24,7 @@ export class RequestReviewComponent {
 
   statuses = [
     'Pending',
-    'Verified',
+    'Awaiting DSWD Confirmation',
     'Assisted',
     'Completed'
   ];
@@ -41,9 +41,9 @@ export class RequestReviewComponent {
     });
   }
 
-  verifyRequest(): void {
+  saveReview(): void {
     this.router.navigate([
-      '/request-verified',
+      '/request-review-recorded',
       this.requestId
     ]);
   }

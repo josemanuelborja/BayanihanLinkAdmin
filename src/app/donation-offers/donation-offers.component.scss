@@ -375,6 +375,24 @@ td {
   white-space: nowrap;
 }
 
+th.action-column,
+td.action-column {
+  width: 132px;
+  min-width: 132px;
+  padding-right: 22px;
+  padding-left: 18px;
+}
+
+td.action-column p-button {
+  display: inline-flex;
+  align-items: center;
+}
+
+::ng-deep td.action-column .p-button {
+  min-width: 98px;
+  white-space: nowrap;
+}
+
 .id,
 .request {
   color: #194db9;

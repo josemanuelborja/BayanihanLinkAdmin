@@ -1,7 +1,13 @@
-import { inject } from '@angular/core';
+﻿import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 
-import { findDswdRequest } from './dswd-request.data';
+import { findDswdValidationCase } from './dswd-request.data';
+
+export const dswdSessionGuard: CanActivateFn = () => {
+  return sessionStorage.getItem('bayanihanlink-dswd-demo-session') === 'true'
+    ? true
+    : inject(Router).createUrlTree(['/dswd/login']);
+};
 
 /**
  * Keeps the review page off unknown request ids.
@@ -13,7 +19,7 @@ import { findDswdRequest } from './dswd-request.data';
  * navigation.
  */
 export const dswdRequestExistsGuard: CanActivateFn = route => {
-  const request = findDswdRequest(route.paramMap.get('id'));
+  const request = findDswdValidationCase(route.paramMap.get('id'));
 
   return request
     ? true

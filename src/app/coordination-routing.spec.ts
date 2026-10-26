@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { routes } from './app.routes';
-import { DswdCoordinationComponent } from './dswd-coordination/dswd-coordination.component';
+import { ExternalPartnerCoordinationComponent } from './external-coordination/external-coordination.component';
 import { DonationOffersComponent } from './donation-offers/donation-offers.component';
 import { RequestManagementComponent } from './request-management/request-management.component';
 import { RequestReviewComponent } from './request-management/request-review/request-review.component';
@@ -27,18 +27,18 @@ describe('every coordination link lands on the coordination UI', () => {
   const toUrl = (args: string[]) => '/' + args.join('/').replace(/^\/+/, '');
 
   it('resolves the bare coordination route', async () => {
-    await router.navigateByUrl('/dswd-coordination');
-    expect(activeComponent()).toBe(DswdCoordinationComponent);
+    await router.navigateByUrl('/external-coordination');
+    expect(activeComponent()).toBe(ExternalPartnerCoordinationComponent);
   });
 
   it('resolves request-only link to the coordination UI (not login)', async () => {
-    await router.navigateByUrl('/dswd-coordination/BL-000301');
-    expect(activeComponent()).toBe(DswdCoordinationComponent);
+    await router.navigateByUrl('/external-coordination/BL-000301');
+    expect(activeComponent()).toBe(ExternalPartnerCoordinationComponent);
   });
 
   it('resolves request+offer link to the coordination UI', async () => {
-    await router.navigateByUrl('/dswd-coordination/BL-000234/DO-000089');
-    expect(activeComponent()).toBe(DswdCoordinationComponent);
+    await router.navigateByUrl('/external-coordination/BL-000234/DO-000089');
+    expect(activeComponent()).toBe(ExternalPartnerCoordinationComponent);
   });
 
   it('Review on every request row lands on the review page', async () => {
@@ -68,18 +68,18 @@ describe('every coordination link lands on the coordination UI', () => {
       cmp.coordinate(d);
       const url = toUrl(spy.mock.calls[spy.mock.calls.length - 1][0] as string[]);
       await router.navigateByUrl(url);
-      expect(activeComponent(), `Coordinate failed for ${url}`).toBe(DswdCoordinationComponent);
+      expect(activeComponent(), `Coordinate failed for ${url}`).toBe(ExternalPartnerCoordinationComponent);
     }
   });
 
   it('shows the clicked request id, and defaults the offer when omitted', async () => {
-    const cmp = await harness.navigateByUrl('/dswd-coordination/BL-000301', DswdCoordinationComponent);
+    const cmp = await harness.navigateByUrl('/external-coordination/BL-000301', ExternalPartnerCoordinationComponent);
     expect(cmp.requestId).toBe('BL-000301');
     expect(cmp.offerId).toBe('DO-000089');
   });
 
   it('shows both clicked ids when an offer row is used', async () => {
-    const cmp = await harness.navigateByUrl('/dswd-coordination/BL-000241/DO-000085', DswdCoordinationComponent);
+    const cmp = await harness.navigateByUrl('/external-coordination/BL-000241/DO-000085', ExternalPartnerCoordinationComponent);
     expect(cmp.requestId).toBe('BL-000241');
     expect(cmp.offerId).toBe('DO-000085');
   });
