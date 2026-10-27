@@ -1,39 +1,34 @@
 <div class="page">
-
   <app-admin-sidebar />
 
-
   <main>
-
     <header class="topbar">
-
       <div>
         <h1>External Partner Coordination</h1>
-        <p>
-          App Admin workspace · Request #{{ requestId }} · Offer #{{ offerId }}
-        </p>
+        <p>App Admin workspace · Request #{{ requestDisplayId }} · Offer #{{ offerDisplayId }}</p>
       </div>
 
       <div class="admin">
         <app-notification-bell [circle]="true" />
         <app-admin-user-badge />
       </div>
-
     </header>
 
-
     <section class="content">
+      <p class="empty" *ngIf="errorMessage" style="padding: 1rem 2rem;">
+        {{ errorMessage }}
+      </p>
 
       <div class="layout">
-
         <div class="left">
-
           <section class="case-header">
-
             <div class="case-title">
               <small>APP ADMIN · EXTERNAL COORDINATION CASE</small>
 
-              <h2>Typhoon Assistance · Drinking Water</h2>
+              <h2>
+                {{ request?.disasterType || 'Assistance Request' }} ·
+                {{ request?.itemNeeded || request?.category || 'Relief Item' }}
+              </h2>
             </div>
 
             <div class="case-status">
@@ -42,66 +37,66 @@
             </div>
 
             <div class="case-info">
-
               <div>
                 <small>Request ID</small>
-                <strong>#{{ requestId }}</strong>
+                <strong>#{{ requestDisplayId }}</strong>
               </div>
 
               <div>
                 <small>Donation Offer ID</small>
-                <strong>#{{ offerId }}</strong>
+                <strong>#{{ offerDisplayId }}</strong>
               </div>
 
               <div>
                 <small>Priority</small>
-                <strong>CRITICAL</strong>
+                <strong>{{ request?.urgency || 'NORMAL' }}</strong>
               </div>
-
             </div>
-
           </section>
 
-
           <section class="card details">
-
             <h2>External Validation Requested</h2>
             <p class="validation-guidance">
-              DSWD is the external authority that confirms whether a reported disaster is genuine and eligible,
-              and whether the proposed donation is appropriate. The App Admin contacts DSWD outside this system
-              and records only confirmed updates here. BayanihanLink does not send requests to DSWD.
+              DSWD is the external authority that confirms whether a reported disaster is genuine
+              and eligible, and whether the proposed donation is appropriate. The App Admin contacts
+              DSWD outside this system and records only confirmed updates here. BayanihanLink does
+              not send requests to DSWD.
             </p>
 
             <div class="detail-grid">
-
               <div>
                 <small>RECIPIENT REQUEST</small>
-                <strong>#{{ requestId }}</strong>
+                <strong>#{{ requestDisplayId }}</strong>
               </div>
 
               <div>
                 <small>GENERAL LOCATION</small>
-                <strong>Brgy. 14, Cagayan de Oro City</strong>
+                <strong>{{ request?.location || 'Not specified' }}</strong>
               </div>
 
               <div>
                 <small>ITEM NEEDED</small>
-                <strong>Drinking Water (1L bottles)</strong>
+                <strong>{{ request?.itemNeeded || 'Relief Item' }}</strong>
               </div>
 
               <div>
                 <small>QUANTITY NEEDED</small>
-                <strong>100 bottles</strong>
+                <strong>{{ request?.quantity || '0' }} {{ request?.unit || '' }}</strong>
               </div>
 
               <div>
                 <small>DONATION OFFER</small>
-                <strong>#{{ offerId }} · Ramon Garcia</strong>
+                <strong
+                  >#{{ offerDisplayId }} {{ offer?.donorName || offer?.donorId ? '· ' + (offer?.donorName || offer?.donorId) : '' }}</strong
+                >
               </div>
 
               <div>
                 <small>QUANTITY OFFERED</small>
-                <strong>30 bottles</strong>
+                <strong
+                  >{{ offer?.quantityOffered || '0' }}
+                  {{ offer?.unit || request?.unit || '' }}</strong
+                >
               </div>
 
               <div>
@@ -111,42 +106,42 @@
 
               <div>
                 <small>PERSONS AFFECTED</small>
-                <strong>50 families</strong>
+                <strong>{{ request?.personsAffected || '0' }} families/individuals</strong>
               </div>
-
             </div>
 
+            <div class="request-image">
+              <small>REQUEST IMAGE</small>
+
+              <ng-container *ngIf="request?.evidenceImage; else noImage">
+                <img
+                  [src]="imageUrl(request?.evidenceImage || '')"
+                  alt="Image uploaded with this request"
+                />
+              </ng-container>
+
+              <ng-template #noImage>
+                <p class="empty">No image was uploaded for this request.</p>
+              </ng-template>
+            </div>
           </section>
 
-
           <section class="card notes">
-
             <h2>Administrator Notes</h2>
 
             <div class="note-list" *ngIf="notes.length; else noNotes">
-
-              <article
-                class="note"
-                *ngFor="let note of notes"
-              >
+              <article class="note" *ngFor="let note of notes">
                 <div class="note-head">
                   <div class="note-avatar">{{ note.author.slice(0, 2) }}</div>
                   <div>
                     <strong>{{ note.author }}</strong>
                     <small>{{ note.authorRole }} · {{ note.time }}</small>
                   </div>
-                  <button
-                    class="remove"
-                    type="button"
-                    (click)="removeNote(note.id)"
-                  >
-                    ×
-                  </button>
+                  <button class="remove" type="button" (click)="removeNote(note.id)">×</button>
                 </div>
 
                 <p>{{ note.text }}</p>
               </article>
-
             </div>
 
             <ng-template #noNotes>
@@ -172,18 +167,13 @@
                 />
               </div>
             </div>
-
           </section>
-
         </div>
 
-
         <aside class="update-card">
-
-            <h2>Record External Confirmation</h2>
+          <h2>Record External Confirmation</h2>
 
           <div class="status-options">
-
             <button
               *ngFor="let status of statuses"
               [class.selected]="selectedStatus === status"
@@ -192,7 +182,6 @@
               <i></i>
               {{ status }}
             </button>
-
           </div>
 
           <p-button
@@ -211,13 +200,8 @@
             styleClass="back"
             (onClick)="backToOffers()"
           />
-
         </aside>
-
       </div>
-
     </section>
-
   </main>
-
 </div>

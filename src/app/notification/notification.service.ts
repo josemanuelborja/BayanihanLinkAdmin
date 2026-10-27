@@ -1,8 +1,11 @@
-﻿// BayanihanLink ΓÇö notification store
+﻿// BayanihanLink — notification store
 // Holds the transient toast queue and the persistent bell-dropdown inbox.
 
-import { Injectable, computed, signal } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 
+import { AuthService } from '../auth/auth.service';
 import {
   AppNotification,
   NotificationCategory,
@@ -15,11 +18,26 @@ import {
 const MAX_VISIBLE_TOASTS = 4;
 const DEFAULT_DURATION = 4000;
 
-function timeAgo(minutes: number): string {
+interface ApiNotification {
+  _id: string;
+  type: string;
+  title: string;
+  message: string;
+  isRead: boolean;
+  createdAt: string;
+}
+
+function timeAgo(value: string): string {
+  const date = new Date(value);
+  if (isNaN(date.getTime())) {
+    return '';
+  }
+
+  const minutes = Math.max(0, Math.floor((Date.now() - date.getTime()) / 60000));
+
   if (minutes < 1) {
     return 'Just now';
   }
-
   if (minutes < 60) {
     return `${minutes} min ago`;
   }
@@ -33,63 +51,11 @@ function timeAgo(minutes: number): string {
   return `${days} day${days === 1 ? '' : 's'} ago`;
 }
 
-function seedItems(startId: number): AppNotification[] {
-  const seeds: Array<NotificationInput & { minutesAgo: number; read: boolean }> = [
-    {
-      minutesAgo: 4,
-      read: false,
-      type: 'warning',
-      category: 'request',
-      title: 'Urgent request needs review',
-      message: '#BL-000123 ┬╖ Typhoon ┬╖ Food & Water ┬╖ CDO City'
-    },
-    {
-      minutesAgo: 18,
-      read: false,
-      type: 'info',
-      category: 'donation',
-      title: 'New donation offer',
-      message: 'DO-000089 ┬╖ Blankets & Clothing ┬╖ 240 units'
-    },
-    {
-      minutesAgo: 52,
-      read: false,
-      type: 'success',
-      category: 'coordination',
-      title: 'Distribution completed',
-      message: 'Request #BL-000189 ┬╖ Hygiene Supplies ┬╖ Davao City'
-    },
-    {
-      minutesAgo: 145,
-      read: true,
-      type: 'error',
-      category: 'request',
-      title: 'Verification failed',
-      message: 'Request #BL-000234 ┬╖ Iligan City ┬╖ Documents unreadable'
-    },
-    {
-      minutesAgo: 320,
-      read: true,
-      type: 'info',
-      category: 'system',
-      title: 'System maintenance scheduled',
-      message: 'The portal will be unavailable on Sunday, 02:00ΓÇô04:00'
-    }
-  ];
-
-  return seeds.map((seed, index) => ({
-    id: startId + index,
-    type: seed.type ?? 'info',
-    category: seed.category ?? 'system',
-    title: seed.title,
-    message: seed.message,
-    time: timeAgo(seed.minutesAgo),
-    read: seed.read
-  }));
-}
-
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
+  private readonly http = inject(HttpClient, { optional: true });
+  private readonly auth = inject(AuthService, { optional: true });
+
   private readonly toastState = signal<Toast[]>([]);
   private readonly itemState = signal<AppNotification[]>([]);
 
@@ -100,11 +66,72 @@ export class NotificationService {
   readonly hasUnread = computed(() => this.unreadCount() > 0);
 
   private nextId = 1;
+  private loadedForUserId = '';
   private readonly timers = new Map<number, ReturnType<typeof setTimeout>>();
 
-  constructor() {
-    this.itemState.set(seedItems(this.nextId));
-    this.nextId += 5;
+  /* ---------- Inbox (loaded from MongoDB) ---------- */
+
+  async loadInbox(force = false): Promise<void> {
+    const user = this.auth?.currentUser();
+    if (!user?.id || !this.http) {
+      return;
+    }
+    if (!force && this.loadedForUserId === user.id) {
+      return;
+    }
+
+    try {
+      const rows = await firstValueFrom(
+        this.http.get<ApiNotification[]>(`/api/notifications/user/${user.id}`, {
+          headers: this.authHeaders()
+        })
+      );
+
+      this.itemState.set(rows.map((row, index) => this.toAppNotification(row, index)));
+      this.nextId = rows.length + 1;
+      this.loadedForUserId = user.id;
+    } catch {
+      // No notifications yet, or the request failed: show the empty state.
+      this.itemState.set([]);
+    }
+  }
+
+  private toAppNotification(row: ApiNotification, index: number): AppNotification {
+    const backendType = row.type || '';
+
+    let type: NotificationType = 'info';
+    if (backendType.includes('COMPLETED') || backendType.includes('ACCEPTED') || backendType.includes('SAVED')) {
+      type = 'success';
+    } else if (backendType.includes('REJECTED') || backendType.includes('FAILED')) {
+      type = 'error';
+    } else if (backendType.includes('REQUEST')) {
+      type = 'warning';
+    }
+
+    let category: NotificationCategory = 'system';
+    if (backendType.includes('COORDINATION')) {
+      category = 'coordination';
+    } else if (backendType.includes('OFFER') || backendType.includes('DSWD')) {
+      category = 'donation';
+    } else if (backendType.includes('REQUEST')) {
+      category = 'request';
+    }
+
+    return {
+      id: index + 1,
+      remoteId: row._id,
+      type,
+      category,
+      title: row.title || 'Notification',
+      message: row.message || '',
+      time: timeAgo(row.createdAt),
+      read: !!row.isRead
+    };
+  }
+
+  private authHeaders(): HttpHeaders {
+    const token = this.auth?.authToken() ?? '';
+    return new HttpHeaders({ Authorization: `Bearer ${token}` });
   }
 
   /* ---------- Toasts ---------- */
@@ -148,7 +175,7 @@ export class NotificationService {
     this.toastState.set([]);
   }
 
-  /* ---------- Inbox ---------- */
+  /* ---------- Inbox actions ---------- */
 
   notify(input: NotificationInput): void {
     const item: AppNotification = {
@@ -165,13 +192,28 @@ export class NotificationService {
   }
 
   markRead(id: number): void {
+    const target = this.itemState().find(item => item.id === id);
+
     this.itemState.update(list =>
       list.map(item => (item.id === id && !item.read ? { ...item, read: true } : item))
     );
+
+    if (target?.remoteId && this.http) {
+      void firstValueFrom(
+        this.http.put(`/api/notifications/${target.remoteId}/read`, {}, { headers: this.authHeaders() })
+      ).catch(() => undefined);
+    }
   }
 
   markAllRead(): void {
     this.itemState.update(list => list.map(item => (item.read ? item : { ...item, read: true })));
+
+    const user = this.auth?.currentUser();
+    if (user?.id && this.http) {
+      void firstValueFrom(
+        this.http.put(`/api/notifications/user/${user.id}/read-all`, {}, { headers: this.authHeaders() })
+      ).catch(() => undefined);
+    }
   }
 
   removeItem(id: number): void {

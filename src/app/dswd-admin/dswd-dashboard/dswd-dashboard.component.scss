@@ -32,5 +32,7 @@ td small { display: inline-block; margin: 5px 0 0 6px; padding: 3px 7px; border-
 main button { padding: 8px 13px; border: 0; border-radius: 7px; background: #2848b7; color: #fff; cursor: pointer; font: 12px "Poppins",Arial,sans-serif; }
 main button:hover { background: #203a98; }
 .disclaimer { display: block; margin: 16px 0 0; color: #8b98ac; font-size: 11px; }
+.empty { margin: 12px 0 0; color: #6b7b94; font-size: 12px; }
+.empty-row { padding: 18px 11px; color: #6b7b94; text-align: center; }
 @media(max-width:950px) { .content { padding: 18px; } .topbar { padding: 16px 18px; } }
 @media(max-width:600px) { .page { display: block; } .content { padding: 14px; } .topbar-user div { display: none; } .topbar h1 { font-size: 19px; } }

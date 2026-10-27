@@ -1,8 +1,9 @@
 ﻿import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { AdminUserBadgeComponent } from '../admin-user-badge/admin-user-badge.component';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { NotificationBellComponent } from '../notification/notification-bell.component';
+import { ApiService } from '../api/api.service';
 
 interface TrackingItem {
   id: string;
@@ -20,50 +21,13 @@ interface TrackingItem {
   templateUrl: './status-monitoring.component.html',
   styleUrl: './status-monitoring.component.scss'
 })
-export class StatusMonitoringComponent {
+export class StatusMonitoringComponent implements OnInit {
+  private readonly api = inject(ApiService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
-  tracking: TrackingItem[] = [
-    {
-      id: '#BL-000123',
-      name: 'Maria Santos',
-      priority: 'URGENT',
-      disaster: 'Typhoon ┬╖ Food & Water',
-      location: 'CDO City',
-      current: 4
-    },
-    {
-      id: '#BL-000234',
-      name: 'Juan Dela Cruz',
-      priority: 'CRITICAL',
-      disaster: 'Flood ┬╖ Drinking Water',
-      location: 'Iligan City',
-      current: 3
-    },
-    {
-      id: '#BL-000189',
-      name: 'Ana Reyes',
-      priority: 'NORMAL',
-      disaster: 'Fire ┬╖ Medicine Kit',
-      location: 'Davao City',
-      current: 6
-    },
-    {
-      id: '#BL-000256',
-      name: 'Pedro Cruz',
-      priority: 'URGENT',
-      disaster: 'Typhoon ┬╖ Blankets & Clothing',
-      location: 'Butuan City',
-      current: 2
-    },
-    {
-      id: '#BL-000290',
-      name: 'Rosa Lopez',
-      priority: 'NORMAL',
-      disaster: 'Earthquake ┬╖ Hygiene Supplies',
-      location: 'Surigao del Norte',
-      current: 5
-    }
-  ];
+  tracking: TrackingItem[] = [];
+  stageCounts: number[] = [0, 0, 0, 0, 0, 0];
+  loading = true;
 
   stages = [
     'Submitted',
@@ -74,4 +38,25 @@ export class StatusMonitoringComponent {
     'Completed'
   ];
 
+  async ngOnInit(): Promise<void> {
+    // Load the real requests from the database.
+    const requests = await this.api.getRequests();
+
+    this.tracking = requests.map(request => ({
+      id: request.referenceNo ? '#' + request.referenceNo : '#' + request.id,
+      name: request.requesterName || request.userId,
+      priority: request.urgency,
+      disaster: `${request.disasterType} · ${request.itemNeeded}`,
+      location: request.location || 'Location not specified',
+      current: Math.min(Math.max(request.currentTimelineStep || 1, 1), this.stages.length)
+    }));
+
+    // Count how many requests are in each stage.
+    this.stageCounts = this.stages.map(
+      (_stage, index) => this.tracking.filter(item => item.current === index + 1).length
+    );
+
+    this.loading = false;
+    this.cdr.markForCheck();
+  }
 }

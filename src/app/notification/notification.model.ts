@@ -7,6 +7,8 @@ export type NotificationCategory = 'system' | 'request' | 'donation' | 'coordina
 // A persistent entry in the bell dropdown.
 export interface AppNotification {
   id: number;
+  /** MongoDB id, used when marking the notification as read. */
+  remoteId?: string;
   type: NotificationType;
   category: NotificationCategory;
   title: string;

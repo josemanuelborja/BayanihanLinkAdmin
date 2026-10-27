@@ -1,4 +1,6 @@
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 
@@ -15,7 +17,9 @@ describe('App Admin and DSWD validation responsibilities', () => {
 
   beforeEach(async () => {
     sessionStorage.removeItem('bayanihanlink-dswd-demo-session');
-    TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
+    TestBed.configureTestingModule({
+      providers: [provideRouter(routes), provideHttpClient(), provideHttpClientTesting()]
+    });
     router = TestBed.inject(Router);
     harness = await RouterTestingHarness.create();
   });

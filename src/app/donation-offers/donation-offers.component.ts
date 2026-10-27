@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -15,6 +15,7 @@ import { ApiOffer } from '../api/api.service';
 interface DonationItem {
   id: string;
   rawId: string;
+  requestRawId: string;
   donor: string;
   contact: string;
   request: string;
@@ -35,6 +36,7 @@ export class DonationOffersComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly auth = inject(AuthService);
   private readonly http = inject(HttpClient);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   search = '';
   filter = 'All';
@@ -49,11 +51,7 @@ export class DonationOffersComponent implements OnInit {
   completedCount = 0;
 
   async ngOnInit(): Promise<void> {
-    this.donations = [
-      { id: '#DO-000089', rawId: 'DO-000089', donor: 'Donor 1', contact: '123', request: '#BL-000301', item: 'Food', quantity: '10', status: 'Pending Coordination', date: '2026-01-01' }
-    ];
-    this.totalOffers = 1;
-    this.loading = false;
+    await this.loadOffers();
   }
 
   private async loadOffers(): Promise<void> {
@@ -82,6 +80,7 @@ export class DonationOffersComponent implements OnInit {
       this.completedCount = 0;
     }
     this.loading = false;
+    this.refreshView();
   }
 
   private toDisplay(o: ApiOffer): DonationItem {
@@ -92,12 +91,13 @@ export class DonationOffersComponent implements OnInit {
       COMPLETED: 'Completed'
     };
     return {
-      id: '#' + o._id.slice(-8),
+      id: '#' + (o.referenceNo || o._id),
       rawId: o._id,
-      donor: o.donorId,
+      requestRawId: o.requestId,
+      donor: o.donorName || o.donorId,
       contact: 'N/A',
-      request: '#' + o.requestId.slice(-8),
-      item: o.unit || 'Relief Goods',
+      request: '#' + (o.requestReferenceNo || o.requestId),
+      item: o.requestItem || o.unit || 'Relief Goods',
       quantity: o.quantityOffered,
       status: statusMap[o.status] ?? o.status,
       date: new Date(o.createdAt).toLocaleDateString('en-PH', { year: 'numeric', month: 'short', day: 'numeric' })
@@ -131,10 +131,20 @@ export class DonationOffersComponent implements OnInit {
   }
 
   coordinate(item: DonationItem): void {
+    if (!item.requestRawId) {
+      return;
+    }
+
     this.router.navigate([
       '/external-coordination',
-      item.request.replace(/^#/, ''),
+      item.requestRawId,
       item.rawId
     ]);
+  }
+
+  // This app runs without zone.js, so Angular does not know data arrived.
+  // Mark this page for a re-render so the new data appears right away.
+  private refreshView(): void {
+    this.cdr.markForCheck();
   }
 }

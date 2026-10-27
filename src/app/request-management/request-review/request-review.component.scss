@@ -65,6 +65,15 @@ main {
 
 .top-avatar {
   background: #2948b8;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .admin strong,
@@ -141,6 +150,19 @@ main {
 
 .requested-items {
   padding-bottom: 20px;
+}
+
+.request-image img {
+  display: block;
+  max-width: 100%;
+  border: 1px solid #e3e9f1;
+  border-radius: 10px;
+}
+
+.request-image .empty {
+  margin: 0;
+  color: #8498b7;
+  font-size: 12px;
 }
 
 .item-header,

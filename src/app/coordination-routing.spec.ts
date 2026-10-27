@@ -75,7 +75,7 @@ describe('every coordination link lands on the coordination UI', () => {
   it('shows the clicked request id, and defaults the offer when omitted', async () => {
     const cmp = await harness.navigateByUrl('/external-coordination/BL-000301', ExternalPartnerCoordinationComponent);
     expect(cmp.requestId).toBe('BL-000301');
-    expect(cmp.offerId).toBe('DO-000089');
+    expect(cmp.offerId).toBe('');
   });
 
   it('shows both clicked ids when an offer row is used', async () => {

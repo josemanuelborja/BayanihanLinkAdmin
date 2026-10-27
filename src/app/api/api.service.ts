@@ -5,7 +5,9 @@ import { AuthService } from '../auth/auth.service';
 
 export interface ApiRequest {
   id: string;
+  referenceNo?: string;
   userId: string;
+  requesterName?: string;
   disasterType: string;
   category: string;
   categories: string[];
@@ -24,12 +26,27 @@ export interface ApiRequest {
 
 export interface ApiOffer {
   _id: string;
+  referenceNo?: string;
   donorId: string;
+  donorName?: string;
   requestId: string;
+  requestReferenceNo?: string;
+  requestItem?: string;
+  requestQuantity?: string;
+  requestUnit?: string;
+  requestDisasterType?: string;
+  requestUrgency?: 'NORMAL' | 'URGENT' | 'CRITICAL';
+  requestPersonsAffected?: number;
+  requestLocation?: string;
   quantityOffered: string;
   unit: string;
   message: string;
   status: string;
+  dswdDisasterEligibility?: string;
+  dswdRequestedItemsAssessment?: string;
+  dswdDonatedItemsAssessment?: string;
+  dswdSuggestedDestination?: string;
+  dswdNotes?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -59,7 +76,7 @@ export class ApiService {
   async getAllOffers(): Promise<ApiOffer[]> {
     try {
       return await firstValueFrom(
-        this.http.get<ApiOffer[]>('/api/offers/all', { headers: this.headers })
+        this.http.get<ApiOffer[]>('/api/offers/admin/all', { headers: this.headers })
       );
     } catch {
       return [];

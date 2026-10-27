@@ -343,6 +343,30 @@ main {
   font-weight: 400;
 }
 
+.request-image {
+  margin-top: 14px;
+}
+
+.request-image > small {
+  display: block;
+  color: #8296b8;
+  font-size: 10px;
+}
+
+.request-image img {
+  display: block;
+  max-width: 100%;
+  margin-top: 8px;
+  border: 1px solid #e3e9f1;
+  border-radius: 11px;
+}
+
+.request-image .empty {
+  margin-top: 6px;
+  color: #8296b8;
+  font-size: 12px;
+}
+
 .note-list {
   display: flex;
   flex-direction: column;

@@ -1,10 +1,11 @@
-﻿import { Component, inject } from '@angular/core';
+﻿import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AdminUserBadgeComponent } from '../admin-user-badge/admin-user-badge.component';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { NotificationBellComponent } from '../notification/notification-bell.component';
+import { ApiOffer, ApiRequest, ApiService } from '../api/api.service';
 import { dateToIso, inDateRange } from '../date-filter.util';
 import { DonationOffersOverviewComponent } from './donation-offers-overview/donation-offers-overview.component';
 import { RequestsByPriorityComponent } from './requests-by-priority/requests-by-priority.component';
@@ -25,58 +26,23 @@ export interface DashboardRequest {
   date: string;
 }
 
-const DASHBOARD_REQUESTS: readonly DashboardRequest[] = [
-  {
-    id: 'BL-000302',
-    requester: 'Ana Reyes',
-    disaster: 'Typhoon',
-    category: 'Food',
-    location: 'CDO City',
-    priority: 'CRITICAL',
-    status: 'Pending',
-    date: 'Sep 16, 2026'
-  },
-  {
-    id: 'BL-000301',
-    requester: 'Juan Dela Cruz',
-    disaster: 'Flood',
-    category: 'Water',
-    location: 'Iligan City',
-    priority: 'URGENT',
-    status: 'Pending',
-    date: 'Sep 16, 2026'
-  },
-  {
-    id: 'BL-000298',
-    requester: 'Rosa Gomez',
-    disaster: 'Fire',
-    category: 'Clothing',
-    location: 'Davao City',
-    priority: 'NORMAL',
-    status: 'Verified',
-    date: 'Sep 15, 2026'
-  },
-  {
-    id: 'BL-000295',
-    requester: 'Pedro Santos',
-    disaster: 'Typhoon',
-    category: 'Medicine',
-    location: 'Butuan City',
-    priority: 'URGENT',
-    status: 'Assisted',
-    date: 'Sep 14, 2026'
-  },
-  {
-    id: 'BL-000290',
-    requester: 'Maria Lopez',
-    disaster: 'Earthquake',
-    category: 'Blankets',
-    location: 'Surigao del Norte',
-    priority: 'NORMAL',
-    status: 'Completed',
-    date: 'Sep 12, 2026'
-  }
-];
+export interface DashboardStats {
+  totalRequests: number;
+  pendingValidation: number;
+  criticalRequests: number;
+  activeAssistance: number;
+  completed: number;
+  donationOffers: number;
+}
+
+const EMPTY_STATS: DashboardStats = {
+  totalRequests: 0,
+  pendingValidation: 0,
+  criticalRequests: 0,
+  activeAssistance: 0,
+  completed: 0,
+  donationOffers: 0
+};
 
 @Component({
   selector: 'app-dashboard',
@@ -96,15 +62,81 @@ const DASHBOARD_REQUESTS: readonly DashboardRequest[] = [
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   private readonly router = inject(Router);
+  private readonly api = inject(ApiService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
-  readonly requests: readonly DashboardRequest[] = DASHBOARD_REQUESTS;
+  requests: DashboardRequest[] = [];
+  stats: DashboardStats = { ...EMPTY_STATS };
+  loading = true;
 
   /** Calendar filter, as picked in the PrimeNG range datepicker. */
   dateRange: Date[] | null = null;
 
-  constructor() {}
+  async ngOnInit(): Promise<void> {
+    // Keep rows that a test (or a parent) already supplied.
+    if (this.requests.length === 0) {
+      await this.loadDashboard();
+    }
+  }
+
+  private async loadDashboard(): Promise<void> {
+    this.loading = true;
+
+    try {
+      const [requests, offers] = await Promise.all([
+        this.api.getRequests(),
+        this.api.getAllOffers()
+      ]);
+
+      this.requests = requests.map(request => this.toRequestRow(request));
+      this.stats = this.buildStats(requests, offers);
+    } catch {
+      this.requests = [];
+      this.stats = { ...EMPTY_STATS };
+    }
+
+    this.loading = false;
+    this.cdr.markForCheck();
+  }
+
+  private toRequestRow(request: ApiRequest): DashboardRequest {
+    const statusMap: Record<string, DashboardRequest['status']> = {
+      PENDING: 'Pending',
+      VERIFIED: 'Verified',
+      ASSISTED: 'Assisted',
+      COMPLETED: 'Completed'
+    };
+
+    return {
+      id: request.referenceNo || request.id,
+      requester: request.requesterName || request.userId,
+      disaster: request.disasterType,
+      category: request.category,
+      location: request.location,
+      priority: request.urgency,
+      status: statusMap[request.status] ?? 'Pending',
+      date: new Date(request.dateSubmitted).toLocaleDateString('en-PH', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      })
+    };
+  }
+
+  private buildStats(requests: ApiRequest[], offers: ApiOffer[]): DashboardStats {
+    return {
+      totalRequests: requests.length,
+      pendingValidation: requests.filter(request => request.status === 'PENDING').length,
+      criticalRequests: requests.filter(request => request.urgency === 'CRITICAL').length,
+      activeAssistance: requests.filter(
+        request => request.status === 'VERIFIED' || request.status === 'ASSISTED'
+      ).length,
+      completed: requests.filter(request => request.status === 'COMPLETED').length,
+      donationOffers: offers.length
+    };
+  }
 
   /** Requests inside the selected date range (all of them by default). */
   get filteredRequests(): readonly DashboardRequest[] {

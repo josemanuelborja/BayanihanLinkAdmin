@@ -1,4 +1,6 @@
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { NotificationComponent } from './notification/notification.component';
 import { NotificationBellComponent } from './notification/notification-bell.component';
@@ -9,15 +11,16 @@ describe('notification feature', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NotificationComponent, NotificationBellComponent]
+      imports: [NotificationComponent, NotificationBellComponent],
+      providers: [provideHttpClient(), provideHttpClientTesting()]
     });
     service = TestBed.inject(NotificationService);
   });
 
   describe('NotificationService toasts', () => {
-    it('starts with no toasts and a seeded inbox', () => {
+    it('starts with no toasts and an empty inbox', () => {
       expect(service.toasts()).toEqual([]);
-      expect(service.items().length).toBeGreaterThan(0);
+      expect(service.items()).toEqual([]);
     });
 
     it('queues a toast with the given type', () => {

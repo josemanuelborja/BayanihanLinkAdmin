@@ -38,7 +38,7 @@
 
     <section class="content">
 
-      <div class="layout" *ngIf="!loading; else loadingTemplate">
+      <div class="layout" *ngIf="!loading && !errorMessage; else statusTemplate">
 
         <div class="left">
 
@@ -117,6 +117,24 @@
 
             <ng-template #noItem>
               <p class="empty">No item information available.</p>
+            </ng-template>
+
+          </section>
+
+
+          <section class="card request-image">
+
+            <h2>Image</h2>
+
+            <ng-container *ngIf="request?.evidenceImage; else noImage">
+              <img
+                [src]="imageUrl(request?.evidenceImage || '')"
+                alt="Image uploaded with this request"
+              />
+            </ng-container>
+
+            <ng-template #noImage>
+              <p class="empty">No image was uploaded for this request.</p>
             </ng-template>
 
           </section>
@@ -327,9 +345,19 @@
 
       </div>
 
-      <ng-template #loadingTemplate>
+      <ng-template #statusTemplate>
         <div style="text-align: center; padding: 4rem;">
-          <p>Loading request details...</p>
+          <p *ngIf="loading">Loading request details...</p>
+
+          <ng-container *ngIf="!loading">
+            <p>{{ errorMessage || 'Request details are not available.' }}</p>
+            <p-button
+              label="Back to Request Management"
+              icon="pi pi-arrow-left"
+              [outlined]="true"
+              (onClick)="backToRequests()"
+            />
+          </ng-container>
         </div>
       </ng-template>
 

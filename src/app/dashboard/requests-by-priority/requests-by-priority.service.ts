@@ -2,32 +2,55 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
-import { API_BASE_URL, API_ENABLED } from '../dashboard-api';
-import { REQUESTS_BY_PRIORITY_FALLBACK, RequestsByPriority } from './requests-by-priority.data';
+import { ApiRequest } from '../../api/api.service';
+import { API_BASE_URL } from '../dashboard-api';
+import { matchesPeriod, periodLabel } from '../dashboard-data.util';
+import { RequestsByPriority } from './requests-by-priority.data';
+
+const PRIORITIES = [
+  { id: 'critical', label: 'Critical', backend: 'CRITICAL' },
+  { id: 'urgent', label: 'Urgent', backend: 'URGENT' },
+  { id: 'normal', label: 'Normal', backend: 'NORMAL' }
+];
+
+function emptyPriorities() {
+  return PRIORITIES.map(priority => ({
+    id: priority.id,
+    label: priority.label,
+    count: 0
+  }));
+}
 
 @Injectable({ providedIn: 'root' })
 export class RequestsByPriorityService {
-  private readonly http = inject(HttpClient, { optional: true });
+  private readonly http = inject(HttpClient);
   private readonly baseUrl = inject(API_BASE_URL);
-  private readonly apiEnabled = inject(API_ENABLED);
-  private readonly dataState = signal<RequestsByPriority>(REQUESTS_BY_PRIORITY_FALLBACK);
+  private readonly dataState = signal<RequestsByPriority>({
+    period: 'All time',
+    priorities: emptyPriorities()
+  });
 
   readonly data = this.dataState.asReadonly();
-  async refresh(month: number | null = null, year: number | null = null): Promise<void> {
-    if (!this.apiEnabled || !this.http) {
-      return;
-    }
 
+  async refresh(month: number | null = null, year: number | null = null): Promise<void> {
     try {
-      const data = await firstValueFrom(
-        this.http.get<RequestsByPriority>(`${this.baseUrl}/dashboard/requests-by-priority`, {
-          params: {
-            ...(month !== null ? { month: String(month) } : {}),
-            ...(year !== null ? { year: String(year) } : {})
-          }
-        })
+      const requests = await firstValueFrom(
+        this.http.get<ApiRequest[]>(`${this.baseUrl}/requests`)
       );
-      this.dataState.set(data);
-    } catch { /* Keep the chart empty while the API is unavailable. */ }
+
+      const filtered = requests.filter(request =>
+        matchesPeriod(request.dateSubmitted, month, year)
+      );
+
+      const priorities = PRIORITIES.map(priority => ({
+        id: priority.id,
+        label: priority.label,
+        count: filtered.filter(request => request.urgency === priority.backend).length
+      }));
+
+      this.dataState.set({ period: periodLabel(month, year), priorities });
+    } catch {
+      this.dataState.set({ period: periodLabel(month, year), priorities: emptyPriorities() });
+    }
   }
 }

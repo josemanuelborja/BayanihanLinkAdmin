@@ -1,9 +1,9 @@
-﻿import { Component, inject } from '@angular/core';
+﻿import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { DatePickerModule } from 'primeng/datepicker';
 
-import { dateToIso, inDateRange } from '../../date-filter.util';
+import { ApiRequest, ApiService } from '../../api/api.service';
 
 export interface DashboardRequest {
   id: string;
@@ -16,59 +16,6 @@ export interface DashboardRequest {
   date: string;
 }
 
-const DASHBOARD_REQUESTS: readonly DashboardRequest[] = [
-  {
-    id: 'BL-000302',
-    requester: 'Ana Reyes',
-    disaster: 'Typhoon',
-    category: 'Food',
-    location: 'CDO City',
-    priority: 'CRITICAL',
-    status: 'Pending',
-    date: 'Sep 16, 2026'
-  },
-  {
-    id: 'BL-000301',
-    requester: 'Juan Dela Cruz',
-    disaster: 'Flood',
-    category: 'Water',
-    location: 'Iligan City',
-    priority: 'URGENT',
-    status: 'Pending',
-    date: 'Sep 16, 2026'
-  },
-  {
-    id: 'BL-000298',
-    requester: 'Rosa Gomez',
-    disaster: 'Fire',
-    category: 'Clothing',
-    location: 'Davao City',
-    priority: 'NORMAL',
-    status: 'Verified',
-    date: 'Sep 15, 2026'
-  },
-  {
-    id: 'BL-000295',
-    requester: 'Pedro Santos',
-    disaster: 'Typhoon',
-    category: 'Medicine',
-    location: 'Butuan City',
-    priority: 'URGENT',
-    status: 'Assisted',
-    date: 'Sep 14, 2026'
-  },
-  {
-    id: 'BL-000290',
-    requester: 'Maria Lopez',
-    disaster: 'Earthquake',
-    category: 'Blankets',
-    location: 'Surigao del Norte',
-    priority: 'NORMAL',
-    status: 'Completed',
-    date: 'Sep 12, 2026'
-  }
-];
-
 @Component({
   selector: 'app-recent-requests',
   standalone: true,
@@ -80,11 +27,50 @@ const DASHBOARD_REQUESTS: readonly DashboardRequest[] = [
   templateUrl: './recent-requests.component.html',
   styleUrl: './recent-requests.component.scss'
 })
-export class RecentRequestsComponent {
+export class RecentRequestsComponent implements OnInit {
   private readonly router = inject(Router);
+  private readonly api = inject(ApiService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
-  readonly requests: readonly DashboardRequest[] = DASHBOARD_REQUESTS;
+  requests: DashboardRequest[] = [];
   searchTerm = '';
+
+  async ngOnInit(): Promise<void> {
+    // Keep rows that a test (or a parent) already supplied.
+    if (this.requests.length === 0) {
+      await this.loadRequests();
+    }
+  }
+
+  private async loadRequests(): Promise<void> {
+    const rows = await this.api.getRequests();
+    this.requests = rows.slice(0, 5).map(request => this.toDisplay(request));
+    this.cdr.markForCheck();
+  }
+
+  private toDisplay(request: ApiRequest): DashboardRequest {
+    const statusMap: Record<string, DashboardRequest['status']> = {
+      PENDING: 'Pending',
+      VERIFIED: 'Verified',
+      ASSISTED: 'Assisted',
+      COMPLETED: 'Completed'
+    };
+
+    return {
+      id: request.referenceNo || request.id,
+      requester: request.requesterName || request.userId,
+      disaster: request.disasterType,
+      category: request.category,
+      location: request.location,
+      priority: request.urgency,
+      status: statusMap[request.status] ?? 'Pending',
+      date: new Date(request.dateSubmitted).toLocaleDateString('en-PH', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      })
+    };
+  }
 
   get filteredRequests(): readonly DashboardRequest[] {
     const term = this.searchTerm.trim().toLowerCase();

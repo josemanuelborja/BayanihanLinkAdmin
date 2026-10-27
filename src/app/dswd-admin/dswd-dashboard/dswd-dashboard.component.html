@@ -5,7 +5,8 @@
     <section class="content">
     <section class="notice"><div class="notice-icon">i</div><div><strong>Two donation paths</strong><p>Donors may offer items for a specific user request, or submit an open donation without choosing a recipient. Review request-linked donations against the user’s needs; assess a suitable destination for open donations. App Admin retains platform priorities and workflow statuses.</p></div></section>
     <section class="queue card">
-      <div class="queue-heading"><div><h2>Donations for assessment</h2><p>{{ cases.length }} demonstration cases</p></div></div>
+      <div class="queue-heading"><div><h2>Donations for assessment</h2><p>{{ cases.length }} donation offers for assessment</p></div></div>
+      <p class="empty" *ngIf="errorMessage">{{ errorMessage }}</p>
       <div class="table-wrap"><table><thead><tr><th>DONATION</th><th>DONATION PATH</th><th>LOCATION / DISASTER</th><th>USER REQUEST</th><th>REQUEST PRIORITY</th><th>DONATED ITEMS</th><th>DSWD STATUS</th><th></th></tr></thead>
         <tbody><tr *ngFor="let item of cases">
           <td><strong>#{{ item.offerId }}</strong></td>
@@ -14,9 +15,12 @@
           <td><small *ngIf="item.requestId" [class]="priorityClass(item.priority)">{{ item.priority }}</small><span *ngIf="!item.requestId" class="unassigned">Not assigned</span></td>
           <td>{{ item.offerItem }} · {{ item.offerQuantity }}</td><td>{{ decisionSummary(item) }}</td>
           <td><button type="button" (click)="reviewCase(item.id)">Review</button></td>
+        </tr>
+        <tr *ngIf="!loading && cases.length === 0">
+          <td colspan="8" class="empty-row">No donation offers to review yet.</td>
         </tr></tbody>
       </table></div>
-      <p class="disclaimer">Demonstration data only. This portal does not connect to DSWD systems or receive automatic submissions.</p>
+      <p class="disclaimer">Live data from BayanihanLink. This portal does not connect to DSWD systems or receive automatic submissions.</p>
     </section>
     </section>
   </main>

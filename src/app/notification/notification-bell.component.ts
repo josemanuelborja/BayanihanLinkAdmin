@@ -22,10 +22,17 @@ export class NotificationBellComponent {
   // The dashboard renders its bell as a white circle; the other topbars use a plain icon.
   @Input() circle = false;
 
-  toggle(): void {
+  constructor() {
+    // Load the real notifications from MongoDB when the bell appears.
+    void this.notifications.loadInbox();
+  }
+
+  async toggle(): Promise<void> {
     this.open = !this.open;
 
     if (this.open) {
+      // Reload first so newly saved Admin activity appears right away.
+      await this.notifications.loadInbox(true);
       this.notifications.markAllRead();
     }
   }

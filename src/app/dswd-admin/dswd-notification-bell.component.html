@@ -6,7 +6,7 @@
 
   @if (open) {
     <section class="notification-panel" aria-label="DSWD notifications">
-      <header><div><h2>Notifications</h2><p>New requests and donations for review</p></div><span class="demo-tag">DEMO</span></header>
+      <header><div><h2>Notifications</h2><p>New requests and donations for review</p></div></header>
       @if (items.length === 0) {
         <p class="empty">You’re all caught up.</p>
       } @else {
@@ -18,7 +18,7 @@
                   @if (item.type === 'request') { <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 14h8M8 18h6"/></svg> }
                   @else { <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg> }
                 </span>
-                <span class="item-copy"><strong>{{ item.title }}</strong><span>{{ item.message }}</span><small>Awaiting review · Demo notification</small></span>
+                <span class="item-copy"><strong>{{ item.title }}</strong><span>{{ item.message }}</span><small>Awaiting review · Live data</small></span>
                 <span class="item-chevron">›</span>
               </button>
             </li>

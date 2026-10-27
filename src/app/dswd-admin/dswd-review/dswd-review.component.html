@@ -1,8 +1,11 @@
-﻿<div class="page" *ngIf="request as item">
+﻿<div class="page">
   <app-dswd-sidebar activePage="review" />
   <main>
     <header class="topbar"><div><h1>Review Donation</h1><p>BayanihanLink · DSWD Assessment Workspace</p></div><div class="topbar-user"><app-dswd-notification-bell /><span>DS</span><div><strong>DSWD Officer</strong><small>Validation role</small></div></div></header>
     <section class="content">
+      <p class="empty" *ngIf="loading">Loading donation offer...</p>
+      <p class="empty" *ngIf="errorMessage">{{ errorMessage }}</p>
+      <ng-container *ngIf="request as item">
       <div class="review-heading">
         <div><a class="back-link" routerLink="/dswd/dashboard">← Back to review queue</a><h2>Donation <span>#{{ item.offerId }}</span></h2></div>
         <span class="path-badge" [class.open]="item.donationType === 'Open donation'">{{ item.donationType }}</span>
@@ -53,10 +56,11 @@
           <label class="note-label">Assessment notes <span>(optional)</span>
             <textarea [(ngModel)]="note" rows="4" maxlength="500" placeholder="Add the basis for this assessment or routing recommendation"></textarea>
           </label>
-          <div class="actions"><button type="button" class="save" [disabled]="!canSave" (click)="saveAssessment()">Save assessment</button><button type="button" class="cancel" (click)="backToDashboard()">Cancel</button></div>
-          <small class="disclaimer">Demo only · Decisions are held in browser memory and are not persisted.</small>
+          <div class="actions"><button type="button" class="save" [disabled]="!canSave || saving" (click)="saveAssessment()">{{ saving ? 'Saving...' : 'Save assessment' }}</button><button type="button" class="cancel" (click)="backToDashboard()">Cancel</button></div>
+          <small class="disclaimer">Decisions are saved to the BayanihanLink database.</small>
         </section>
       </div>
+      </ng-container>
     </section>
   </main>
 </div>

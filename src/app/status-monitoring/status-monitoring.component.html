@@ -23,40 +23,14 @@
 
       <div class="stage-cards">
 
-        <div>
-          <i>1</i>
-          <strong>0</strong>
-          <span>Submitted</span>
-        </div>
+        <div *ngFor="let stage of stages; let i = index">
 
-        <div>
-          <i>2</i>
-          <strong>1</strong>
-          <span>DSWD Confirmed</span>
-        </div>
+          <i>{{ i + 1 }}</i>
 
-        <div>
-          <i>3</i>
-          <strong>1</strong>
-          <span>Assistance Offered</span>
-        </div>
+          <strong>{{ stageCounts[i] }}</strong>
 
-        <div>
-          <i>4</i>
-          <strong>1</strong>
-          <span>External DSWD Review</span>
-        </div>
+          <span>{{ stage }}</span>
 
-        <div>
-          <i>5</i>
-          <strong>1</strong>
-          <span>Distributed</span>
-        </div>
-
-        <div>
-          <i>6</i>
-          <strong>1</strong>
-          <span>Completed</span>
         </div>
 
       </div>
@@ -68,6 +42,12 @@
           <h2>Assistance Progress Tracker</h2>
           <p>Real-time status of all active assistance requests</p>
         </div>
+
+        <p class="empty" *ngIf="loading">Loading requests...</p>
+
+        <p class="empty" *ngIf="!loading && tracking.length === 0">
+          No assistance requests in the database yet.
+        </p>
 
 
         <div

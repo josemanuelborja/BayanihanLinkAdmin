@@ -1,6 +1,8 @@
-﻿import { Component, inject } from '@angular/core';
+﻿import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+
+import { ApiOffer, ApiService } from '../../api/api.service';
 
 export type DonationOfferStatus =
   | 'Pending'
@@ -8,10 +10,14 @@ export type DonationOfferStatus =
   | 'Verification'
   | 'Verified'
   | 'Distributed'
-  | 'Completed';
+  | 'Completed'
+  | 'Rejected';
 
 export interface DonationOffer {
   id: string;
+  rawId: string;
+  requestId: string;
+  requestRawId: string;
   donor: string;
   type: string;
   item: string;
@@ -19,55 +25,7 @@ export interface DonationOffer {
   location: string;
   date: string;
   status: DonationOfferStatus;
-  requestId: string;
 }
-
-const RECENT_DONATION_OFFERS: readonly DonationOffer[] = [
-  {
-    id: 'DO-000089',
-    donor: 'Ramon Garcia',
-    type: 'In-kind',
-    item: 'Drinking Water (1L)',
-    quantity: '30 bottles',
-    location: 'Tondo, Manila',
-    date: 'Sep 16, 2026',
-    status: 'Pending',
-    requestId: 'BL-000234'
-  },
-  {
-    id: 'DO-000085',
-    donor: 'Liza Cruz',
-    type: 'Food Relief',
-    item: 'Rice (5kg sacks)',
-    quantity: '10 sacks',
-    location: 'Cebu City',
-    date: 'Sep 15, 2026',
-    status: 'Coordinating',
-    requestId: 'BL-000241'
-  },
-  {
-    id: 'DO-000079',
-    donor: 'Mike Santos',
-    type: 'Essential Goods',
-    item: 'Blankets',
-    quantity: '25 pieces',
-    location: 'Davao City',
-    date: 'Sep 14, 2026',
-    status: 'Verification',
-    requestId: 'BL-000220'
-  },
-  {
-    id: 'DO-000071',
-    donor: 'Grace Lee',
-    type: 'Medical Supply',
-    item: 'Medicine Kit (First Aid)',
-    quantity: '15 kits',
-    location: 'Baguio City',
-    date: 'Sep 10, 2026',
-    status: 'Verified',
-    requestId: 'BL-000189'
-  }
-];
 
 @Component({
   selector: 'app-recent-donation-offers',
@@ -76,11 +34,53 @@ const RECENT_DONATION_OFFERS: readonly DonationOffer[] = [
   templateUrl: './recent-donation-offers.component.html',
   styleUrl: './recent-donation-offers.component.scss'
 })
-export class RecentDonationOffersComponent {
+export class RecentDonationOffersComponent implements OnInit {
   private readonly router = inject(Router);
+  private readonly api = inject(ApiService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
-  readonly recentOffers: readonly DonationOffer[] = RECENT_DONATION_OFFERS;
+  recentOffers: DonationOffer[] = [];
   searchTerm = '';
+
+  async ngOnInit(): Promise<void> {
+    // Keep rows that a test (or a parent) already supplied.
+    if (this.recentOffers.length === 0) {
+      await this.loadOffers();
+    }
+  }
+
+  private async loadOffers(): Promise<void> {
+    const rows = await this.api.getAllOffers();
+    this.recentOffers = rows.slice(0, 4).map(offer => this.toDisplay(offer));
+    this.cdr.markForCheck();
+  }
+
+  private toDisplay(offer: ApiOffer): DonationOffer {
+    const statusMap: Record<string, DonationOfferStatus> = {
+      PENDING: 'Pending',
+      ACCEPTED: 'Coordinating',
+      REJECTED: 'Rejected',
+      COMPLETED: 'Completed'
+    };
+
+    return {
+      id: offer.referenceNo || offer._id,
+      rawId: offer._id,
+      requestId: offer.requestReferenceNo || offer.requestId,
+      requestRawId: offer.requestId,
+      donor: offer.donorName || offer.donorId,
+      type: 'In-kind',
+      item: offer.requestItem || offer.unit || 'Relief Goods',
+      quantity: (offer.quantityOffered + ' ' + (offer.unit || '')).trim(),
+      location: offer.requestLocation || 'Not specified',
+      date: new Date(offer.createdAt).toLocaleDateString('en-PH', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      }),
+      status: statusMap[offer.status] ?? 'Pending'
+    };
+  }
 
   get filteredOffers(): readonly DonationOffer[] {
     const term = this.searchTerm.trim().toLowerCase();
@@ -122,10 +122,12 @@ export class RecentDonationOffersComponent {
       return;
     }
 
+    // The coordination page stores real database ids, so keep them here even
+    // though the table shows the friendly DO-... reference.
     this.router.navigate([
       '/external-coordination',
-      offer.requestId.replace(/^#/, ''),
-      offer.id.replace(/^#/, '')
+      offer.requestRawId,
+      offer.rawId
     ]);
   }
 }

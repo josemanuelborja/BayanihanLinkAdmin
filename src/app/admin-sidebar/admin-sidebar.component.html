@@ -27,7 +27,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" /></svg>
       </span>
       <span>Request<br>Management</span>
-      <b class="notification" *ngIf="pendingRequestCount > 0">{{ pendingRequestCount }}</b>
+      <b class="notification" *ngIf="pendingRequestCount() > 0">{{ pendingRequestCount() }}</b>
     </a>
 
     <a routerLink="/donation-offers" routerLinkActive="active" class="nav-item">
@@ -35,7 +35,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>
       </span>
       <span>Donation Offers</span>
-      <b class="notification" *ngIf="pendingOfferCount > 0">{{ pendingOfferCount }}</b>
+      <b class="notification" *ngIf="pendingOfferCount() > 0">{{ pendingOfferCount() }}</b>
     </a>
 
     <a routerLink="/external-coordination" routerLinkActive="active" class="nav-item">

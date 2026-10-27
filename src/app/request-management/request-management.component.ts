@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -46,7 +46,8 @@ export class RequestManagementComponent implements OnInit {
     private notifications: NotificationService,
     private api: ApiService,
     private auth: AuthService,
-    private http: HttpClient
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -55,9 +56,15 @@ export class RequestManagementComponent implements OnInit {
 
   private async loadRequests(): Promise<void> {
     this.loading = true;
-    const raw = await this.api.getRequests();
-    this.requests = raw.map(r => this.toDisplay(r));
-    this.loading = false;
+    try {
+      const raw = await this.api.getRequests();
+      this.requests = raw.map(r => this.toDisplay(r));
+    } catch {
+      this.requests = [];
+    } finally {
+      this.loading = false;
+      this.refreshView();
+    }
   }
 
   private toDisplay(r: ApiRequest): RequestItem {
@@ -65,9 +72,9 @@ export class RequestManagementComponent implements OnInit {
       PENDING: 'Pending', VERIFIED: 'Verified', ASSISTED: 'Assisted', COMPLETED: 'Completed'
     };
     return {
-      id: '#' + r.id,
+      id: r.referenceNo ? '#' + r.referenceNo : '#' + r.id,
       rawId: r.id,
-      requester: r.userId,
+      requester: r.requesterName || r.userId,
       disaster: r.disasterType,
       category: r.category,
       quantity: `${r.quantity} ${r.unit}`,
@@ -131,6 +138,13 @@ export class RequestManagementComponent implements OnInit {
       await this.loadRequests();
     } catch (err: any) {
       this.notifications.error(err?.error?.error ?? 'Could not verify request.');
+      this.refreshView();
     }
+  }
+
+  // This app runs without zone.js, so Angular does not know data arrived.
+  // Mark this page for a re-render so the new data appears right away.
+  private refreshView(): void {
+    this.cdr.markForCheck();
   }
 }

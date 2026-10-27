@@ -14,20 +14,23 @@ import { NotificationBellComponent } from '../../notification/notification-bell.
 })
 export class RequestReviewRecordedComponent {
 
-  requestId = 'BL-000301';
+  requestId = '';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router
   ) {
     this.route.params.subscribe(params => {
-      if (params['id']) {
-        this.requestId = params['id'];
-      }
+      this.requestId = params['id'] || '';
     });
   }
 
   proceedToCoordination(): void {
+    if (!this.requestId) {
+      this.router.navigate(['/donation-offers']);
+      return;
+    }
+
     this.router.navigate([
       '/external-coordination',
       this.requestId
